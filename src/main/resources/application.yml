@@ -1,0 +1,13 @@
+server:
+  port: 8081
+spring:
+  profiles: dev
+  application:
+    name: marketMgr
+  servlet:
+    multipart:
+      enabled: true
+      max-file-size: 30MB
+mybatis:
+  mapper-locations:
+    - classpath:com/**/mapper/*.xml
