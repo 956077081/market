@@ -31,7 +31,7 @@ public class User implements Serializable {
     }
 
     public void setCode(String code) {
-        this.code = code == null ? null : code.trim();
+        this.code = code;
     }
 
     public String getUserName() {
@@ -39,7 +39,7 @@ public class User implements Serializable {
     }
 
     public void setUserName(String userName) {
-        this.userName = userName == null ? null : userName.trim();
+        this.userName = userName;
     }
 
     public String getPassWord() {
@@ -47,7 +47,7 @@ public class User implements Serializable {
     }
 
     public void setPassWord(String passWord) {
-        this.passWord = passWord == null ? null : passWord.trim();
+        this.passWord = passWord;
     }
 
     public String getUserType() {
@@ -55,7 +55,7 @@ public class User implements Serializable {
     }
 
     public void setUserType(String userType) {
-        this.userType = userType == null ? null : userType.trim();
+        this.userType = userType;
     }
 
     public Date getCreateTime() {

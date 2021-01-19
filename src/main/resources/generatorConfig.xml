@@ -27,20 +27,20 @@
         <property name="nullCatalogMeansCurrent" value="true" />
     </jdbcConnection>
 
-    <javaModelGenerator targetPackage="com.pht.cust.model"
+    <javaModelGenerator targetPackage="com.pht.market.model"
     targetProject="src/main/java">
     <property name="enableSubPackages" value="true"/>
     <property name="trimStrings" value="true"/>
     </javaModelGenerator>
-    <sqlMapGenerator targetPackage="com.pht.cust.mapper"
+    <sqlMapGenerator targetPackage="com.pht.market.mapper"
     targetProject="src/main/java">
     <property name="enableSubPackages" value="true"/>
     </sqlMapGenerator>
-    <javaClientGenerator targetPackage="com.pht.cust.mapper"
+    <javaClientGenerator targetPackage="com.pht.market.mapper"
     targetProject="src/main/java" type="XMLMAPPER">
     <property name="enableSubPackages" value="true"/>
     </javaClientGenerator>
-    <table tableName="customer" domainObjectName="Customer"
+    <table tableName="sever_operator_log" domainObjectName="SeverOperatorLog"
     enableCountByExample="false" enableUpdateByExample="false"
     enableDeleteByExample="false" enableSelectByExample="false"
     selectByExampleQueryId="false">

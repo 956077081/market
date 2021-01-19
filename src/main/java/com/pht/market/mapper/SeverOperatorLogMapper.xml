@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.pht.market.mapper.SeverOperatorLogMapper">
+  <resultMap id="BaseResultMap" type="com.pht.market.model.SeverOperatorLog">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="entity_name" jdbcType="VARCHAR" property="entityName" />
+    <result column="entity_code" jdbcType="VARCHAR" property="entityCode" />
+    <result column="create_time" jdbcType="DATE" property="createTime" />
+  </resultMap>
+  <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="com.pht.market.model.SeverOperatorLog">
+    <result column="entity" jdbcType="LONGVARBINARY" property="entity" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, entity_name, entity_code, create_time
+  </sql>
+  <sql id="Blob_Column_List">
+    entity
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="ResultMapWithBLOBs">
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from sever_operator_log
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from sever_operator_log
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.pht.market.model.SeverOperatorLog">
+    insert into sever_operator_log (id, entity_name, entity_code, 
+      create_time, entity)
+    values (#{id,jdbcType=BIGINT}, #{entityName,jdbcType=VARCHAR}, #{entityCode,jdbcType=VARCHAR}, 
+      #{createTime,jdbcType=DATE}, #{entity,jdbcType=LONGVARBINARY})
+  </insert>
+  <insert id="insertSelective" parameterType="com.pht.market.model.SeverOperatorLog">
+    insert into sever_operator_log
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="entityName != null">
+        entity_name,
+      </if>
+      <if test="entityCode != null">
+        entity_code,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+      <if test="entity != null">
+        entity,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="entityName != null">
+        #{entityName,jdbcType=VARCHAR},
+      </if>
+      <if test="entityCode != null">
+        #{entityCode,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=DATE},
+      </if>
+      <if test="entity != null">
+        #{entity,jdbcType=LONGVARBINARY},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.pht.market.model.SeverOperatorLog">
+    update sever_operator_log
+    <set>
+      <if test="entityName != null">
+        entity_name = #{entityName,jdbcType=VARCHAR},
+      </if>
+      <if test="entityCode != null">
+        entity_code = #{entityCode,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=DATE},
+      </if>
+      <if test="entity != null">
+        entity = #{entity,jdbcType=LONGVARBINARY},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.pht.market.model.SeverOperatorLog">
+    update sever_operator_log
+    set entity_name = #{entityName,jdbcType=VARCHAR},
+      entity_code = #{entityCode,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=DATE},
+      entity = #{entity,jdbcType=LONGVARBINARY}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.pht.market.model.SeverOperatorLog">
+    update sever_operator_log
+    set entity_name = #{entityName,jdbcType=VARCHAR},
+      entity_code = #{entityCode,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=DATE}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>

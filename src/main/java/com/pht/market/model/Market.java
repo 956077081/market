@@ -46,7 +46,7 @@ public class Market implements Serializable {
     }
 
     public void setCustCode(String custCode) {
-        this.custCode = custCode == null ? null : custCode.trim();
+        this.custCode = custCode;
     }
 
     public String getDetailCode() {
@@ -54,7 +54,7 @@ public class Market implements Serializable {
     }
 
     public void setDetailCode(String detailCode) {
-        this.detailCode = detailCode == null ? null : detailCode.trim();
+        this.detailCode = detailCode;
     }
 
     public String getCode() {
@@ -62,7 +62,7 @@ public class Market implements Serializable {
     }
 
     public void setCode(String code) {
-        this.code = code == null ? null : code.trim();
+        this.code = code;
     }
 
     public Date getStartTime() {
@@ -94,7 +94,7 @@ public class Market implements Serializable {
     }
 
     public void setTerm(String term) {
-        this.term = term == null ? null : term.trim();
+        this.term = term;
     }
 
     public String getPayType() {
@@ -102,7 +102,7 @@ public class Market implements Serializable {
     }
 
     public void setPayType(String payType) {
-        this.payType = payType == null ? null : payType.trim();
+        this.payType = payType;
     }
 
     public String getAccoutNum() {
@@ -110,7 +110,7 @@ public class Market implements Serializable {
     }
 
     public void setAccoutNum(String accoutNum) {
-        this.accoutNum = accoutNum == null ? null : accoutNum.trim();
+        this.accoutNum = accoutNum;
     }
 
     public String getPayMethod() {
@@ -118,7 +118,7 @@ public class Market implements Serializable {
     }
 
     public void setPayMethod(String payMethod) {
-        this.payMethod = payMethod == null ? null : payMethod.trim();
+        this.payMethod = payMethod;
     }
 
     public Date getUpdateTime() {

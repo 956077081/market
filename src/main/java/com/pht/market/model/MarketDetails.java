@@ -48,7 +48,7 @@ public class MarketDetails implements Serializable {
     }
 
     public void setCustCode(String custCode) {
-        this.custCode = custCode == null ? null : custCode.trim();
+        this.custCode = custCode;
     }
 
     public String getCode() {
@@ -56,7 +56,7 @@ public class MarketDetails implements Serializable {
     }
 
     public void setCode(String code) {
-        this.code = code == null ? null : code.trim();
+        this.code = code;
     }
 
     public String getMarketCode() {
@@ -64,7 +64,7 @@ public class MarketDetails implements Serializable {
     }
 
     public void setMarketCode(String marketCode) {
-        this.marketCode = marketCode == null ? null : marketCode.trim();
+        this.marketCode = marketCode;
     }
 
     public Date getStartTime() {
@@ -96,7 +96,7 @@ public class MarketDetails implements Serializable {
     }
 
     public void setTerm(String term) {
-        this.term = term == null ? null : term.trim();
+        this.term = term;
     }
 
     public String getPayType() {
@@ -104,7 +104,7 @@ public class MarketDetails implements Serializable {
     }
 
     public void setPayType(String payType) {
-        this.payType = payType == null ? null : payType.trim();
+        this.payType = payType;
     }
 
     public String getAccoutNum() {
@@ -112,7 +112,7 @@ public class MarketDetails implements Serializable {
     }
 
     public void setAccoutNum(String accoutNum) {
-        this.accoutNum = accoutNum == null ? null : accoutNum.trim();
+        this.accoutNum = accoutNum;
     }
 
     public String getPayMethod() {
@@ -120,7 +120,7 @@ public class MarketDetails implements Serializable {
     }
 
     public void setPayMethod(String payMethod) {
-        this.payMethod = payMethod == null ? null : payMethod.trim();
+        this.payMethod = payMethod;
     }
 
     public String getOperatorCode() {
@@ -128,7 +128,7 @@ public class MarketDetails implements Serializable {
     }
 
     public void setOperatorCode(String operatorCode) {
-        this.operatorCode = operatorCode == null ? null : operatorCode.trim();
+        this.operatorCode = operatorCode;
     }
 
     public Date getUpdateTime() {

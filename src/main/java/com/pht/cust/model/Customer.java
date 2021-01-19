@@ -51,7 +51,7 @@ public class Customer implements Serializable {
     }
 
     public void setUserCode(String userCode) {
-        this.userCode = userCode == null ? null : userCode.trim();
+        this.userCode = userCode;
     }
 
     public String getCode() {
@@ -59,7 +59,7 @@ public class Customer implements Serializable {
     }
 
     public void setCode(String code) {
-        this.code = code == null ? null : code.trim();
+        this.code = code;
     }
 
     public String getCustName() {
@@ -67,7 +67,7 @@ public class Customer implements Serializable {
     }
 
     public void setCustName(String custName) {
-        this.custName = custName == null ? null : custName.trim();
+        this.custName = custName;
     }
 
     public String getCustType() {
@@ -75,7 +75,7 @@ public class Customer implements Serializable {
     }
 
     public void setCustType(String custType) {
-        this.custType = custType == null ? null : custType.trim();
+        this.custType = custType;
     }
 
     public String getIdType() {
@@ -83,7 +83,7 @@ public class Customer implements Serializable {
     }
 
     public void setIdType(String idType) {
-        this.idType = idType == null ? null : idType.trim();
+        this.idType = idType;
     }
 
     public String getIdNum() {
@@ -91,7 +91,7 @@ public class Customer implements Serializable {
     }
 
     public void setIdNum(String idNum) {
-        this.idNum = idNum == null ? null : idNum.trim();
+        this.idNum = idNum;
     }
 
     public String getLawName() {
@@ -99,7 +99,7 @@ public class Customer implements Serializable {
     }
 
     public void setLawName(String lawName) {
-        this.lawName = lawName == null ? null : lawName.trim();
+        this.lawName = lawName;
     }
 
     public String getLawNum() {
@@ -107,7 +107,7 @@ public class Customer implements Serializable {
     }
 
     public void setLawNum(String lawNum) {
-        this.lawNum = lawNum == null ? null : lawNum.trim();
+        this.lawNum = lawNum;
     }
 
     public Date getRegisterTime() {
@@ -123,7 +123,7 @@ public class Customer implements Serializable {
     }
 
     public void setProfession(String profession) {
-        this.profession = profession == null ? null : profession.trim();
+        this.profession = profession;
     }
 
     public String getAddress() {
@@ -131,7 +131,7 @@ public class Customer implements Serializable {
     }
 
     public void setAddress(String address) {
-        this.address = address == null ? null : address.trim();
+        this.address = address;
     }
 
     public String getLawMobile() {
@@ -139,7 +139,7 @@ public class Customer implements Serializable {
     }
 
     public void setLawMobile(String lawMobile) {
-        this.lawMobile = lawMobile == null ? null : lawMobile.trim();
+        this.lawMobile = lawMobile;
     }
 
     public String getPhone() {
@@ -147,7 +147,7 @@ public class Customer implements Serializable {
     }
 
     public void setPhone(String phone) {
-        this.phone = phone == null ? null : phone.trim();
+        this.phone = phone;
     }
 
     public Date getUpdateTime() {
