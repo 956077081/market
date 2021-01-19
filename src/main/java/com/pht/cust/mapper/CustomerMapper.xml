@@ -1,0 +1,223 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.pht.cust.mapper.CustomerMapper">
+  <resultMap id="BaseResultMap" type="com.pht.cust.model.Customer">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="user_code" jdbcType="VARCHAR" property="userCode" />
+    <result column="code" jdbcType="VARCHAR" property="code" />
+    <result column="cust_name" jdbcType="VARCHAR" property="custName" />
+    <result column="cust_type" jdbcType="VARCHAR" property="custType" />
+    <result column="id_type" jdbcType="VARCHAR" property="idType" />
+    <result column="id_num" jdbcType="VARCHAR" property="idNum" />
+    <result column="law_name" jdbcType="VARCHAR" property="lawName" />
+    <result column="law_num" jdbcType="VARCHAR" property="lawNum" />
+    <result column="register_time" jdbcType="DATE" property="registerTime" />
+    <result column="profession" jdbcType="VARCHAR" property="profession" />
+    <result column="address" jdbcType="VARCHAR" property="address" />
+    <result column="law_mobile" jdbcType="VARCHAR" property="lawMobile" />
+    <result column="phone" jdbcType="VARCHAR" property="phone" />
+    <result column="update_time" jdbcType="DATE" property="updateTime" />
+    <result column="create_time" jdbcType="DATE" property="createTime" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, user_code, code, cust_name, cust_type, id_type, id_num, law_name, law_num, register_time, 
+    profession, address, law_mobile, phone, update_time, create_time
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from customer
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from customer
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.pht.cust.model.Customer">
+    insert into customer (id, user_code, code, 
+      cust_name, cust_type, id_type, 
+      id_num, law_name, law_num, 
+      register_time, profession, address, 
+      law_mobile, phone, update_time, 
+      create_time)
+    values (#{id,jdbcType=BIGINT}, #{userCode,jdbcType=VARCHAR}, #{code,jdbcType=VARCHAR}, 
+      #{custName,jdbcType=VARCHAR}, #{custType,jdbcType=VARCHAR}, #{idType,jdbcType=VARCHAR}, 
+      #{idNum,jdbcType=VARCHAR}, #{lawName,jdbcType=VARCHAR}, #{lawNum,jdbcType=VARCHAR}, 
+      #{registerTime,jdbcType=DATE}, #{profession,jdbcType=VARCHAR}, #{address,jdbcType=VARCHAR}, 
+      #{lawMobile,jdbcType=VARCHAR}, #{phone,jdbcType=VARCHAR}, #{updateTime,jdbcType=DATE}, 
+      #{createTime,jdbcType=DATE})
+  </insert>
+  <insert id="insertSelective" parameterType="com.pht.cust.model.Customer">
+    insert into customer
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="userCode != null">
+        user_code,
+      </if>
+      <if test="code != null">
+        code,
+      </if>
+      <if test="custName != null">
+        cust_name,
+      </if>
+      <if test="custType != null">
+        cust_type,
+      </if>
+      <if test="idType != null">
+        id_type,
+      </if>
+      <if test="idNum != null">
+        id_num,
+      </if>
+      <if test="lawName != null">
+        law_name,
+      </if>
+      <if test="lawNum != null">
+        law_num,
+      </if>
+      <if test="registerTime != null">
+        register_time,
+      </if>
+      <if test="profession != null">
+        profession,
+      </if>
+      <if test="address != null">
+        address,
+      </if>
+      <if test="lawMobile != null">
+        law_mobile,
+      </if>
+      <if test="phone != null">
+        phone,
+      </if>
+      <if test="updateTime != null">
+        update_time,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="userCode != null">
+        #{userCode,jdbcType=VARCHAR},
+      </if>
+      <if test="code != null">
+        #{code,jdbcType=VARCHAR},
+      </if>
+      <if test="custName != null">
+        #{custName,jdbcType=VARCHAR},
+      </if>
+      <if test="custType != null">
+        #{custType,jdbcType=VARCHAR},
+      </if>
+      <if test="idType != null">
+        #{idType,jdbcType=VARCHAR},
+      </if>
+      <if test="idNum != null">
+        #{idNum,jdbcType=VARCHAR},
+      </if>
+      <if test="lawName != null">
+        #{lawName,jdbcType=VARCHAR},
+      </if>
+      <if test="lawNum != null">
+        #{lawNum,jdbcType=VARCHAR},
+      </if>
+      <if test="registerTime != null">
+        #{registerTime,jdbcType=DATE},
+      </if>
+      <if test="profession != null">
+        #{profession,jdbcType=VARCHAR},
+      </if>
+      <if test="address != null">
+        #{address,jdbcType=VARCHAR},
+      </if>
+      <if test="lawMobile != null">
+        #{lawMobile,jdbcType=VARCHAR},
+      </if>
+      <if test="phone != null">
+        #{phone,jdbcType=VARCHAR},
+      </if>
+      <if test="updateTime != null">
+        #{updateTime,jdbcType=DATE},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=DATE},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.pht.cust.model.Customer">
+    update customer
+    <set>
+      <if test="userCode != null">
+        user_code = #{userCode,jdbcType=VARCHAR},
+      </if>
+      <if test="code != null">
+        code = #{code,jdbcType=VARCHAR},
+      </if>
+      <if test="custName != null">
+        cust_name = #{custName,jdbcType=VARCHAR},
+      </if>
+      <if test="custType != null">
+        cust_type = #{custType,jdbcType=VARCHAR},
+      </if>
+      <if test="idType != null">
+        id_type = #{idType,jdbcType=VARCHAR},
+      </if>
+      <if test="idNum != null">
+        id_num = #{idNum,jdbcType=VARCHAR},
+      </if>
+      <if test="lawName != null">
+        law_name = #{lawName,jdbcType=VARCHAR},
+      </if>
+      <if test="lawNum != null">
+        law_num = #{lawNum,jdbcType=VARCHAR},
+      </if>
+      <if test="registerTime != null">
+        register_time = #{registerTime,jdbcType=DATE},
+      </if>
+      <if test="profession != null">
+        profession = #{profession,jdbcType=VARCHAR},
+      </if>
+      <if test="address != null">
+        address = #{address,jdbcType=VARCHAR},
+      </if>
+      <if test="lawMobile != null">
+        law_mobile = #{lawMobile,jdbcType=VARCHAR},
+      </if>
+      <if test="phone != null">
+        phone = #{phone,jdbcType=VARCHAR},
+      </if>
+      <if test="updateTime != null">
+        update_time = #{updateTime,jdbcType=DATE},
+      </if>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=DATE},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.pht.cust.model.Customer">
+    update customer
+    set user_code = #{userCode,jdbcType=VARCHAR},
+      code = #{code,jdbcType=VARCHAR},
+      cust_name = #{custName,jdbcType=VARCHAR},
+      cust_type = #{custType,jdbcType=VARCHAR},
+      id_type = #{idType,jdbcType=VARCHAR},
+      id_num = #{idNum,jdbcType=VARCHAR},
+      law_name = #{lawName,jdbcType=VARCHAR},
+      law_num = #{lawNum,jdbcType=VARCHAR},
+      register_time = #{registerTime,jdbcType=DATE},
+      profession = #{profession,jdbcType=VARCHAR},
+      address = #{address,jdbcType=VARCHAR},
+      law_mobile = #{lawMobile,jdbcType=VARCHAR},
+      phone = #{phone,jdbcType=VARCHAR},
+      update_time = #{updateTime,jdbcType=DATE},
+      create_time = #{createTime,jdbcType=DATE}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>

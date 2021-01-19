@@ -27,20 +27,20 @@
         <property name="nullCatalogMeansCurrent" value="true" />
     </jdbcConnection>
 
-    <javaModelGenerator targetPackage="com.pht.plugins.model"
+    <javaModelGenerator targetPackage="com.pht.cust.model"
     targetProject="src/main/java">
     <property name="enableSubPackages" value="true"/>
     <property name="trimStrings" value="true"/>
     </javaModelGenerator>
-    <sqlMapGenerator targetPackage="com.pht.plugins.mapper"
+    <sqlMapGenerator targetPackage="com.pht.cust.mapper"
     targetProject="src/main/java">
     <property name="enableSubPackages" value="true"/>
     </sqlMapGenerator>
-    <javaClientGenerator targetPackage="com.pht.plugins.mapper"
+    <javaClientGenerator targetPackage="com.pht.cust.mapper"
     targetProject="src/main/java" type="XMLMAPPER">
     <property name="enableSubPackages" value="true"/>
     </javaClientGenerator>
-    <table tableName="customer" domainObjectName="customer"
+    <table tableName="customer" domainObjectName="Customer"
     enableCountByExample="false" enableUpdateByExample="false"
     enableDeleteByExample="false" enableSelectByExample="false"
     selectByExampleQueryId="false">

@@ -1,0 +1,188 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.pht.market.mapper.MarketMapper">
+  <resultMap id="BaseResultMap" type="com.pht.market.model.Market">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="cust_code" jdbcType="VARCHAR" property="custCode" />
+    <result column="detail_code" jdbcType="VARCHAR" property="detailCode" />
+    <result column="code" jdbcType="VARCHAR" property="code" />
+    <result column="start_time" jdbcType="DATE" property="startTime" />
+    <result column="end_time" jdbcType="DATE" property="endTime" />
+    <result column="money" jdbcType="DECIMAL" property="money" />
+    <result column="term" jdbcType="VARCHAR" property="term" />
+    <result column="pay_type" jdbcType="VARCHAR" property="payType" />
+    <result column="accout_num" jdbcType="VARCHAR" property="accoutNum" />
+    <result column="pay_method" jdbcType="VARCHAR" property="payMethod" />
+    <result column="update_time" jdbcType="DATE" property="updateTime" />
+    <result column="create_time" jdbcType="DATE" property="createTime" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, cust_code, detail_code, code, start_time, end_time, money, term, pay_type, accout_num, 
+    pay_method, update_time, create_time
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from market
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from market
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.pht.market.model.Market">
+    insert into market (id, cust_code, detail_code, 
+      code, start_time, end_time, 
+      money, term, pay_type, 
+      accout_num, pay_method, update_time, 
+      create_time)
+    values (#{id,jdbcType=BIGINT}, #{custCode,jdbcType=VARCHAR}, #{detailCode,jdbcType=VARCHAR}, 
+      #{code,jdbcType=VARCHAR}, #{startTime,jdbcType=DATE}, #{endTime,jdbcType=DATE}, 
+      #{money,jdbcType=DECIMAL}, #{term,jdbcType=VARCHAR}, #{payType,jdbcType=VARCHAR}, 
+      #{accoutNum,jdbcType=VARCHAR}, #{payMethod,jdbcType=VARCHAR}, #{updateTime,jdbcType=DATE}, 
+      #{createTime,jdbcType=DATE})
+  </insert>
+  <insert id="insertSelective" parameterType="com.pht.market.model.Market">
+    insert into market
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="custCode != null">
+        cust_code,
+      </if>
+      <if test="detailCode != null">
+        detail_code,
+      </if>
+      <if test="code != null">
+        code,
+      </if>
+      <if test="startTime != null">
+        start_time,
+      </if>
+      <if test="endTime != null">
+        end_time,
+      </if>
+      <if test="money != null">
+        money,
+      </if>
+      <if test="term != null">
+        term,
+      </if>
+      <if test="payType != null">
+        pay_type,
+      </if>
+      <if test="accoutNum != null">
+        accout_num,
+      </if>
+      <if test="payMethod != null">
+        pay_method,
+      </if>
+      <if test="updateTime != null">
+        update_time,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="custCode != null">
+        #{custCode,jdbcType=VARCHAR},
+      </if>
+      <if test="detailCode != null">
+        #{detailCode,jdbcType=VARCHAR},
+      </if>
+      <if test="code != null">
+        #{code,jdbcType=VARCHAR},
+      </if>
+      <if test="startTime != null">
+        #{startTime,jdbcType=DATE},
+      </if>
+      <if test="endTime != null">
+        #{endTime,jdbcType=DATE},
+      </if>
+      <if test="money != null">
+        #{money,jdbcType=DECIMAL},
+      </if>
+      <if test="term != null">
+        #{term,jdbcType=VARCHAR},
+      </if>
+      <if test="payType != null">
+        #{payType,jdbcType=VARCHAR},
+      </if>
+      <if test="accoutNum != null">
+        #{accoutNum,jdbcType=VARCHAR},
+      </if>
+      <if test="payMethod != null">
+        #{payMethod,jdbcType=VARCHAR},
+      </if>
+      <if test="updateTime != null">
+        #{updateTime,jdbcType=DATE},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=DATE},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.pht.market.model.Market">
+    update market
+    <set>
+      <if test="custCode != null">
+        cust_code = #{custCode,jdbcType=VARCHAR},
+      </if>
+      <if test="detailCode != null">
+        detail_code = #{detailCode,jdbcType=VARCHAR},
+      </if>
+      <if test="code != null">
+        code = #{code,jdbcType=VARCHAR},
+      </if>
+      <if test="startTime != null">
+        start_time = #{startTime,jdbcType=DATE},
+      </if>
+      <if test="endTime != null">
+        end_time = #{endTime,jdbcType=DATE},
+      </if>
+      <if test="money != null">
+        money = #{money,jdbcType=DECIMAL},
+      </if>
+      <if test="term != null">
+        term = #{term,jdbcType=VARCHAR},
+      </if>
+      <if test="payType != null">
+        pay_type = #{payType,jdbcType=VARCHAR},
+      </if>
+      <if test="accoutNum != null">
+        accout_num = #{accoutNum,jdbcType=VARCHAR},
+      </if>
+      <if test="payMethod != null">
+        pay_method = #{payMethod,jdbcType=VARCHAR},
+      </if>
+      <if test="updateTime != null">
+        update_time = #{updateTime,jdbcType=DATE},
+      </if>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=DATE},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.pht.market.model.Market">
+    update market
+    set cust_code = #{custCode,jdbcType=VARCHAR},
+      detail_code = #{detailCode,jdbcType=VARCHAR},
+      code = #{code,jdbcType=VARCHAR},
+      start_time = #{startTime,jdbcType=DATE},
+      end_time = #{endTime,jdbcType=DATE},
+      money = #{money,jdbcType=DECIMAL},
+      term = #{term,jdbcType=VARCHAR},
+      pay_type = #{payType,jdbcType=VARCHAR},
+      accout_num = #{accoutNum,jdbcType=VARCHAR},
+      pay_method = #{payMethod,jdbcType=VARCHAR},
+      update_time = #{updateTime,jdbcType=DATE},
+      create_time = #{createTime,jdbcType=DATE}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>
