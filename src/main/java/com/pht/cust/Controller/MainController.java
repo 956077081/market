@@ -13,15 +13,13 @@ import org.springframework.web.bind.annotation.ResponseBody;
  *
  */
 @Controller
+@RequestMapping("/index")
 public class MainController {
     @Autowired
     private UserService userService;
     @RequestMapping("/login")
     @ResponseBody
-    public CommonResult<Object> login(User user){
-         user =  userService.login(user);
-        if(user ==null){
-        }
-        return null;
+    public String login(User user){
+            return "";
     }
 }
