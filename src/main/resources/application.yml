@@ -1,13 +1,44 @@
 server:
   port: 8081
 spring:
-  profiles: dev
   application:
     name: marketMgr
+  profiles:
+    active: dev #默认配置
   servlet:
     multipart:
       enabled: true
       max-file-size: 30MB
+
 mybatis:
   mapper-locations:
-    - classpath:com/**/mapper/*.xml
+    - classpath*:com/pht/**/*.xml
+  type-aliases-package: com/pht/**/model
+  configuration:
+    map-underscore-to-camel-case: true
+jwt:
+  security: marketMgr
+  expiration: 604800 #JWT的超期限时间(60*60*24*7)
+  tokenHead: 'Bearer'
+  tokenHeader: Authorization #JWT存储的请求头
+
+
+secure:
+  ignored:
+    urls: #安全路径白名单
+      - /swagger-ui.html
+      - /swagger-resources/**
+      - /swagger/**
+      - /**/v2/api-docs
+      - /**/*.js
+      - /**/*.css
+      - /**/*.png
+      - /**/*.ico
+      - /webjars/springfox-swagger-ui/**
+      - /actuator/**
+      - /druid/**
+      - /admin/login
+      - /admin/register
+      - /admin/info
+      - /admin/logout
+      - /minio/upload

@@ -21,8 +21,11 @@ public class CommonResult<T> {
     public static <T> CommonResult<T> failed(String mess, T data){
         return new CommonResult<T>(ResultCode.Fail.getCode(),mess,data);
     }
-    public static <T> CommonResult<T> failed( T data){
-        return new CommonResult<T>(ResultCode.Fail.getCode(),ResultCode.Fail.getMessage(),data);
+    public static <T> CommonResult<T> failed( ){
+        return new CommonResult<T>(ResultCode.Fail.getCode(),ResultCode.Fail.getMessage(),null);
+    }
+    public static <T> CommonResult<T> packRetData( ResultCode resultCode,T data){
+        return new CommonResult<T>(resultCode.getCode(),resultCode.getMessage(),data);
     }
     public long getCode() {
         return code;

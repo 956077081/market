@@ -1,8 +1,8 @@
-package com.pht.cust.mapper;
+package com.pht.cust.dao;
 
 import com.pht.cust.model.Customer;
 
-public interface CustomerMapper {
+public interface CustomerDao {
     int deleteByPrimaryKey(Long id);
 
     int insert(Customer record);
