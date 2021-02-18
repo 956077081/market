@@ -1,8 +1,8 @@
 package com.pht.security.config;
 
 import cn.hutool.json.JSONUtil;
-import com.pht.Common.CommonResult;
-import com.pht.Common.ResultCode;
+import com.pht.common.CommonResult;
+import com.pht.common.ResultCode;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.AuthenticationEntryPoint;
 

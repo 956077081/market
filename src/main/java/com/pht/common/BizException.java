@@ -1,4 +1,4 @@
-package com.pht.Common;
+package com.pht.common;
 
 public class BizException  extends RuntimeException{
     private  String  message;

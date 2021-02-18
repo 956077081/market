@@ -2,6 +2,8 @@ package com.pht.cust.dao;
 
 import com.pht.cust.model.Customer;
 
+import java.util.List;
+
 public interface CustomerDao {
     int deleteByPrimaryKey(Long id);
 
@@ -14,4 +16,5 @@ public interface CustomerDao {
     int updateByPrimaryKeySelective(Customer record);
 
     int updateByPrimaryKey(Customer record);
+    List<Customer> queryAll();
 }

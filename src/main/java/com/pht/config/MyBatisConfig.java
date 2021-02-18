@@ -10,6 +10,6 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
  */
 @Configuration
 @EnableTransactionManagement
-@MapperScan(basePackages = {"com.pht.cust.dao"})
+@MapperScan(basePackages = {"com.pht.*.dao"})
 public class MyBatisConfig {
 }

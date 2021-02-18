@@ -34,18 +34,18 @@
     where id = #{id,jdbcType=BIGINT}
   </delete>
   <insert id="insert" parameterType="com.pht.cust.model.Customer">
-    insert into customer (id, user_code, code, 
+    insert into customer ( user_code, code,
       cust_name, cust_type, id_type, 
       id_num, law_name, law_num, 
       register_time, profession, address, 
-      law_mobile, phone, update_time, 
+      law_mobile, phone,email,register_money ,update_time,
       create_time)
-    values (#{id,jdbcType=BIGINT}, #{userCode,jdbcType=VARCHAR}, #{code,jdbcType=VARCHAR}, 
+    values ( #{userCode,jdbcType=VARCHAR}, #{code,jdbcType=VARCHAR},
       #{custName,jdbcType=VARCHAR}, #{custType,jdbcType=VARCHAR}, #{idType,jdbcType=VARCHAR}, 
       #{idNum,jdbcType=VARCHAR}, #{lawName,jdbcType=VARCHAR}, #{lawNum,jdbcType=VARCHAR}, 
       #{registerTime,jdbcType=DATE}, #{profession,jdbcType=VARCHAR}, #{address,jdbcType=VARCHAR}, 
-      #{lawMobile,jdbcType=VARCHAR}, #{phone,jdbcType=VARCHAR}, #{updateTime,jdbcType=DATE}, 
-      #{createTime,jdbcType=DATE})
+      #{lawMobile,jdbcType=VARCHAR}, #{phone,jdbcType=VARCHAR},#{email,jdbcType=VARCHAR},#{registerMoney,jdbcType=DECIMAL}, #{updateTime,jdbcType=TIMESTAMP},
+      #{createTime,jdbcType=TIMESTAMP})
   </insert>
   <insert id="insertSelective" parameterType="com.pht.cust.model.Customer">
     insert into customer
@@ -220,4 +220,7 @@
       create_time = #{createTime,jdbcType=DATE}
     where id = #{id,jdbcType=BIGINT}
   </update>
+  <select id="queryAll" resultType="com.pht.cust.model.Customer">
+      select * from  customer order by create_time desc;
+  </select>
 </mapper>

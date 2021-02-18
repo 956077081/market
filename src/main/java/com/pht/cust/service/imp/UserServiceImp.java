@@ -1,6 +1,6 @@
 package com.pht.cust.service.imp;
 
-import com.pht.Common.BizException;
+import com.pht.common.BizException;
 import com.pht.bo.AdminUserDetails;
 import com.pht.cust.dao.UseDao;
 import com.pht.cust.model.User;

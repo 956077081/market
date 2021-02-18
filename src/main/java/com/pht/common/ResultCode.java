@@ -1,4 +1,4 @@
-package com.pht.Common;
+package com.pht.common;
 
 public enum ResultCode {
     SUCCESS(200, "操作成功"),

@@ -1,6 +1,7 @@
 package com.pht.cust.model;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.util.Date;
 
 public class Customer implements Serializable {
@@ -36,6 +37,8 @@ public class Customer implements Serializable {
 
     private Date createTime;
 
+    private String email;
+    private BigDecimal registerMoney;
     private static final long serialVersionUID = 1L;
 
     public Long getId() {
@@ -166,30 +169,19 @@ public class Customer implements Serializable {
         this.createTime = createTime;
     }
 
-    @Override
-    public String toString() {
-        StringBuilder sb = new StringBuilder();
-        sb.append(getClass().getSimpleName());
-        sb.append(" [");
-        sb.append("Hash = ").append(hashCode());
-        sb.append(", id=").append(id);
-        sb.append(", userCode=").append(userCode);
-        sb.append(", code=").append(code);
-        sb.append(", custName=").append(custName);
-        sb.append(", custType=").append(custType);
-        sb.append(", idType=").append(idType);
-        sb.append(", idNum=").append(idNum);
-        sb.append(", lawName=").append(lawName);
-        sb.append(", lawNum=").append(lawNum);
-        sb.append(", registerTime=").append(registerTime);
-        sb.append(", profession=").append(profession);
-        sb.append(", address=").append(address);
-        sb.append(", lawMobile=").append(lawMobile);
-        sb.append(", phone=").append(phone);
-        sb.append(", updateTime=").append(updateTime);
-        sb.append(", createTime=").append(createTime);
-        sb.append(", serialVersionUID=").append(serialVersionUID);
-        sb.append("]");
-        return sb.toString();
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public BigDecimal getRegisterMoney() {
+        return registerMoney;
+    }
+
+    public void setRegisterMoney(BigDecimal registerMoney) {
+        this.registerMoney = registerMoney;
     }
 }

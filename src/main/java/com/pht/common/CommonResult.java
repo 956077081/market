@@ -1,4 +1,4 @@
-package com.pht.Common;
+package com.pht.common;
 
 public class CommonResult<T> {
 
