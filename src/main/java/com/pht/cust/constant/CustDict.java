@@ -8,4 +8,9 @@ public class CustDict {
     public static String  CUSTTYPE_00 ="00";
     @BizDictAnot(dictTypeId ="CustType" ,dictName = "公司")
     public static String  CUSTTYPE_01 ="01";
+
+    @BizDictAnot(dictTypeId ="CustStatus" ,dictName = "客户有效")
+    public static String  CUSTSTATUS_01 ="01";
+    @BizDictAnot(dictTypeId ="CustStatus" ,dictName = "客户无效")
+    public static String  CUSTSTATUS_00 ="00";
 }

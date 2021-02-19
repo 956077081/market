@@ -27,7 +27,6 @@ public class MainTest {
     public void testCustomerCrt(){
         CustomerParam customerParam= new CustomerParam();
         customerParam.setCustType("00");
-        customerParam.setUserCode("001");
         customerParam.setCustName("张三");
         customerParam.setIdNum("610321199603122772");
         customerService.save(customerParam);

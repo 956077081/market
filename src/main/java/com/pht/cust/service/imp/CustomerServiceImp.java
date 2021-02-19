@@ -30,7 +30,7 @@ public class CustomerServiceImp implements CustomerService {
     public void save(CustomerParam customerParam) {
         Customer customer = new Customer();
         if(CustDict.CUSTTYPE_00.equals(customerParam.getCustType())){
-            customer.setUserCode(customerParam.getUserCode());
+            customer.setOperatorCode(customerParam.getOperatorCode());
             customer.setCustName(customerParam.getCustName());
             customer.setCustType(customerParam.getCustType());
             customer.setIdType(customerParam.getIdType());
@@ -42,6 +42,7 @@ public class CustomerServiceImp implements CustomerService {
         customer.setCode(PersistentUtil.getBizEntity(Customer.class));
         customer.setCreateTime(new Date());
         customer.setUpdateTime(new Date());
+        customer.setStatus(CustDict.CUSTSTATUS_01);
         customerDao.insert(customer);
     }
 }

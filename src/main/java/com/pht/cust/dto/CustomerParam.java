@@ -3,12 +3,13 @@ package com.pht.cust.dto;
 import lombok.Data;
 
 import javax.validation.constraints.NotEmpty;
+import java.math.BigDecimal;
 import java.util.Date;
 @Data
 public class CustomerParam  {
     private Long id;
     @NotEmpty
-    private String userCode;
+    private String operatorCode;
 
     private String code;
     @NotEmpty
@@ -38,6 +39,5 @@ public class CustomerParam  {
 
     private Date createTime;
     private String email;
-
-    private String  registerMoney;
+    private BigDecimal registerMoney;
 }
