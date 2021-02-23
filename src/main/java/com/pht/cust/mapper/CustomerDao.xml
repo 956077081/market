@@ -3,7 +3,6 @@
 <mapper namespace="com.pht.cust.dao.CustomerDao">
     <resultMap id="BaseResultMap" type="com.pht.cust.model.Customer">
         <id column="id" jdbcType="BIGINT" property="id"/>
-        <result column="user_code" jdbcType="VARCHAR" property="userCode"/>
         <result column="code" jdbcType="VARCHAR" property="code"/>
         <result column="cust_name" jdbcType="VARCHAR" property="custName"/>
         <result column="cust_type" jdbcType="VARCHAR" property="custType"/>
@@ -20,7 +19,7 @@
         <result column="create_time" jdbcType="DATE" property="createTime"/>
     </resultMap>
     <sql id="Base_Column_List">
-        id,
+                id,
                 user_code,
                 code,
                 cust_name,
@@ -44,14 +43,14 @@
                               cust_name, cust_type, id_type,
                               id_num, law_name, law_num,
                               register_time, profession, address,
-                              law_mobile, phone, email, register_money, operator_code, status, update_time,
+                              law_mobile, phone, email, register_money, operator_code,operator_name, status, update_time,
                               create_time)
         values (#{code,jdbcType=VARCHAR},
                 #{custName,jdbcType=VARCHAR}, #{custType,jdbcType=VARCHAR}, #{idType,jdbcType=VARCHAR},
                 #{idNum,jdbcType=VARCHAR}, #{lawName,jdbcType=VARCHAR}, #{lawNum,jdbcType=VARCHAR},
                 #{registerTime,jdbcType=DATE}, #{profession,jdbcType=VARCHAR}, #{address,jdbcType=VARCHAR},
                 #{lawMobile,jdbcType=VARCHAR}, #{phone,jdbcType=VARCHAR}, #{email,jdbcType=VARCHAR},
-                #{registerMoney,jdbcType=DECIMAL}, #{operatorCode,jdbcType=VARCHAR}, #{status,jdbcType=VARCHAR},
+                #{registerMoney,jdbcType=DECIMAL}, #{operatorCode,jdbcType=VARCHAR},#{operatorName,jdbcType=VARCHAR}, #{status,jdbcType=VARCHAR},
                 #{updateTime,jdbcType=TIMESTAMP},
                 #{createTime,jdbcType=TIMESTAMP})
     </insert>
@@ -72,6 +71,7 @@
             email          = #{email,jdbcType=VARCHAR},
             register_money = #{registerMoney,jdbcType=DECIMAL},
             operator_code= #{operatorCode,jdbcType=VARCHAR},
+            operator_name =#{operatorName,jdbcType=VARCHAR},
             status= #{status,jdbcType=VARCHAR},
             update_time    = #{updateTime,jdbcType=DATE},
             create_time    = #{createTime,jdbcType=DATE}
@@ -81,5 +81,38 @@
         select *
         from customer
         order by create_time desc;
+    </select>
+
+    <select id="getByCust3Val" resultType="com.pht.cust.model.Customer">
+        select *
+        from customer
+        where id_type =#{idType} and cust_type =#{custType} and id_num =#{idNum}#{idType}
+    </select>
+    <select id="queryList" resultType="com.pht.cust.model.Customer">
+        select *
+        from customer
+        <where>
+            and  status in ('01')
+            <if test="customerQueryParam.idType != null and customerQueryParam.idType != ''">
+                and id_type = #{customerQueryParam.idType}
+            </if>
+            <if test="customerQueryParam.custName != null and customerQueryParam.custName != ''  ">
+                and cust_name  like concat("%",#{customerQueryParam.custName},"%")
+            </if>
+            <if test="customerQueryParam.idNum != null and customerQueryParam.idNum != ''">
+                and id_num =#{customerQueryParam.idNum}
+            </if>
+            <if test="customerQueryParam.profession != null and customerQueryParam.profession != ''">
+                and profession  like concat("%",#{customerQueryParam.profession},"%")
+            </if>
+            <if test="customerQueryParam.createTimeStart != null and customerQueryParam.createTimeStart != '' ">
+                  and create_time  >= #{param1.createTimeStart}
+            </if>
+            <if test="customerQueryParam.createTimeEnd != null and customerQueryParam.createTimeEnd != ''">
+                and create_time  <![CDATA[ <= #{param1.createTimeEnd}]]>
+            </if>
+        </where>
+        order by create_time desc,id_type
+
     </select>
 </mapper>

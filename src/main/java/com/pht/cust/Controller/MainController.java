@@ -49,6 +49,7 @@ public class MainController {
         User user = userService.getUserByUserName(principal.getName());
         Map<String, Object> map = new HashMap<>();
         map.put("userCode",user.getCode());
+        map.put("userName",user.getUserName());
         return CommonResult.success(map);
     }
 }

@@ -11,6 +11,8 @@ public class Customer implements Serializable {
 
     private String  operatorCode;
 
+    private String  operatorName;
+
     private String code;
 
     private String custName;

@@ -10,7 +10,8 @@ public class CustomerParam  {
     private Long id;
     @NotEmpty
     private String operatorCode;
-
+    @NotEmpty
+    private String operatorName;
     private String code;
     @NotEmpty
     private String custName;
@@ -40,4 +41,5 @@ public class CustomerParam  {
     private Date createTime;
     private String email;
     private BigDecimal registerMoney;
+
 }
