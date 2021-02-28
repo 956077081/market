@@ -1,0 +1,186 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.pht.contract.dao.ContractdetailsDao">
+
+
+    <!--查询单个-->
+    <select id="queryByCode" resultType="com.pht.contract.entity.Contractdetails">
+        select  *
+        from  market.contractdetails
+        where code = #{code}
+    </select>
+
+    <!--查询指定行数据-->
+    <select id="queryAllByLimit" resultType="com.pht.contract.entity.Contractdetails" >
+        select *
+        from market.contractdetails
+        limit #{offset}, #{limit}
+    </select>
+
+    <!--通过实体作为筛选条件查询-->
+    <select id="queryAll" resultType="com.pht.contract.entity.Contractdetails">
+        select *
+        from market.contractdetails
+        <where>
+            <if test="id != null">
+                and id = #{id}
+            </if>
+            <if test="custCode != null and custCode != ''">
+                and cust_code = #{custCode}
+            </if>
+            <if test="code != null and code != ''">
+                and code = #{code}
+            </if>
+            <if test="startTime != null">
+                and start_time = #{startTime}
+            </if>
+            <if test="endTime != null">
+                and end_time = #{endTime}
+            </if>
+            <if test="term != null and term != ''">
+                and term = #{term}
+            </if>
+            <if test="totalMoney != null">
+                and total_money = #{totalMoney}
+            </if>
+            <if test="status != null and status != ''">
+                and status = #{status}
+            </if>
+            <if test="type != null and type != ''">
+                and type = #{type}
+            </if>
+            <if test="operatorCode != null and operatorCode != ''">
+                and operator_code = #{operatorCode}
+            </if>
+            <if test="operatorName != null and operatorName != ''">
+                and operator_name = #{operatorName}
+            </if>
+            <if test="updateTime != null">
+                and update_time = #{updateTime}
+            </if>
+            <if test="createTime != null">
+                and create_time = #{createTime}
+            </if>
+        </where>
+    </select>
+
+    <!--新增所有列-->
+    <insert id="insert">
+        insert into market.contractdetails(cust_code, code, contract_name,start_time, end_time, term, total_money, status, type,memo,manager_code,operator_code, operator_name, update_time, create_time)
+        values (#{custCode}, #{code},#{contractName}, #{startTime}, #{endTime}, #{term}, #{totalMoney}, #{status}, #{type},#{memo},#{managerCode}, #{operatorCode}, #{operatorName}, #{updateTime}, #{createTime})
+    </insert>
+
+    <insert id="insertBatch">
+        insert into market.contractdetails(cust_code, code, contract_name,start_time, end_time, term, total_money, status, type,memo,manager_code,
+        operator_code, operator_name, update_time, create_time)
+        values
+        <foreach collection="entities" item="entity" separator=",">
+            (#{entity.custCode}, #{entity.code},#{entity.contractName}, #{entity.startTime}, #{entity.endTime}, #{entity.term},
+            #{entity.totalMoney}, #{entity.status}, #{entity.type},#{entity.memo},#{entity.managerCode},#{entity.operatorCode}, #{entity.operatorName},
+            #{entity.updateTime}, #{entity.createTime})
+        </foreach>
+    </insert>
+
+    <insert id="insertOrUpdateBatch">
+        insert into market.contractdetails(cust_code, code, start_time, end_time, term, total_money, status, type,
+        operator_code, operator_name, update_time, create_time)
+        values
+        <foreach collection="entities" item="entity" separator=",">
+            (#{entity.custCode}, #{entity.code}, #{entity.startTime}, #{entity.endTime}, #{entity.term},
+            #{entity.totalMoney}, #{entity.status}, #{entity.type}, #{entity.operatorCode}, #{entity.operatorName},
+            #{entity.updateTime}, #{entity.createTime})
+        </foreach>
+        on duplicate key update
+        cust_code = values(cust_code) , code = values(code) , start_time = values(start_time) , end_time =
+        values(end_time) , term = values(term) , total_money = values(total_money) , status = values(status) , type =
+        values(type) , operator_code = values(operator_code) , operator_name = values(operator_name) , update_time =
+        values(update_time) , create_time = values(create_time)
+    </insert>
+
+    <!--通过主键修改数据-->
+    <update id="update">
+        update market.contractdetails
+        <set>
+            <if test="custCode != null and custCode != ''">
+                cust_code = #{custCode},
+            </if>
+            <if test="code != null and code != ''">
+                code = #{code},
+            </if>
+            <if test="startTime != null">
+                start_time = #{startTime},
+            </if>
+            <if test="endTime != null">
+                end_time = #{endTime},
+            </if>
+            <if test="term != null and term != ''">
+                term = #{term},
+            </if>
+            <if test="totalMoney != null">
+                total_money = #{totalMoney},
+            </if>
+            <if test="status != null and status != ''">
+                status = #{status},
+            </if>
+            <if test="type != null and type != ''">
+                type = #{type},
+            </if>
+            <if test="operatorCode != null and operatorCode != ''">
+                operator_code = #{operatorCode},
+            </if>
+            <if test="operatorName != null and operatorName != ''">
+                operator_name = #{operatorName},
+            </if>
+            <if test="updateTime != null">
+                update_time = #{updateTime},
+            </if>
+            <if test="createTime != null">
+                create_time = #{createTime},
+            </if>
+        </set>
+        where code = #{code}
+    </update>
+
+    <!--通过主键删除-->
+    <delete id="deleteByCode">
+        delete
+        from market.contractdetails
+        where code = #{code}
+    </delete>
+
+    <select id="queryList" resultType="com.pht.contract.dto.ContractReturnParam">
+        select *,b.cust_name,b.cust_type,b.id_type,b.id_num
+        from market.contractdetails a left join market.customer b on a.cust_code =b.code
+        <where>
+            <if test='contractQueryParam.custName != "" and contractQueryParam.custName != null '>
+                  and b.cust_name like concat("%",#{contractQueryParam.custName},"%")
+            </if>
+            <if test='contractQueryParam.idType != "" and contractQueryParam.idType != null '>
+                and b.id_type  =#{contractQueryParam.idType}
+            </if>
+            <if test='contractQueryParam.idNum != ""  and contractQueryParam.idNum != null '>
+                and b.id_num   like concat("%",#{contractQueryParam.idNum},"%")
+            </if>
+            <if test='contractQueryParam.status != ""  and contractQueryParam.status != null'>
+                and a.status  = #{contractQueryParam.status}
+            </if>
+            <if test='contractQueryParam.startEndTime != "" and contractQueryParam.startEndTime != null  '>
+                and  a.end_time <![CDATA[ >= #{contractQueryParam.startEndTime}]]>
+            </if>
+            <if test='contractQueryParam.endEndTime != "" and contractQueryParam.endEndTime != null  '>
+                and  a.end_time <![CDATA[ <= #{contractQueryParam.endEndTime}]]>
+            </if>
+            <if test='contractQueryParam.operatorName != "" and contractQueryParam.operatorName != null '>
+                and a.operator_name  like concat("%",#{contractQueryParam.operatorName},"%");
+            </if>
+        </where>
+
+        order by a.update_time
+    </select>
+
+    <select id="getContractName" resultType="java.lang.String">
+        select concat('第',count(*)+1,'号合同')
+        from market.contractdetails ;
+    </select>
+</mapper>
+

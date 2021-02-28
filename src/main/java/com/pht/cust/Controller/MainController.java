@@ -2,7 +2,7 @@ package com.pht.cust.Controller;
 
 import com.pht.common.CommonResult;
 import com.pht.cust.dto.AdminLoginParam;
-import com.pht.cust.model.User;
+import com.pht.cust.entity.User;
 import com.pht.cust.service.UserService;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;

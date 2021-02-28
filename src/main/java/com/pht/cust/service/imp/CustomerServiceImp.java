@@ -5,7 +5,7 @@ import com.pht.cust.constant.CustDict;
 import com.pht.cust.dao.CustomerDao;
 import com.pht.cust.dto.CustomerParam;
 import com.pht.cust.dto.CustomerQueryParam;
-import com.pht.cust.model.Customer;
+import com.pht.cust.entity.Customer;
 import com.pht.cust.service.CustomerService;
 import com.pht.utils.PersistentUtil;
 import org.springframework.beans.BeanUtils;
@@ -24,8 +24,8 @@ public class CustomerServiceImp implements CustomerService {
     }
 
     @Override
-    public Customer getByCode() {
-        return null;
+    public Customer getByCode(String code) {
+        return customerDao.getByCode(code);
     }
 
     @Override
@@ -58,5 +58,26 @@ public class CustomerServiceImp implements CustomerService {
     public List<Customer> queryList(CustomerQueryParam customerQueryParam, Integer pageSize, Integer currPage) {
         PageHelper.startPage(currPage,pageSize);
         return customerDao.queryList(customerQueryParam);
+    }
+
+    @Override
+    public void update(CustomerParam customerParam,Customer customer) {
+        customer.setCustType(customerParam.getCustType());
+        customer.setCustName(customerParam.getCustName());
+        customer.setIdType(customerParam.getIdType());
+        customer.setIdNum(customerParam.getIdNum());
+        customer.setLawName(customerParam.getLawName());
+        customer.setLawNum(customerParam.getLawNum());
+        customer.setLawMobile(customerParam.getLawMobile());
+        customer.setOperatorCode(customerParam.getOperatorCode());
+        customer.setOperatorName(customerParam.getOperatorName());
+        customer.setEmail(customerParam.getEmail());
+        customer.setAddress(customerParam.getAddress());
+        customer.setProfession(customerParam.getProfession());
+        customer.setRegisterMoney(customerParam.getRegisterMoney());
+        customer.setPhone(customerParam.getPhone());
+        customer.setRegisterTime(customerParam.getRegisterTime());
+        customer.setUpdateTime(new Date());
+        customerDao.updateByCode(customer);
     }
 }

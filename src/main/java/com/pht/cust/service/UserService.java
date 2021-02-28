@@ -1,6 +1,6 @@
 package com.pht.cust.service;
 
-import com.pht.cust.model.User;
+import com.pht.cust.entity.User;
 import org.springframework.security.core.userdetails.UserDetails;
 
 public interface UserService {

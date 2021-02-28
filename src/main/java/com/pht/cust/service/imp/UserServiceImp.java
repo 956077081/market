@@ -3,7 +3,7 @@ package com.pht.cust.service.imp;
 import com.pht.common.BizException;
 import com.pht.bo.AdminUserDetails;
 import com.pht.cust.dao.UseDao;
-import com.pht.cust.model.User;
+import com.pht.cust.entity.User;
 import com.pht.cust.service.UserService;
 import com.pht.security.util.JwtTokenUtil;
 import org.springframework.beans.factory.annotation.Autowired;

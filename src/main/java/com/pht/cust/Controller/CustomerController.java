@@ -1,12 +1,13 @@
 package com.pht.cust.Controller;
 
-import com.github.pagehelper.PageInfo;
+import com.pht.common.BizException;
 import com.pht.common.CommonPage;
 import com.pht.common.CommonResult;
 import com.pht.cust.dto.CustomerParam;
 import com.pht.cust.dto.CustomerQueryParam;
-import com.pht.cust.model.Customer;
+import com.pht.cust.entity.Customer;
 import com.pht.cust.service.CustomerService;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -43,9 +44,24 @@ public class CustomerController {
         return null;
     }
 
-    @RequestMapping("/get/{id}")
+    @RequestMapping("/get/{code}")
     @ResponseBody
-    public CommonResult get(@PathVariable Long id) {
-        return null;
+    public CommonResult get(@PathVariable String code) {
+        Customer customer = customerService.getByCode(code);
+        return CommonResult.success(customer);
+    }
+    @RequestMapping("/update/{code}")
+    @ResponseBody
+    public CommonResult update( @RequestBody CustomerParam customerParam,@PathVariable String code) {
+        if(StringUtils.isBlank(code)){
+            throw  new BizException("当前客户编号不存在！");
+        }
+        Customer customer = customerService.getByCode(code);
+        if(customer == null){
+            throw  new BizException("需要更新的当前客户不存在！");
+        }
+        customerParam.setCode(code);
+        customerService.update(customerParam,customer);
+        return CommonResult.success(true);
     }
 }

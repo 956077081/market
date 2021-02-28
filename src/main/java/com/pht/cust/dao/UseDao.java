@@ -1,6 +1,6 @@
 package com.pht.cust.dao;
 
-import com.pht.cust.model.User;
+import com.pht.cust.entity.User;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 

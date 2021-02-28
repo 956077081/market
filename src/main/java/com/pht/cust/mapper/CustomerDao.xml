@@ -1,23 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.pht.cust.dao.CustomerDao">
-    <resultMap id="BaseResultMap" type="com.pht.cust.model.Customer">
-        <id column="id" jdbcType="BIGINT" property="id"/>
-        <result column="code" jdbcType="VARCHAR" property="code"/>
-        <result column="cust_name" jdbcType="VARCHAR" property="custName"/>
-        <result column="cust_type" jdbcType="VARCHAR" property="custType"/>
-        <result column="id_type" jdbcType="VARCHAR" property="idType"/>
-        <result column="id_num" jdbcType="VARCHAR" property="idNum"/>
-        <result column="law_name" jdbcType="VARCHAR" property="lawName"/>
-        <result column="law_num" jdbcType="VARCHAR" property="lawNum"/>
-        <result column="register_time" jdbcType="DATE" property="registerTime"/>
-        <result column="profession" jdbcType="VARCHAR" property="profession"/>
-        <result column="address" jdbcType="VARCHAR" property="address"/>
-        <result column="law_mobile" jdbcType="VARCHAR" property="lawMobile"/>
-        <result column="phone" jdbcType="VARCHAR" property="phone"/>
-        <result column="update_time" jdbcType="DATE" property="updateTime"/>
-        <result column="create_time" jdbcType="DATE" property="createTime"/>
-    </resultMap>
     <sql id="Base_Column_List">
                 id,
                 user_code,
@@ -38,7 +21,7 @@
     </sql>
 
 
-    <insert id="insert" parameterType="com.pht.cust.model.Customer">
+    <insert id="insert" parameterType="com.pht.cust.entity.Customer">
         insert into customer (code,
                               cust_name, cust_type, id_type,
                               id_num, law_name, law_num,
@@ -54,45 +37,47 @@
                 #{updateTime,jdbcType=TIMESTAMP},
                 #{createTime,jdbcType=TIMESTAMP})
     </insert>
-    <update id="updateByCode" parameterType="com.pht.cust.model.Customer">
+    <update id="updateByCode" parameterType="com.pht.cust.entity.Customer">
         update customer
         set
-            cust_name      = #{custName,jdbcType=VARCHAR},
-            cust_type      = #{custType,jdbcType=VARCHAR},
-            id_type        = #{idType,jdbcType=VARCHAR},
-            id_num         = #{idNum,jdbcType=VARCHAR},
-            law_name       = #{lawName,jdbcType=VARCHAR},
-            law_num        = #{lawNum,jdbcType=VARCHAR},
-            register_time  = #{registerTime,jdbcType=DATE},
-            profession     = #{profession,jdbcType=VARCHAR},
-            address        = #{address,jdbcType=VARCHAR},
-            law_mobile     = #{lawMobile,jdbcType=VARCHAR},
-            phone          = #{phone,jdbcType=VARCHAR},
-            email          = #{email,jdbcType=VARCHAR},
-            register_money = #{registerMoney,jdbcType=DECIMAL},
-            operator_code= #{operatorCode,jdbcType=VARCHAR},
-            operator_name =#{operatorName,jdbcType=VARCHAR},
-            status= #{status,jdbcType=VARCHAR},
-            update_time    = #{updateTime,jdbcType=DATE},
-            create_time    = #{createTime,jdbcType=DATE}
-        where code = #{code,jdbcType=VARCHAR}
+            cust_name      = #{customer.custName,jdbcType=VARCHAR},
+            cust_type      = #{customer.custType,jdbcType=VARCHAR},
+            id_type        = #{customer.idType,jdbcType=VARCHAR},
+            id_num         = #{customer.idNum,jdbcType=VARCHAR},
+            law_name       = #{customer.lawName,jdbcType=VARCHAR},
+            law_num        = #{customer.lawNum,jdbcType=VARCHAR},
+            register_time  = #{customer.registerTime,jdbcType=DATE},
+            profession     = #{customer.profession,jdbcType=VARCHAR},
+            address        = #{customer.address,jdbcType=VARCHAR},
+            law_mobile     = #{customer.lawMobile,jdbcType=VARCHAR},
+            phone          = #{customer.phone,jdbcType=VARCHAR},
+            email          = #{customer.email,jdbcType=VARCHAR},
+            register_money = #{customer.registerMoney,jdbcType=DECIMAL},
+            operator_code= #{customer.operatorCode,jdbcType=VARCHAR},
+            operator_name =#{customer.operatorName,jdbcType=VARCHAR},
+            status= #{customer.status,jdbcType=VARCHAR},
+            update_time  = #{customer.updateTime,jdbcType=DATE}
+        where code = #{customer.code,jdbcType=VARCHAR}
     </update>
-    <select id="queryAll" resultType="com.pht.cust.model.Customer">
+    <select id="queryAll" resultType="com.pht.cust.entity.Customer">
         select *
         from customer
         order by create_time desc;
     </select>
 
-    <select id="getByCust3Val" resultType="com.pht.cust.model.Customer">
+    <select id="getByCust3Val" resultType="com.pht.cust.entity.Customer">
         select *
         from customer
         where id_type =#{idType} and cust_type =#{custType} and id_num =#{idNum}#{idType}
     </select>
-    <select id="queryList" resultType="com.pht.cust.model.Customer">
+    <select id="queryList" resultType="com.pht.cust.entity.Customer">
         select *
         from customer
         <where>
             and  status in ('01')
+            <if test="customerQueryParam.custType != null and customerQueryParam.custType != ''">
+                and cust_type = #{customerQueryParam.custType}
+            </if>
             <if test="customerQueryParam.idType != null and customerQueryParam.idType != ''">
                 and id_type = #{customerQueryParam.idType}
             </if>
@@ -112,7 +97,12 @@
                 and create_time  <![CDATA[ <= #{param1.createTimeEnd}]]>
             </if>
         </where>
-        order by create_time desc,id_type
+        order by update_time  desc,id_type
 
+    </select>
+
+    <select id="getByCode" resultType="com.pht.cust.entity.Customer">
+        select  *
+        from customer where code =#{code}
     </select>
 </mapper>

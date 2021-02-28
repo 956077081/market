@@ -1,4 +1,4 @@
-package com.pht.cust.model;
+package com.pht.cust.entity;
 
 import lombok.Data;
 

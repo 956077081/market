@@ -1,4 +1,4 @@
-package com.pht.cust.model;
+package com.pht.cust.entity;
 
 import java.io.Serializable;
 import java.util.Date;

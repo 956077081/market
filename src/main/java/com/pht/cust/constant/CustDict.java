@@ -1,7 +1,7 @@
 package com.pht.cust.constant;
 
 import com.pht.common.BizDictAnot;
-import com.sun.org.glassfish.gmbal.Description;
+
 
 public class CustDict {
     @BizDictAnot(dictTypeId ="CustType" ,dictName = "自然人")
