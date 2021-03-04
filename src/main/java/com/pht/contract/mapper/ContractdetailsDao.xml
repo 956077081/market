@@ -4,18 +4,13 @@
 
 
     <!--查询单个-->
-    <select id="queryByCode" resultType="com.pht.contract.entity.Contractdetails">
+    <select id="getByCode" resultType="com.pht.contract.entity.Contractdetails">
         select  *
         from  market.contractdetails
         where code = #{code}
     </select>
 
-    <!--查询指定行数据-->
-    <select id="queryAllByLimit" resultType="com.pht.contract.entity.Contractdetails" >
-        select *
-        from market.contractdetails
-        limit #{offset}, #{limit}
-    </select>
+
 
     <!--通过实体作为筛选条件查询-->
     <select id="queryAll" resultType="com.pht.contract.entity.Contractdetails">
@@ -175,7 +170,7 @@
             </if>
         </where>
 
-        order by a.update_time
+        order by a.update_time Desc
     </select>
 
     <select id="getContractName" resultType="java.lang.String">

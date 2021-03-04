@@ -42,4 +42,7 @@ public class CustomerParam  {
     private String email;
     private BigDecimal registerMoney;
 
+    private Integer sex;
+    private Integer age;
+
 }

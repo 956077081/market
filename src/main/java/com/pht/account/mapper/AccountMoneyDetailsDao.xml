@@ -1,24 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.pht.account.dao.AccountMoneyDetailsDao">
-    <resultMap type="com.pht.account.entity.AccountMoneyDetails" id="AccountMoneyDetailsMap">
-        <result property="id" column="id" jdbcType="INTEGER"/>
-        <result property="code" column="code" jdbcType="VARCHAR"/>
-        <result property="custCode" column="cust_code" jdbcType="VARCHAR"/>
-        <result property="contractCode" column="contract_code" jdbcType="VARCHAR"/>
-        <result property="status" column="status" jdbcType="VARCHAR"/>
-        <result property="payMethod" column="pay_method" jdbcType="VARCHAR"/>
-        <result property="payType" column="pay_type" jdbcType="VARCHAR"/>
-        <result property="accountNum" column="account_num" jdbcType="VARCHAR"/>
-        <result property="payMoney" column="pay_money" jdbcType="NUMERIC"/>
-        <result property="operatorCode" column="operator_code" jdbcType="VARCHAR"/>
-        <result property="operatorName" column="operator_name" jdbcType="VARCHAR"/>
-        <result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
-        <result property="updateTime" column="update_time" jdbcType="TIMESTAMP"/>
-    </resultMap>
-
     <!--查询单个-->
-    <select id="queryByCode" resultMap="AccountMoneyDetailsMap">
+    <select id="getByCode" resultType="com.pht.account.entity.AccountMoneyDetails">
         select id,
                code,
                cust_code,
@@ -28,6 +12,7 @@
                pay_type,
                account_num,
                pay_money,
+               type,
                operator_code,
                operator_name,
                create_time,
@@ -36,29 +21,11 @@
         where code = #{code}
     </select>
 
-    <!--查询指定行数据-->
-    <select id="queryAllByLimit" resultMap="AccountMoneyDetailsMap">
-        select id,
-               code,
-               cust_code,
-               contract_code,
-               status,
-               pay_method,
-               pay_type,
-               account_num,
-               pay_money,
-               operator_code,
-               operator_name,
-               create_time,
-               update_time
-        from market.account_money_details
-        limit #{offset}, #{limit}
-    </select>
 
     <!--通过实体作为筛选条件查询-->
-    <select id="queryAll" resultMap="AccountMoneyDetailsMap">
+    <select id="queryAll" resultType="com.pht.account.entity.AccountMoneyDetails">
         select
-        id, code, cust_code, contract_code, status, pay_method, pay_type, account_num, pay_money, operator_code,
+        id, code, cust_code, contract_code, status, pay_method, pay_type, account_num, pay_money, type, operator_code,
         operator_name, create_time, update_time
         from market.account_money_details
         <where>
@@ -89,6 +56,9 @@
             <if test="payMoney != null">
                 and pay_money = #{payMoney}
             </if>
+            <if test="type != null and type != ''">
+                and type = #{type}
+            </if>
             <if test="operatorCode != null and operatorCode != ''">
                 and operator_code = #{operatorCode}
             </if>
@@ -107,81 +77,53 @@
     <!--新增所有列-->
     <insert id="insert">
         insert into market.account_money_details(code, cust_code, contract_code, status, pay_method, pay_type,
-                                                 account_num, pay_money, operator_code, operator_name, create_time,
-                                                 update_time)
+                                                 account_num, pay_money, type, operator_code, operator_name,
+                                                 create_time, update_time)
         values (#{code}, #{custCode}, #{contractCode}, #{status}, #{payMethod}, #{payType}, #{accountNum}, #{payMoney},
-                #{operatorCode}, #{operatorName}, #{createTime}, #{updateTime})
+                #{type}, #{operatorCode}, #{operatorName}, #{createTime}, #{updateTime})
     </insert>
 
     <insert id="insertBatch">
         insert into market.account_money_details(code, cust_code, contract_code, status, pay_method, pay_type,
-        account_num, pay_money, operator_code, operator_name, create_time, update_time)
+        account_num, pay_money, type, operator_code, operator_name, create_time, update_time)
         values
         <foreach collection="entities" item="entity" separator=",">
             (#{entity.code}, #{entity.custCode}, #{entity.contractCode}, #{entity.status}, #{entity.payMethod},
-            #{entity.payType}, #{entity.accountNum}, #{entity.payMoney}, #{entity.operatorCode}, #{entity.operatorName},
-            #{entity.createTime}, #{entity.updateTime})
+            #{entity.payType}, #{entity.accountNum}, #{entity.payMoney}, #{entity.type}, #{entity.operatorCode},
+            #{entity.operatorName}, #{entity.createTime}, #{entity.updateTime})
         </foreach>
     </insert>
 
-    <insert id="insertOrUpdateBatch">
-        insert into market.account_money_details(code, cust_code, contract_code, status, pay_method, pay_type,
-        account_num, pay_money, operator_code, operator_name, create_time, update_time)
-        values
-        <foreach collection="entities" item="entity" separator=",">
-            (#{entity.code}, #{entity.custCode}, #{entity.contractCode}, #{entity.status}, #{entity.payMethod},
-            #{entity.payType}, #{entity.accountNum}, #{entity.payMoney}, #{entity.operatorCode}, #{entity.operatorName},
-            #{entity.createTime}, #{entity.updateTime})
-        </foreach>
-        on duplicate key update
-        code = values(code) , cust_code = values(cust_code) , contract_code = values(contract_code) , status =
-        values(status) , pay_method = values(pay_method) , pay_type = values(pay_type) , account_num =
-        values(account_num) , pay_money = values(pay_money) , operator_code = values(operator_code) , operator_name =
-        values(operator_name) , create_time = values(create_time) , update_time = values(update_time)
-    </insert>
 
     <!--通过主键修改数据-->
     <update id="update">
         update market.account_money_details
-        <set>
-            <if test="code != null and code != ''">
-                code = #{code},
-            </if>
-            <if test="custCode != null and custCode != ''">
-                cust_code = #{custCode},
-            </if>
-            <if test="contractCode != null and contractCode != ''">
-                contract_code = #{contractCode},
-            </if>
-            <if test="status != null and status != ''">
-                status = #{status},
-            </if>
-            <if test="payMethod != null and payMethod != ''">
-                pay_method = #{payMethod},
-            </if>
-            <if test="payType != null and payType != ''">
-                pay_type = #{payType},
-            </if>
-            <if test="accountNum != null and accountNum != ''">
-                account_num = #{accountNum},
-            </if>
-            <if test="payMoney != null">
-                pay_money = #{payMoney},
-            </if>
-            <if test="operatorCode != null and operatorCode != ''">
-                operator_code = #{operatorCode},
-            </if>
-            <if test="operatorName != null and operatorName != ''">
-                operator_name = #{operatorName},
-            </if>
-            <if test="createTime != null">
-                create_time = #{createTime},
-            </if>
-            <if test="updateTime != null">
-                update_time = #{updateTime},
-            </if>
-        </set>
-        where code = #{code}
+        set code          = #{code},
+
+            cust_code     = #{custCode},
+
+            contract_code = #{contractCode},
+
+            status        = #{status},
+
+            pay_method    = #{payMethod},
+
+            pay_type      = #{payType},
+
+            account_num   = #{accountNum},
+
+            pay_money     = #{payMoney},
+
+            type          = #{type},
+
+            operator_code = #{operatorCode},
+
+            operator_name = #{operatorName},
+
+            create_time   = #{createTime},
+
+            update_time   = #{updateTime},
+            where code = #{code}
     </update>
 
     <!--通过主键删除-->
@@ -190,5 +132,10 @@
         from market.account_money_details
         where code = #{code}
     </delete>
+    <select id="queryByContractCode" resultType="com.pht.account.entity.AccountMoneyDetails">
+        select *
+        from market.account_money_details
+        where contract_code =#{contractCode}
+    </select>
 </mapper>
 

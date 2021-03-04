@@ -29,7 +29,7 @@ public class AccountMoneyDetailsController {
      */
     @GetMapping("selectOne")
     public AccountMoneyDetails selectOne(String code) {
-        return this.accountMoneyDetailsService.queryByCode(code);
+        return this.accountMoneyDetailsService.getByCode(code);
     }
 
 }

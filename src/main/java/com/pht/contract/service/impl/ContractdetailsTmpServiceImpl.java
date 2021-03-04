@@ -1,8 +1,12 @@
 package com.pht.contract.service.impl;
 
+import com.pht.contract.constant.ContractDict;
+import com.pht.contract.entity.Contractdetails;
 import com.pht.contract.entity.ContractdetailsTmp;
 import com.pht.contract.dao.ContractdetailsTmpDao;
 import com.pht.contract.service.ContractdetailsTmpService;
+import com.pht.utils.PersistentUtil;
+import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -26,21 +30,10 @@ public class ContractdetailsTmpServiceImpl implements ContractdetailsTmpService 
      * @return 实例对象
      */
     @Override
-    public ContractdetailsTmp queryByCode(String code) {
-        return this.contractdetailsTmpDao.queryByCode(code);
+    public ContractdetailsTmp getByCode(String code) {
+        return this.contractdetailsTmpDao.getByCode(code);
     }
 
-    /**
-     * 查询多条数据
-     *
-     * @param offset 查询起始位置
-     * @param limit  查询条数
-     * @return 对象列表
-     */
-    @Override
-    public List<ContractdetailsTmp> queryAllByLimit(int offset, int limit) {
-        return this.contractdetailsTmpDao.queryAllByLimit(offset, limit);
-    }
 
     /**
      * 新增数据
@@ -63,7 +56,7 @@ public class ContractdetailsTmpServiceImpl implements ContractdetailsTmpService 
     @Override
     public ContractdetailsTmp update(ContractdetailsTmp contractdetailsTmp) {
         this.contractdetailsTmpDao.update(contractdetailsTmp);
-        return this.queryByCode(contractdetailsTmp.getCode());
+        return this.getByCode(contractdetailsTmp.getCode());
     }
 
     /**
@@ -75,5 +68,15 @@ public class ContractdetailsTmpServiceImpl implements ContractdetailsTmpService 
     @Override
     public boolean deleteByCode(String code) {
         return this.contractdetailsTmpDao.deleteByCode(code) > 0;
+    }
+
+    @Override
+    public void crtContractTmp(Contractdetails contractdetails, String operate) {
+        ContractdetailsTmp contractdetailsTmp = new ContractdetailsTmp();//合同临时表
+        BeanUtils.copyProperties(contractdetails, contractdetailsTmp);
+        contractdetailsTmp.setCode(PersistentUtil.getBizEntity(ContractdetailsTmp.class));
+        contractdetailsTmp.setContractCode(contractdetails.getCode());
+        contractdetailsTmp.setOperate(operate);
+        this.insert(contractdetailsTmp);
     }
 }

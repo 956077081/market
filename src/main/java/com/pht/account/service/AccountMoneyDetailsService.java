@@ -18,16 +18,8 @@ public interface AccountMoneyDetailsService {
      * @param code 主键
      * @return 实例对象
      */
-    AccountMoneyDetails queryByCode(String code);
+    AccountMoneyDetails getByCode(String code);
 
-    /**
-     * 查询多条数据
-     *
-     * @param offset 查询起始位置
-     * @param limit  查询条数
-     * @return 对象列表
-     */
-    List<AccountMoneyDetails> queryAllByLimit(int offset, int limit);
 
     /**
      * 新增数据
@@ -43,7 +35,7 @@ public interface AccountMoneyDetailsService {
      * @param accountMoneyDetails 实例对象
      * @return 实例对象
      */
-    AccountMoneyDetails update(AccountMoneyDetails accountMoneyDetails);
+    void update(AccountMoneyDetails accountMoneyDetails);
 
     /**
      * 通过主键删除数据
@@ -53,4 +45,7 @@ public interface AccountMoneyDetailsService {
      */
     boolean deleteByCode(String code);
 
+    void crtAccountDetails(AccountMoneyDetails accountMoneyDetails, String code, String code1, String accountTypeIn);
+
+    List<AccountMoneyDetails> queryByContractCode(String contractCode);
 }

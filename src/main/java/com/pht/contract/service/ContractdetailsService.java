@@ -3,6 +3,7 @@ package com.pht.contract.service;
 import com.pht.contract.dto.ContractParams;
 import com.pht.contract.dto.ContractQueryParam;
 import com.pht.contract.dto.ContractReturnParam;
+import com.pht.contract.dto.ContractViews;
 import com.pht.contract.entity.Contractdetails;
 
 import java.util.List;
@@ -21,16 +22,8 @@ public interface ContractdetailsService {
      * @param code 主键
      * @return 实例对象
      */
-    Contractdetails queryByCode(String code);
+    Contractdetails getByCode(String code);
 
-    /**
-     * 查询多条数据
-     *
-     * @param offset 查询起始位置
-     * @param limit  查询条数
-     * @return 对象列表
-     */
-    List<Contractdetails> queryAllByLimit(int offset, int limit);
 
     /**
      * 新增数据
@@ -66,4 +59,6 @@ public interface ContractdetailsService {
     String getAutoContractName();
 
     void save(ContractParams contractParams);
+
+    ContractViews getContractDetails(String code);
 }

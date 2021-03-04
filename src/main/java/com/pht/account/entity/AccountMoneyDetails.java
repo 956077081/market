@@ -8,10 +8,10 @@ import java.io.Serializable;
  * 支付金额明细(AccountMoneyDetails)实体类
  *
  * @author makejava
- * @since 2021-02-28 20:02:28
+ * @since 2021-03-03 20:21:07
  */
 public class AccountMoneyDetails implements Serializable {
-    private static final long serialVersionUID = 932245485797017829L;
+    private static final long serialVersionUID = 546230119135379012L;
     /**
      * 自增id
      */
@@ -48,6 +48,11 @@ public class AccountMoneyDetails implements Serializable {
      * 支付金额
      */
     private BigDecimal payMoney;
+    /**
+     * 1:打款
+     * 0：扣款
+     */
+    private String type;
     /**
      * 操作人
      */
@@ -136,6 +141,14 @@ public class AccountMoneyDetails implements Serializable {
 
     public void setPayMoney(BigDecimal payMoney) {
         this.payMoney = payMoney;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
     }
 
     public String getOperatorCode() {

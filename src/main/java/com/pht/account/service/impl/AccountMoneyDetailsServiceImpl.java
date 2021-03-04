@@ -1,12 +1,16 @@
 package com.pht.account.service.impl;
 
+import com.pht.account.constant.AccountMoneyDict;
 import com.pht.account.entity.AccountMoneyDetails;
 import com.pht.account.dao.AccountMoneyDetailsDao;
 import com.pht.account.service.AccountMoneyDetailsService;
+import com.pht.account.service.AccountMoneySumService;
+import com.pht.utils.PersistentUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -19,7 +23,8 @@ import java.util.List;
 public class AccountMoneyDetailsServiceImpl implements AccountMoneyDetailsService {
     @Autowired
     private AccountMoneyDetailsDao accountMoneyDetailsDao;
-
+    @Autowired
+    private AccountMoneySumService accountMoneySumService;
     /**
      * 通过ID查询单条数据
      *
@@ -27,20 +32,8 @@ public class AccountMoneyDetailsServiceImpl implements AccountMoneyDetailsServic
      * @return 实例对象
      */
     @Override
-    public AccountMoneyDetails queryByCode(String code) {
-        return this.accountMoneyDetailsDao.queryByCode(code);
-    }
-
-    /**
-     * 查询多条数据
-     *
-     * @param offset 查询起始位置
-     * @param limit  查询条数
-     * @return 对象列表
-     */
-    @Override
-    public List<AccountMoneyDetails> queryAllByLimit(int offset, int limit) {
-        return this.accountMoneyDetailsDao.queryAllByLimit(offset, limit);
+    public AccountMoneyDetails getByCode(String code) {
+        return this.accountMoneyDetailsDao.getByCode(code);
     }
 
     /**
@@ -62,9 +55,8 @@ public class AccountMoneyDetailsServiceImpl implements AccountMoneyDetailsServic
      * @return 实例对象
      */
     @Override
-    public AccountMoneyDetails update(AccountMoneyDetails accountMoneyDetails) {
+    public void update(AccountMoneyDetails accountMoneyDetails) {
         this.accountMoneyDetailsDao.update(accountMoneyDetails);
-        return this.queryByCode(accountMoneyDetails.getCode());
     }
 
     /**
@@ -76,5 +68,23 @@ public class AccountMoneyDetailsServiceImpl implements AccountMoneyDetailsServic
     @Override
     public boolean deleteByCode(String code) {
         return this.accountMoneyDetailsDao.deleteByCode(code) > 0;
+    }
+
+    @Override
+    public void crtAccountDetails(AccountMoneyDetails accountMoneyDetails, String contractCode, String custCode, String type) {
+        accountMoneyDetails.setCode(PersistentUtil.getBizEntity(AccountMoneyDetails.class));
+        accountMoneyDetails.setContractCode(contractCode);
+        accountMoneyDetails.setCustCode(custCode);
+        accountMoneyDetails.setStatus(AccountMoneyDict.ACCOUNT_MONEY_STATUS_VALID);
+        accountMoneyDetails.setCreateTime(new Date());
+        accountMoneyDetails.setUpdateTime(new Date());
+        accountMoneyDetails.setType(type);
+        this.insert(accountMoneyDetails);
+        accountMoneySumService.crtAccountSum(accountMoneyDetails);
+    }
+
+    @Override
+    public List<AccountMoneyDetails> queryByContractCode(String contractCode) {
+        return accountMoneyDetailsDao.queryByContractCode(contractCode);
     }
 }

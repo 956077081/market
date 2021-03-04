@@ -1,39 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.pht.cust.dao.CustomerDao">
-    <sql id="Base_Column_List">
-                id,
-                user_code,
-                code,
-                cust_name,
-                cust_type,
-                id_type,
-                id_num,
-                law_name,
-                law_num,
-                register_time,
-                profession,
-                address,
-                law_mobile,
-                phone,
-                update_time,
-                create_time
-    </sql>
-
 
     <insert id="insert" parameterType="com.pht.cust.entity.Customer">
         insert into customer (code,
                               cust_name, cust_type, id_type,
                               id_num, law_name, law_num,
                               register_time, profession, address,
-                              law_mobile, phone, email, register_money, operator_code,operator_name, status, update_time,
+                              law_mobile, phone, email, register_money, sex,age, operator_code,operator_name, status, update_time,
                               create_time)
         values (#{code,jdbcType=VARCHAR},
                 #{custName,jdbcType=VARCHAR}, #{custType,jdbcType=VARCHAR}, #{idType,jdbcType=VARCHAR},
                 #{idNum,jdbcType=VARCHAR}, #{lawName,jdbcType=VARCHAR}, #{lawNum,jdbcType=VARCHAR},
                 #{registerTime,jdbcType=DATE}, #{profession,jdbcType=VARCHAR}, #{address,jdbcType=VARCHAR},
                 #{lawMobile,jdbcType=VARCHAR}, #{phone,jdbcType=VARCHAR}, #{email,jdbcType=VARCHAR},
-                #{registerMoney,jdbcType=DECIMAL}, #{operatorCode,jdbcType=VARCHAR},#{operatorName,jdbcType=VARCHAR}, #{status,jdbcType=VARCHAR},
+                #{registerMoney,jdbcType=DECIMAL},#{sex,jdbcType=INTEGER},#{age,jdbcType=INTEGER},#{operatorCode,jdbcType=VARCHAR},#{operatorName,jdbcType=VARCHAR}, #{status,jdbcType=VARCHAR},
                 #{updateTime,jdbcType=TIMESTAMP},
                 #{createTime,jdbcType=TIMESTAMP})
     </insert>
@@ -53,6 +34,8 @@
             phone          = #{customer.phone,jdbcType=VARCHAR},
             email          = #{customer.email,jdbcType=VARCHAR},
             register_money = #{customer.registerMoney,jdbcType=DECIMAL},
+            sex =#{customer.sex,jdbcType=INTEGER},
+            age=#{customer.age,jdbcType=INTEGER},
             operator_code= #{customer.operatorCode,jdbcType=VARCHAR},
             operator_name =#{customer.operatorName,jdbcType=VARCHAR},
             status= #{customer.status,jdbcType=VARCHAR},

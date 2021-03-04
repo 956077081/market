@@ -7,4 +7,8 @@ public class AccountMoneyDict {
     public static final String OPERATE_CREATE="create";
     public static final String OPERATE_UPDATE="update";
     public static final String OPERATE_DELETE="delete";
+
+
+    public static final String ACCOUNT_TYPE_IN="0";//打款
+    public static final String ACCOUNT_TYPE_OUT="1";//扣款
 }

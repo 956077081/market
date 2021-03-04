@@ -4,19 +4,20 @@ import com.alibaba.fastjson.JSONObject;
 import com.github.pagehelper.PageHelper;
 import com.pht.account.constant.AccountMoneyDict;
 import com.pht.account.entity.AccountMoneyDetails;
-import com.pht.account.entity.AccountMoneyDetailsTmp;
 import com.pht.account.service.AccountMoneyDetailsService;
-import com.pht.account.service.AccountMoneyDetailsTmpService;
+import com.pht.common.BizException;
 import com.pht.contract.constant.ContractDict;
 import com.pht.contract.dto.ContractParams;
 import com.pht.contract.dto.ContractQueryParam;
 import com.pht.contract.dto.ContractReturnParam;
+import com.pht.contract.dto.ContractViews;
 import com.pht.contract.entity.Contractdetails;
 import com.pht.contract.dao.ContractdetailsDao;
 import com.pht.contract.entity.ContractdetailsTmp;
 import com.pht.contract.service.ContractdetailsService;
 import com.pht.contract.service.ContractdetailsTmpService;
 import com.pht.cust.entity.Customer;
+import com.pht.cust.service.CustomerService;
 import com.pht.utils.PersistentUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -43,8 +44,9 @@ public class ContractdetailsServiceImpl implements ContractdetailsService {
     private AccountMoneyDetailsService accountMoneyDetailsService;
    @Autowired
    private ContractdetailsTmpService contractdetailsTmpService;
+
    @Autowired
-   private AccountMoneyDetailsTmpService accountMoneyDetailsTmpService;
+   private CustomerService customerService;
     /**
      * 通过ID查询单条数据
      *
@@ -52,21 +54,11 @@ public class ContractdetailsServiceImpl implements ContractdetailsService {
      * @return 实例对象
      */
     @Override
-    public Contractdetails queryByCode(String code) {
-        return this.contractdetailsDao.queryByCode(code);
+    public Contractdetails getByCode(String code) {
+        return this.contractdetailsDao.getByCode(code);
     }
 
-    /**
-     * 查询多条数据
-     *
-     * @param offset 查询起始位置
-     * @param limit  查询条数
-     * @return 对象列表
-     */
-    @Override
-    public List<Contractdetails> queryAllByLimit(int offset, int limit) {
-        return this.contractdetailsDao.queryAllByLimit(offset, limit);
-    }
+
 
     /**
      * 新增数据
@@ -89,7 +81,7 @@ public class ContractdetailsServiceImpl implements ContractdetailsService {
     @Override
     public Contractdetails update(Contractdetails contractdetails) {
         this.contractdetailsDao.update(contractdetails);
-        return this.queryByCode(contractdetails.getCode());
+        return this.getByCode(contractdetails.getCode());
     }
 
     /**
@@ -127,27 +119,25 @@ public class ContractdetailsServiceImpl implements ContractdetailsService {
         contractdetails.setUpdateTime(new Date());
         contractdetails.setCreateTime(new Date());
         contractdetails.setTotalMoney(accountMoneyDetails.getPayMoney());
-        accountMoneyDetails.setCode(PersistentUtil.getBizEntity(AccountMoneyDetails.class));
-        accountMoneyDetails.setContractCode(contractdetails.getCode());
-        accountMoneyDetails.setCustCode(customer.getCode());
-        accountMoneyDetails.setStatus(AccountMoneyDict.ACCOUNT_MONEY_STATUS_VALID);
-        accountMoneyDetails.setCreateTime(new Date());
-        accountMoneyDetails.setUpdateTime(new Date());
 
-        ContractdetailsTmp contractdetailsTmp = new ContractdetailsTmp();//合同临时表
-        AccountMoneyDetailsTmp accountMoneyDetailsTmp =new AccountMoneyDetailsTmp();//打款临时表
-        BeanUtils.copyProperties(contractdetails,contractdetailsTmp);
-        BeanUtils.copyProperties(accountMoneyDetails,accountMoneyDetailsTmp);
-        contractdetailsTmp.setCode(PersistentUtil.getBizEntity(ContractdetailsTmp.class));
-        contractdetailsTmp.setContractCode(contractdetails.getCode());
-        contractdetailsTmp.setOperate(ContractDict.OPERATE_CREATE);
-        accountMoneyDetailsTmp.setCode(PersistentUtil.getBizEntity(AccountMoneyDetailsTmp.class));
-        accountMoneyDetailsTmp.setAccountCode(accountMoneyDetails.getCode());
-        accountMoneyDetailsTmp.setOperate(AccountMoneyDict.OPERATE_CREATE);
-
+        contractdetailsTmpService.crtContractTmp(contractdetails,ContractDict.OPERATE_CREATE);
+        accountMoneyDetailsService.crtAccountDetails(accountMoneyDetails,contractdetails.getCode(),customer.getCode(),AccountMoneyDict.ACCOUNT_TYPE_IN);
         contractdetailsDao.insert(contractdetails);
-        accountMoneyDetailsService.insert(accountMoneyDetails);
-        contractdetailsTmpService.insert(contractdetailsTmp);
-        accountMoneyDetailsTmpService.insert(accountMoneyDetailsTmp);
+    }
+
+
+    @Override
+    public ContractViews getContractDetails(String code) {
+        ContractViews contractViews =new ContractViews();
+        Contractdetails contractdetails = contractdetailsDao.getByCode(code);
+        if(contractdetails ==null){
+            throw  new BizException("当前合同保存不存在code="+code);
+        }
+        Customer customer = customerService.getByCode(contractdetails.getCustCode());
+        List<AccountMoneyDetails> accountMoneyDetails = accountMoneyDetailsService.queryByContractCode(contractdetails.getCode());
+        contractViews.setAccountMoneyDetails(accountMoneyDetails);//打款
+        contractViews.setCustomer(customer);//客户
+        contractViews.setContractdetails(contractdetails);//合同
+        return contractViews;
     }
 }

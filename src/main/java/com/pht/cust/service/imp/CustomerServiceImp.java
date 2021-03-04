@@ -39,6 +39,10 @@ public class CustomerServiceImp implements CustomerService {
             customer.setIdType(customerParam.getIdType());
             customer.setIdNum(customerParam.getIdNum());
             customer.setEmail(customerParam.getEmail());
+            customer.setAddress(customerParam.getAddress());
+            customer.setPhone(customerParam.getPhone());
+            customer.setSex(customerParam.getSex());
+            customer.setAge(customerParam.getAge());
         }else{
             BeanUtils.copyProperties(customerParam,customer);
         }
@@ -74,6 +78,8 @@ public class CustomerServiceImp implements CustomerService {
         customer.setEmail(customerParam.getEmail());
         customer.setAddress(customerParam.getAddress());
         customer.setProfession(customerParam.getProfession());
+        customer.setAge(customerParam.getAge());
+        customer.setSex(customerParam.getSex());
         customer.setRegisterMoney(customerParam.getRegisterMoney());
         customer.setPhone(customerParam.getPhone());
         customer.setRegisterTime(customerParam.getRegisterTime());

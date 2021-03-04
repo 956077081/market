@@ -19,16 +19,7 @@ public interface AccountMoneyDetailsDao {
      * @param code 主键
      * @return 实例对象
      */
-    AccountMoneyDetails queryByCode(String code);
-
-    /**
-     * 查询指定行数据
-     *
-     * @param offset 查询起始位置
-     * @param limit  查询条数
-     * @return 对象列表
-     */
-    List<AccountMoneyDetails> queryAllByLimit(@Param("offset") int offset, @Param("limit") int limit);
+    AccountMoneyDetails getByCode(String code);
 
 
     /**
@@ -55,13 +46,7 @@ public interface AccountMoneyDetailsDao {
      */
     int insertBatch(@Param("entities") List<AccountMoneyDetails> entities);
 
-    /**
-     * 批量新增或按主键更新数据（MyBatis原生foreach方法）
-     *
-     * @param entities List<AccountMoneyDetails> 实例对象列表
-     * @return 影响行数
-     */
-    int insertOrUpdateBatch(@Param("entities") List<AccountMoneyDetails> entities);
+
 
     /**
      * 修改数据
@@ -79,5 +64,6 @@ public interface AccountMoneyDetailsDao {
      */
     int deleteByCode(String code);
 
+    List<AccountMoneyDetails> queryByContractCode(@Param("contractCode") String contractCode);
 }
 

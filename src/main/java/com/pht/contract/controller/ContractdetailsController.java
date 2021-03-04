@@ -5,6 +5,7 @@ import com.pht.common.CommonResult;
 import com.pht.contract.dto.ContractParams;
 import com.pht.contract.dto.ContractQueryParam;
 import com.pht.contract.dto.ContractReturnParam;
+import com.pht.contract.dto.ContractViews;
 import com.pht.contract.entity.Contractdetails;
 import com.pht.contract.service.ContractdetailsService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,16 +29,6 @@ public class ContractdetailsController {
     @Autowired
     private ContractdetailsService contractdetailsService;
 
-    /**
-     * 通过主键查询单条数据
-     *
-     * @param code 主键
-     * @return 单条数据
-     */
-    @GetMapping("selectOne")
-    public Contractdetails selectOne(String code) {
-        return this.contractdetailsService.queryByCode(code);
-    }
 
 
     @RequestMapping("/list")
@@ -56,5 +47,10 @@ public class ContractdetailsController {
     public CommonResult save(@RequestBody ContractParams contractParams){
           contractdetailsService.save(contractParams);
           return  CommonResult.success(true);
+    }
+    @RequestMapping("/get/{code}")
+    public CommonResult get(@PathVariable String code){
+        ContractViews contractViews  =contractdetailsService.getContractDetails(code);
+        return CommonResult.success(contractViews);
     }
 }

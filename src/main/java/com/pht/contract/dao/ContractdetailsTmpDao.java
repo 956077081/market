@@ -19,16 +19,9 @@ public interface ContractdetailsTmpDao {
      * @param code 主键
      * @return 实例对象
      */
-    ContractdetailsTmp queryByCode(String code);
+    ContractdetailsTmp getByCode(String code);
 
-    /**
-     * 查询指定行数据
-     *
-     * @param offset 查询起始位置
-     * @param limit  查询条数
-     * @return 对象列表
-     */
-    List<ContractdetailsTmp> queryAllByLimit(@Param("offset") int offset, @Param("limit") int limit);
+
 
 
     /**
@@ -55,13 +48,6 @@ public interface ContractdetailsTmpDao {
      */
     int insertBatch(@Param("entities") List<ContractdetailsTmp> entities);
 
-    /**
-     * 批量新增或按主键更新数据（MyBatis原生foreach方法）
-     *
-     * @param entities List<ContractdetailsTmp> 实例对象列表
-     * @return 影响行数
-     */
-    int insertOrUpdateBatch(@Param("entities") List<ContractdetailsTmp> entities);
 
     /**
      * 修改数据
