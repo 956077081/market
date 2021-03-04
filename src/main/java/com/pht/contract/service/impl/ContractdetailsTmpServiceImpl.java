@@ -1,16 +1,14 @@
 package com.pht.contract.service.impl;
 
-import com.pht.contract.constant.ContractDict;
+import com.pht.config.utils.PersistentUtil;
 import com.pht.contract.entity.Contractdetails;
 import com.pht.contract.entity.ContractdetailsTmp;
 import com.pht.contract.dao.ContractdetailsTmpDao;
 import com.pht.contract.service.ContractdetailsTmpService;
-import com.pht.utils.PersistentUtil;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
-import java.util.List;
 
 /**
  * contractdetails_tmp(ContractdetailsTmp)表服务实现类
