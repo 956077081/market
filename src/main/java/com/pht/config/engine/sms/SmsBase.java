@@ -1,4 +1,4 @@
-package com.pht.engine.sms;
+package com.pht.config.engine.sms;
 
 import org.junit.Test;
 

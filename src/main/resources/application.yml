@@ -13,7 +13,6 @@ spring:
 mybatis:
   mapper-locations:
     - classpath*:com/pht/**/*.xml
-  type-aliases-package: com/pht/**/entity
   configuration:
     map-underscore-to-camel-case: true
 jwt:

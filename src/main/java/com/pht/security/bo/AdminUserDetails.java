@@ -1,4 +1,4 @@
-package com.pht.bo;
+package com.pht.security.bo;
 
 import com.pht.cust.entity.User;
 import org.springframework.security.core.GrantedAuthority;

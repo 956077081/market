@@ -17,7 +17,7 @@ import com.pht.contract.entity.ContractdetailsTmp;
 import com.pht.contract.service.ContractdetailsService;
 import com.pht.contract.service.ContractdetailsTmpService;
 import com.pht.cust.entity.Customer;
-import com.pht.utils.PersistentUtil;
+import com.pht.config.utils.PersistentUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeanUtils;

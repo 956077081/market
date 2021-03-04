@@ -1,4 +1,4 @@
-package com.pht.utils.http;
+package com.pht.config.utils.http;
 
 import com.alibaba.fastjson.JSONObject;
 import org.apache.http.HttpEntity;
@@ -19,7 +19,7 @@ import java.net.URI;
 import java.util.ArrayList;
 import java.util.List;
 
-public class HttpUtils {
+public class QmHttpUtils {
     public static RespHttpParam sendHttpGet(ReqHttpParam reqHttpParam) {
         RespHttpParam respHttpParam = new RespHttpParam();
         try {
@@ -88,7 +88,7 @@ public class HttpUtils {
     }
 
     private static String sendPost(ReqHttpParam reqHttpParam) throws Exception {
-        System.out.println("发送get请求，参数：" + JSONObject.toJSONString(reqHttpParam));
+        System.out.println("发送post请求，参数：" + JSONObject.toJSONString(reqHttpParam));
         CloseableHttpClient httpClient = HttpClientBuilder.create().build();
         CloseableHttpResponse response = null;
         List<NameValuePair> paramNames = new ArrayList<>();
