@@ -78,8 +78,11 @@ public class ContractdetailsServiceImpl implements ContractdetailsService {
      */
     @Override
     public Contractdetails update(Contractdetails contractdetails) {
+        contractdetails.setId(null);
+        contractdetails.setUpdateTime(new Date());
         this.contractdetailsDao.update(contractdetails);
-        return this.getByCode(contractdetails.getCode());
+        contractdetailsTmpService.crtContractTmp(contractdetails,ContractDict.OPERATE_UPDATE);
+        return contractdetails;
     }
 
     /**
@@ -90,6 +93,8 @@ public class ContractdetailsServiceImpl implements ContractdetailsService {
      */
     @Override
     public boolean deleteByCode(String code) {
+        Contractdetails contractdetails = getByCode(code);
+        contractdetailsTmpService.crtContractTmp(contractdetails,ContractDict.OPERATE_DELETE);
         return this.contractdetailsDao.deleteByCode(code) > 0;
     }
 

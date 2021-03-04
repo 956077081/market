@@ -53,4 +53,17 @@ public class ContractdetailsController {
         ContractViews contractViews  =contractdetailsService.getContractDetails(code);
         return CommonResult.success(contractViews);
     }
+
+    @RequestMapping("/update")
+    public CommonResult  update(@RequestBody ContractParams contractParams){
+        contractdetailsService.update(contractParams.getContractdetails());
+        return CommonResult.success(true);
+    }
+
+    @RequestMapping("/delete")
+    public CommonResult  delete(@RequestParam(required = true,name = "code") String code){
+        contractdetailsService.deleteByCode(code);
+        return CommonResult.success(true);
+    }
+
 }

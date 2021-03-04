@@ -9,6 +9,7 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.util.Date;
 
 /**
  * contractdetails_tmp(ContractdetailsTmp)表服务实现类
@@ -75,6 +76,8 @@ public class ContractdetailsTmpServiceImpl implements ContractdetailsTmpService 
         contractdetailsTmp.setCode(PersistentUtil.getBizEntity(ContractdetailsTmp.class));
         contractdetailsTmp.setContractCode(contractdetails.getCode());
         contractdetailsTmp.setOperate(operate);
+        contractdetailsTmp.setCreateTime(new Date());
+        contractdetailsTmp.setUpdateTime(new Date());
         this.insert(contractdetailsTmp);
     }
 }
