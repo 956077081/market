@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.pht.sms.dao.SmsDetailsDao">
+
+
+    <!--查询单个-->
+    <select id="getByCode" resultType="com.pht.sms.entity.SmsDetails">
+        select *
+        from market.sms_details
+        where code = #{code}
+    </select>
+
+
+    <!--通过实体作为筛选条件查询-->
+    <select id="queryAll" resultType="com.pht.sms.entity.SmsDetails">
+        select  *
+        from market.sms_details
+        <where>
+            <if test="id != null">
+                and id = #{id}
+            </if>
+            <if test="code != null and code != ''">
+                and code = #{code}
+            </if>
+            <if test="status != null and status != ''">
+                and status = #{status}
+            </if>
+            <if test="custCode != null and custCode != ''">
+                and cust_code = #{custCode}
+            </if>
+            <if test="smsTemplateCode != null and smsTemplateCode != ''">
+                and sms_template_code = #{smsTemplateCode}
+            </if>
+            <if test="telPhone != null and telPhone != ''">
+                and tel_phone = #{telPhone}
+            </if>
+            <if test="templateParam != null and templateParam != ''">
+                and template_param = #{templateParam}
+            </if>
+            <if test="content != null and content != ''">
+                and content = #{content}
+            </if>
+            <if test="smsStatus != null and smsStatus != ''">
+                and sms_status = #{smsStatus}
+            </if>
+            <if test="ssmId != null and ssmId != ''">
+                and ssm_id = #{ssmId}
+            </if>
+            <if test="consumption != null">
+                and Consumption = #{consumption}
+            </if>
+            <if test="tmoney != null">
+                and tmoney = #{tmoney}
+            </if>
+            <if test="smsSend != null and smsSend != ''">
+                and sms_send = #{smsSend}
+            </if>
+            <if test="dsc != null and dsc != ''">
+                and dsc = #{dsc}
+            </if>
+            <if test="updateTime != null">
+                and update_time = #{updateTime}
+            </if>
+            <if test="createTime != null">
+                and create_time = #{createTime}
+            </if>
+            <if test="operateName != null and operateName != ''">
+                and operate_name = #{operateName}
+            </if>
+        </where>
+    </select>
+
+    <!--新增所有列-->
+    <insert id="insert">
+        insert into market.sms_details(code, status, cust_code, sms_template_code, tel_phone, template_param, content,
+                                       sms_status, ssm_id, Consumption, tmoney, sms_send, dsc, update_time, create_time,
+                                       operate_name)
+        values (#{code}, #{status}, #{custCode}, #{smsTemplateCode}, #{telPhone}, #{templateParam}, #{content},
+                #{smsStatus}, #{ssmId}, #{consumption}, #{tmoney}, #{smsSend}, #{dsc}, #{updateTime}, #{createTime},
+                #{operateName})
+    </insert>
+
+    <insert id="insertBatch">
+        insert into market.sms_details(code, status, cust_code, sms_template_code, tel_phone, template_param, content,
+        sms_status, ssm_id, Consumption, tmoney, sms_send, dsc, update_time, create_time, operate_name)
+        values
+        <foreach collection="entities" item="entity" separator=",">
+            (#{entity.code}, #{entity.status}, #{entity.custCode}, #{entity.smsTemplateCode}, #{entity.telPhone},
+            #{entity.templateParam}, #{entity.content}, #{entity.smsStatus}, #{entity.ssmId}, #{entity.consumption},
+            #{entity.tmoney}, #{entity.smsSend}, #{entity.dsc}, #{entity.updateTime}, #{entity.createTime},
+            #{entity.operateName})
+        </foreach>
+    </insert>
+
+
+    <!--通过主键修改数据-->
+    <update id="update">
+        update market.sms_details
+        <set>
+            code = #{code},
+            status = #{status},
+            cust_code = #{custCode},
+            sms_template_code = #{smsTemplateCode},
+            tel_phone = #{telPhone},
+            template_param = #{templateParam},
+            content = #{content},
+            sms_status = #{smsStatus},
+            ssm_id = #{ssmId},
+            Consumption = #{consumption},
+            tmoney = #{tmoney},
+            sms_send = #{smsSend},
+            dsc = #{dsc},
+            update_time = #{updateTime},
+            create_time = #{createTime},
+            operate_name = #{operateName},
+        </set>
+        where code = #{code}
+    </update>
+
+    <!--通过主键删除-->
+    <delete id="deleteByCode">
+        delete
+        from market.sms_details
+        where code = #{code}
+    </delete>
+
+</mapper>
+

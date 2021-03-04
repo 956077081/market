@@ -7,7 +7,7 @@ import com.pht.cust.dto.CustomerParam;
 import com.pht.cust.dto.CustomerQueryParam;
 import com.pht.cust.entity.Customer;
 import com.pht.cust.service.CustomerService;
-import com.pht.utils.PersistentUtil;
+import com.pht.config.utils.PersistentUtil;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

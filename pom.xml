@@ -118,7 +118,7 @@
       <artifactId>hutool-all</artifactId>
       <version>5.4.0</version>
     </dependency>
-    <!--基本配置-->
+    <!--基本配置                         -->
     <dependency>
       <groupId>junit</groupId>
       <artifactId>junit</artifactId>
@@ -141,6 +141,38 @@
       <artifactId>fastjson</artifactId>
       <version>1.2.4</version>
     </dependency>
+    <dependency>
+      <groupId>org.apache.httpcomponents</groupId>
+      <artifactId>httpclient</artifactId>
+      <version>4.5.2</version>
+    </dependency>
+    <dependency>
+      <groupId>dom4j</groupId>
+      <artifactId>dom4j</artifactId>
+      <version>1.6.1</version>
+    </dependency>
+    <dependency>
+      <groupId>commons-beanutils</groupId>
+      <artifactId>commons-beanutils</artifactId>
+      <version>1.9.4</version>
+    </dependency>
+    <dependency>
+      <groupId>com.google.guava</groupId>
+      <artifactId>guava</artifactId>
+      <version>18.0</version>
+    </dependency>
+    <!--groovy-->
+    <dependency>
+      <groupId>org.codehaus.groovy</groupId>
+      <artifactId>groovy</artifactId>
+      <version>3.0.3</version>
+    </dependency>
+    <dependency>
+      <groupId>org.codehaus.groovy</groupId>
+      <artifactId>groovy-jsr223</artifactId>
+      <version>3.0.3</version>
+    </dependency>
+
   </dependencies>
 
 
