@@ -12,4 +12,10 @@ public class QMENV {
         userInfo.userName =user.getUserName();
         QMRunTimeContext.setUserInfo(userInfo);
     }
+    public static String getCompCode(){
+      return   QMRunTimeContext.getCompCode();
+    }
+    public static void setCompCode(String compCode){
+         QMRunTimeContext.setCompCode(compCode);
+    }
 }

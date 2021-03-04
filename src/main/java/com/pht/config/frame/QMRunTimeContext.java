@@ -7,14 +7,13 @@ public class QMRunTimeContext {
      private static ThreadLocal<Map<String,Object>> threadLocal =new ThreadLocal<>();
 
      private static String  THREAD_USERINFO="userInfo";
-
+     private static String  COMP="comp";//当前数据源
     public static UserInfo getUserInfo() {
         Map<String, Object> threadMap = threadLocal.get();
-        Object userObj = threadMap.get(THREAD_USERINFO);
-        UserInfo userInfo  =null;
-        if(userInfo ==null){
-            userInfo =new UserInfo();
+        if(threadMap==null){
+            threadMap =new HashMap<>();
         }
+        Object userObj = threadMap.get(THREAD_USERINFO);
         return (UserInfo) userObj;
     }
     public static void setUserInfo(UserInfo userInfo) {
@@ -24,8 +23,21 @@ public class QMRunTimeContext {
         }
         objectMap.put(THREAD_USERINFO,userInfo);
     }
-
     public static void clear(){
         threadLocal.remove();
+    }
+    public static String getCompCode(){
+        Map<String, Object> objectMap = threadLocal.get();
+        if(objectMap ==null){
+            objectMap= new HashMap<>();
+        }
+        return objectMap.get(COMP).toString();
+    }
+    public static void setCompCode(String compCode){
+        Map<String, Object> objectMap = threadLocal.get();
+        if(objectMap ==null){
+            objectMap= new HashMap<>();
+        }
+        objectMap.put(COMP,compCode);
     }
 }

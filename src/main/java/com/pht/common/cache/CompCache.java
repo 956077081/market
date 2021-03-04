@@ -1,4 +1,4 @@
 package com.pht.common.cache;
 
-public class DictFactory {
+public class CompCache {
 }
