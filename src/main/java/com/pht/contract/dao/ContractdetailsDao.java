@@ -75,5 +75,7 @@ public interface ContractdetailsDao {
     List<ContractReturnParam> queryList(@Param("contractQueryParam") ContractQueryParam contractQueryParam);
 
     String getContractName();
+
+    void updateContractStatus(@Param("code") String code,@Param("status") String status);
 }
 

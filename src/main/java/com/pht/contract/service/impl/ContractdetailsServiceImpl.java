@@ -93,9 +93,7 @@ public class ContractdetailsServiceImpl implements ContractdetailsService {
      */
     @Override
     public boolean deleteByCode(String code) {
-        Contractdetails contractdetails = getByCode(code);
-        contractdetailsTmpService.crtContractTmp(contractdetails,ContractDict.OPERATE_DELETE);
-        return this.contractdetailsDao.deleteByCode(code) > 0;
+          return this.contractdetailsDao.deleteByCode(code) > 0;
     }
 
     @Override
@@ -121,8 +119,6 @@ public class ContractdetailsServiceImpl implements ContractdetailsService {
         contractdetails.setStatus(ContractDict.CONTRACT_STATUS_VALID);
         contractdetails.setUpdateTime(new Date());
         contractdetails.setCreateTime(new Date());
-        contractdetails.setTotalMoney(accountMoneyDetails.getPayMoney());
-
         contractdetailsTmpService.crtContractTmp(contractdetails,ContractDict.OPERATE_CREATE);
         accountMoneyDetailsService.crtAccountDetails(accountMoneyDetails,contractdetails.getCode(),customer.getCode(),AccountMoneyDict.ACCOUNT_TYPE_IN);
         contractdetailsDao.insert(contractdetails);
@@ -142,5 +138,20 @@ public class ContractdetailsServiceImpl implements ContractdetailsService {
         contractViews.setCustomer(customer);//客户
         contractViews.setContractdetails(contractdetails);//合同
         return contractViews;
+    }
+
+    @Override
+    @Transactional
+    public void delete(String code) {
+        Contractdetails contractdetails = getByCode(code);
+        contractdetails.setStatus(ContractDict.CONTRACT_STATUS_INVALID);
+        updateContractStatus(code,contractdetails.getStatus());
+        accountMoneyDetailsService.invalidAccoutByContract(code);
+        contractdetailsTmpService.crtContractTmp(contractdetails,ContractDict.OPERATE_UPDATE);
+    }
+
+
+    private void updateContractStatus(String code,String status){
+         contractdetailsDao.updateContractStatus(code,status);
     }
 }

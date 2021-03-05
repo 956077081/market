@@ -61,4 +61,6 @@ public interface ContractdetailsService {
     void save(ContractParams contractParams);
 
     ContractViews getContractDetails(String code);
+
+    void delete(String code);
 }

@@ -137,5 +137,10 @@
         from market.account_money_details
         where contract_code =#{contractCode}
     </select>
+    <update id="invalidAccoutByContract">
+        update  market.account_money_details
+        set status ='00'
+        where contract_code = #{contractCode}
+    </update>
 </mapper>
 

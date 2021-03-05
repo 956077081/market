@@ -62,7 +62,7 @@ public class ContractdetailsController {
 
     @RequestMapping("/delete")
     public CommonResult  delete(@RequestParam(required = true,name = "code") String code){
-        contractdetailsService.deleteByCode(code);
+        contractdetailsService.delete(code);
         return CommonResult.success(true);
     }
 

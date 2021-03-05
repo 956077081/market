@@ -135,6 +135,11 @@
         </set>
         where code = #{code}
     </update>
+    <update id="updateContractStatus">
+         update market.contractdetails
+         set status =#{status}
+         where code= #{code}
+    </update>
 
     <!--通过主键删除-->
     <delete id="deleteByCode">

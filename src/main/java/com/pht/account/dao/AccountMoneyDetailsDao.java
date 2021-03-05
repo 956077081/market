@@ -65,5 +65,7 @@ public interface AccountMoneyDetailsDao {
     int deleteByCode(String code);
 
     List<AccountMoneyDetails> queryByContractCode(@Param("contractCode") String contractCode);
+
+    void invalidAccoutByContract(@Param("contractCode") String contractCode);
 }
 

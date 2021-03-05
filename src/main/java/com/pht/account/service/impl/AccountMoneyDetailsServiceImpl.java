@@ -87,4 +87,9 @@ public class AccountMoneyDetailsServiceImpl implements AccountMoneyDetailsServic
     public List<AccountMoneyDetails> queryByContractCode(String contractCode) {
         return accountMoneyDetailsDao.queryByContractCode(contractCode);
     }
+
+    @Override
+    public void invalidAccoutByContract(String contractCode) {
+         accountMoneyDetailsDao.invalidAccoutByContract(contractCode);
+    }
 }

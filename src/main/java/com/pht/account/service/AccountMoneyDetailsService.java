@@ -48,4 +48,6 @@ public interface AccountMoneyDetailsService {
     void crtAccountDetails(AccountMoneyDetails accountMoneyDetails, String code, String code1, String accountTypeIn);
 
     List<AccountMoneyDetails> queryByContractCode(String contractCode);
+     void invalidAccoutByContract(String contractCode);
 }
+
