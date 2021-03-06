@@ -1,6 +1,7 @@
 package com.pht.common.factory.datasource;
 
 import com.alibaba.druid.filter.logging.Log4jFilter;
+import com.alibaba.druid.filter.logging.Slf4jLogFilter;
 import com.alibaba.druid.pool.DruidDataSource;
 import com.pht.common.CommonDict;
 import com.pht.config.frame.QMENV;
@@ -17,25 +18,32 @@ import java.sql.*;
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 
-@Component
-@Order(-1)
-public class DataSourceFactory implements InitializingBean {
+public class DataSourceFactory  {
     private static Logger log = LoggerFactory.getLogger(DataSourceFactory.class);
     @Autowired
     private DefDataSourceConfig defDataSourceConfig;
     private static DataSource defaultDataSource=null;
+    private static JdbcServerConfig defaultServerConfig =null;
     private static Map<Object,Object> dataSourceMap= new ConcurrentHashMap<>();
     private static Map<String,JdbcServerConfig> compServers =new HashMap<>();
-    @Override
-    public void afterPropertiesSet() throws Exception {//加载数据源
+    private static List<String> compCodes= new ArrayList();
+    public void init() {//加载数据源
         List<JdbcServerConfig> collect = getGroupJdbc();
+        StringBuffer sb = new StringBuffer();
+
           collect.forEach(jdbcBean -> {
+              if(!CommonDict.YES.equals(jdbcBean.getStatus())){
+                  return;
+              }
             if (CommonDict.YES.equals(jdbcBean.getIsDefault())) {
+                defaultServerConfig=jdbcBean;
                 QMENV.setCompCode(jdbcBean.getCompCode());//初始化为默人comp
+                System.out.println(QMENV.getCompCode());
                 defaultDataSource = crtDuridDataSource(jdbcBean);
             }
-            compServers.put(jdbcBean.getCompCode(),jdbcBean);
-            dataSourceMap.put(jdbcBean.getCompCode(),crtDuridDataSource(jdbcBean));
+            compServers.put(jdbcBean.getCompCode().toUpperCase(),jdbcBean);
+            dataSourceMap.put(jdbcBean.getCompCode().toUpperCase(),crtDuridDataSource(jdbcBean));
+            compCodes.add(jdbcBean.getCompCode().toUpperCase());
           });
         if(collect== null ||collect.isEmpty()){
             log.error("当前获取数据为空，启动失败");
@@ -49,17 +57,18 @@ public class DataSourceFactory implements InitializingBean {
     }
 
     public List<JdbcServerConfig> getGroupJdbc(){
+        log.info("数据中心连接|"+defDataSourceConfig.toString());
         List<JdbcServerConfig> list =new ArrayList<>();
         try{
-            Class.forName("com.mysql.jdbc.Driver");
-            Connection conn= DriverManager.getConnection(defDataSourceConfig.getJdbcUrl(),defDataSourceConfig.getUserName(),defDataSourceConfig.getPassWord());
+            Class.forName(this.defDataSourceConfig.getDriverClassName());
+            Connection conn= DriverManager.getConnection(this.defDataSourceConfig.getJdbcUrl(), this.defDataSourceConfig.getUserName(), this.defDataSourceConfig.getPassWord());
             if(conn ==null){
-                throw  new RuntimeException("获取数据中心失败!"+QmDataConvertUtils.obj2JsonStr(defDataSourceConfig));
+                throw  new RuntimeException("获取数据中心失败!"+QmDataConvertUtils.obj2JsonStr(this.defDataSourceConfig));
             }
             PreparedStatement preparedStatement = conn.prepareStatement(getExecCenterSql());
-            preparedStatement.setString(0,defDataSourceConfig.getDataGroup());
+            preparedStatement.setString(1, this.defDataSourceConfig.getDataGroup());
             ResultSet resultSet = preparedStatement.executeQuery();
-            if(resultSet.next()){
+            while (resultSet.next()){
                 JdbcServerConfig jdbcBean =new JdbcServerConfig();
                 jdbcBean.setGroupID(resultSet.getString("group_id"));
                 jdbcBean.setCompCode(resultSet.getString("comp_code"));
@@ -106,11 +115,11 @@ public class DataSourceFactory implements InitializingBean {
         dataSource.setTestOnBorrow(false);
         dataSource.setTestOnReturn(false);
         try {
-            dataSource.setFilters("stat,log4j2");
+            dataSource.setFilters("stat,slf4jLog");
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        Log4jFilter log4jFilter = new Log4jFilter();
+        Slf4jLogFilter log4jFilter = new Slf4jLogFilter();
         log4jFilter.setConnectionLogEnabled(false);
         log4jFilter.setStatementLogEnabled(false);
         log4jFilter.setResultSetLogEnabled(true);
@@ -125,5 +134,12 @@ public class DataSourceFactory implements InitializingBean {
     }
     public static Map<String,JdbcServerConfig> getCompServerConfig(){
         return compServers;
+    }
+    public static JdbcServerConfig getDefaultServerConfig(){
+        return defaultServerConfig;
+    }
+
+    public static List<String> getCodes(){
+        return compCodes;
     }
 }

@@ -1,6 +1,8 @@
 package com.pht.config.frame;
 
+import com.pht.common.factory.datasource.DataSourceFactory;
 import com.pht.cust.entity.User;
+import org.apache.commons.lang3.StringUtils;
 
 public class QMENV {
     public  static UserInfo getUser(){
@@ -13,9 +15,13 @@ public class QMENV {
         QMRunTimeContext.setUserInfo(userInfo);
     }
     public static String getCompCode(){
-      return   QMRunTimeContext.getCompCode();
+        String compCode = QMRunTimeContext.getCompCode();
+        if(StringUtils.isBlank(compCode)){
+            return DataSourceFactory.getDefaultServerConfig().getCompCode();
+        }
+        return compCode;
     }
     public static void setCompCode(String compCode){
-         QMRunTimeContext.setCompCode(compCode);
+         QMRunTimeContext.setCompCode(compCode.toUpperCase());
     }
 }

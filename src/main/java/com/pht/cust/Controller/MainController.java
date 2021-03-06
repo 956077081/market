@@ -1,6 +1,8 @@
 package com.pht.cust.Controller;
 
 import com.pht.common.CommonResult;
+import com.pht.common.factory.datasource.DataSourceFactory;
+import com.pht.config.frame.QMENV;
 import com.pht.cust.dto.AdminLoginParam;
 import com.pht.cust.entity.User;
 import com.pht.cust.service.UserService;
@@ -52,4 +54,11 @@ public class MainController {
         map.put("userName",user.getUserName());
         return CommonResult.success(map);
     }
+
+    @RequestMapping(value = "/queryComp")
+    @ResponseBody
+    public CommonResult queryComp(){
+        return CommonResult.success(DataSourceFactory.getCompServerConfig().get(QMENV.getCompCode()));
+    }
+
 }

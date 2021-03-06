@@ -4,7 +4,7 @@
 
     <select id="queryAll" resultType="com.pht.base.system.entity.SysParamConfig">
         select *
-        from market.sys_param_config
+        from sys_param_config
     </select>
 </mapper>
 

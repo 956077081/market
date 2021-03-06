@@ -20,7 +20,7 @@ jwt:
   expiration: 604800 #JWT的超期限时间(60*60*24*7)
   tokenHead: 'Bearer'
   tokenHeader: Authorization #JWT存储的请求头
-
+  compHead: 'COMPCODE'
 
 secure:
   ignored:
@@ -41,3 +41,5 @@ secure:
       - /admin/info
       - /admin/logout
       - /minio/upload
+    defSourceUrl: #不需要数据源 即连接数据库操作只能是默认数据源
+      - /admin/queryComp

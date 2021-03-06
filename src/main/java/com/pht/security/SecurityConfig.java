@@ -33,7 +33,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         ExpressionUrlAuthorizationConfigurer<HttpSecurity>.ExpressionInterceptUrlRegistry registry = http.authorizeRequests();
-        ignoreUrlConfig().getUrls().forEach(url -> {//白名单
+        ignoreUrlConfig().getAllIgnoreUrls().forEach(url -> {//白名单
             registry.antMatchers(url).permitAll();
         });
 

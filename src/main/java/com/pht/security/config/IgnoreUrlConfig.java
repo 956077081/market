@@ -10,6 +10,17 @@ import java.util.List;
 @Setter
 @ConfigurationProperties(prefix = "secure.ignored")
 public class IgnoreUrlConfig {
-    private List<String> urls = new ArrayList<>();
+    private List<String> urls = new ArrayList<>();//白名单
+    private List<String> defSourceUrl = new ArrayList<>();//默认数据源操作
+    public List<String> getAllIgnoreUrls(){
 
+        List<String> objects = new ArrayList<>();
+        if(urls!=null){
+            objects.addAll(urls);
+        }
+        if(defSourceUrl!=null){
+            objects.addAll(defSourceUrl);
+        }
+        return objects;
+    }
 }

@@ -13,6 +13,8 @@ import org.springframework.util.PathMatcher;
 import javax.servlet.*;
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * 动态资源权限校验
@@ -44,12 +46,16 @@ public class DynamicSecurityFilter extends AbstractSecurityInterceptor implement
         }
         //白名单请求直接放行
         PathMatcher pathMatcher = new AntPathMatcher();
-        for (String path : ignoreUrlsConfig.getUrls()) {
+        List<String > ignoreUrls =new ArrayList<>();
+        ignoreUrls.addAll(ignoreUrlsConfig.getUrls());
+        ignoreUrls.addAll(ignoreUrlsConfig.getDefSourceUrl());
+        for (String path : ignoreUrls) {
             if(pathMatcher.match(path,request.getRequestURI())){
                 fi.getChain().doFilter(fi.getRequest(), fi.getResponse());
                 return;
             }
         }
+
         //此处会调用AccessDecisionManager中的decide方法进行鉴权操作
         InterceptorStatusToken token = super.beforeInvocation(fi);
         try {

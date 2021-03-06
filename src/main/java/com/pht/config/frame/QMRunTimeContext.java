@@ -14,6 +14,9 @@ public class QMRunTimeContext {
             threadMap =new HashMap<>();
         }
         Object userObj = threadMap.get(THREAD_USERINFO);
+        if(userObj ==null){
+            return null;
+        }
         return (UserInfo) userObj;
     }
     public static void setUserInfo(UserInfo userInfo) {
@@ -22,6 +25,7 @@ public class QMRunTimeContext {
             objectMap= new HashMap<>();
         }
         objectMap.put(THREAD_USERINFO,userInfo);
+        threadLocal.set(objectMap);
     }
     public static void clear(){
         threadLocal.remove();
@@ -31,7 +35,7 @@ public class QMRunTimeContext {
         if(objectMap ==null){
             objectMap= new HashMap<>();
         }
-        return objectMap.get(COMP).toString();
+        return objectMap.get(COMP)==null?"":objectMap.get(COMP).toString();
     }
     public static void setCompCode(String compCode){
         Map<String, Object> objectMap = threadLocal.get();
@@ -39,5 +43,6 @@ public class QMRunTimeContext {
             objectMap= new HashMap<>();
         }
         objectMap.put(COMP,compCode);
+        threadLocal.set(objectMap);
     }
 }

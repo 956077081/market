@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.pht.base.system.dao.SysDictDao">
+    <!--通过实体作为筛选条件查询-->
+    <select id="queryAll" resultType="com.pht.base.system.entity.SysDict">
+        select
+        id, type, value, label, parent_type, parent_value, create_time
+        from sys_dict
+    </select>
+</mapper>
+
