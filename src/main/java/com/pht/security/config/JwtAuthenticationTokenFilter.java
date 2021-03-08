@@ -1,13 +1,12 @@
 package com.pht.security.config;
 
 import com.pht.common.factory.datasource.DataSourceFactory;
-import com.pht.config.frame.QMENV;
-import com.pht.config.frame.QMRunTimeContext;
-import com.pht.config.frame.UserInfo;
+import com.pht.base.frame.QMENV;
+import com.pht.base.frame.QMRunTimeContext;
+import com.pht.base.frame.UserInfo;
 import com.pht.cust.entity.User;
 import com.pht.cust.service.UserService;
 import com.pht.security.util.JwtTokenUtil;
-import com.sun.org.apache.bcel.internal.generic.NEW;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -28,7 +27,6 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.util.Collections;
 import java.util.List;
 
 /**

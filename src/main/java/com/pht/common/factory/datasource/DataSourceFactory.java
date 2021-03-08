@@ -1,17 +1,13 @@
 package com.pht.common.factory.datasource;
 
-import com.alibaba.druid.filter.logging.Log4jFilter;
 import com.alibaba.druid.filter.logging.Slf4jLogFilter;
 import com.alibaba.druid.pool.DruidDataSource;
 import com.pht.common.CommonDict;
-import com.pht.config.frame.QMENV;
+import com.pht.base.frame.QMENV;
 import com.pht.config.utils.QmDataConvertUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.annotation.Order;
-import org.springframework.stereotype.Component;
 
 import javax.sql.DataSource;
 import java.sql.*;

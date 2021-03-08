@@ -1,4 +1,4 @@
-package com.pht.config.frame;
+package com.pht.base.frame;
 
 public class UserInfo {
     public String  userName;

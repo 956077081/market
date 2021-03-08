@@ -2,7 +2,7 @@ package com.pht.cust.Controller;
 
 import com.pht.common.CommonResult;
 import com.pht.common.factory.datasource.DataSourceFactory;
-import com.pht.config.frame.QMENV;
+import com.pht.base.frame.QMENV;
 import com.pht.cust.dto.AdminLoginParam;
 import com.pht.cust.entity.User;
 import com.pht.cust.service.UserService;

@@ -1,7 +1,7 @@
 package com.pht.common.factory.datasource;
 
 import com.alibaba.druid.pool.DruidDataSource;
-import com.pht.config.frame.QMENV;
+import com.pht.base.frame.QMENV;
 import org.springframework.beans.factory.DisposableBean;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.jdbc.datasource.lookup.AbstractRoutingDataSource;

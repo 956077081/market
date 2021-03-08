@@ -1,15 +1,10 @@
 package com.pht.common.cache;
 
-import cn.hutool.core.lang.Dict;
-import com.pht.base.system.dto.DictDto;
 import com.pht.base.system.entity.SysDict;
-import com.pht.base.system.entity.SysParamConfig;
 import com.pht.base.system.service.SysDictService;
 import com.pht.common.factory.datasource.DataSourceFactory;
 import com.pht.common.factory.datasource.JdbcServerConfig;
-import com.pht.config.frame.QMENV;
-import org.apache.commons.lang3.StringUtils;
-import org.springframework.beans.factory.InitializingBean;
+import com.pht.base.frame.QMENV;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.*;
