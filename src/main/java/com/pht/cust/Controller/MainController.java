@@ -20,7 +20,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- *
+ * 登录、获取用户
  */
 @Controller
 @RequestMapping("/admin")
