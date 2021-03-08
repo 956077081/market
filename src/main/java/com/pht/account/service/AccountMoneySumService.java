@@ -3,6 +3,7 @@ package com.pht.account.service;
 import com.pht.account.entity.AccountMoneyDetails;
 import com.pht.account.entity.AccountMoneySum;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 /**
@@ -29,5 +30,8 @@ public interface AccountMoneySumService {
     void update(AccountMoneySum accountMoneySum);
 
 
-    void crtAccountSum(AccountMoneyDetails accountMoneyDetails);
+    void crtAccountSum(String contractCode, String custCode, BigDecimal sumMoney);
+
+    BigDecimal calcAndUpdateAccountSum(String contractCode, String custCode);
+
 }

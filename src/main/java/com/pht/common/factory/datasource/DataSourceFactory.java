@@ -111,7 +111,7 @@ public class DataSourceFactory  {
         dataSource.setTestOnBorrow(false);
         dataSource.setTestOnReturn(false);
         try {
-            dataSource.setFilters("stat,slf4jLog");
+            dataSource.setFilters("stat");
         } catch (SQLException e) {
             e.printStackTrace();
         }

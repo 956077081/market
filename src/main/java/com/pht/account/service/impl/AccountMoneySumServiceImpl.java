@@ -7,6 +7,7 @@ import com.pht.account.service.AccountMoneySumService;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
 
@@ -46,13 +47,18 @@ public class AccountMoneySumServiceImpl implements AccountMoneySumService {
 
 
     @Override
-    public void crtAccountSum(AccountMoneyDetails accountMoneyDetails) {
+    public void crtAccountSum(String contractCode, String custCode, BigDecimal sumMoney) {
         AccountMoneySum sum = new AccountMoneySum();
-        sum.setCustCode(accountMoneyDetails.getCustCode());
-        sum.setContractCode(accountMoneyDetails.getContractCode());
-        sum.setTotalMoney(accountMoneyDetails.getPayMoney());
+        sum.setCustCode(custCode);
+        sum.setContractCode(contractCode);
+        sum.setTotalMoney(sumMoney);
         sum.setUpdateTime(new Date());
         sum.setCreateTime(new Date());
         insert(sum);
+    }
+
+    @Override
+    public BigDecimal calcAndUpdateAccountSum(String contractCode, String custCode) {
+        return null;
     }
 }

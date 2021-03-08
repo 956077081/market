@@ -1,15 +1,25 @@
 package com.pht.account.service.impl;
 
 import com.pht.account.constant.AccountMoneyDict;
+import com.pht.account.dto.AccountMoneyParam;
 import com.pht.account.entity.AccountMoneyDetails;
 import com.pht.account.dao.AccountMoneyDetailsDao;
 import com.pht.account.service.AccountMoneyDetailsService;
 import com.pht.account.service.AccountMoneySumService;
+import com.pht.base.frame.QMENV;
+import com.pht.common.BizException;
 import com.pht.config.utils.PersistentUtil;
+import com.pht.config.utils.QmDataConvertUtils;
+import com.pht.contract.entity.Contractdetails;
+import com.pht.contract.service.ContractdetailsService;
+import com.pht.cust.service.CustomerService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
-import javax.annotation.Resource;
 import java.util.Date;
 import java.util.List;
 
@@ -21,10 +31,15 @@ import java.util.List;
  */
 @Service("accountMoneyDetailsService")
 public class AccountMoneyDetailsServiceImpl implements AccountMoneyDetailsService {
+    private static Logger logger = LoggerFactory.getLogger(AccountMoneyDetailsServiceImpl.class);
     @Autowired
-    private AccountMoneyDetailsDao accountMoneyDetailsDao;
+    private CustomerService customerService;
     @Autowired
     private AccountMoneySumService accountMoneySumService;
+    @Autowired
+    private ContractdetailsService contractdetailsService;
+    @Autowired
+    private AccountMoneyDetailsDao accountMoneyDetailsDao;
     /**
      * 通过ID查询单条数据
      *
@@ -36,15 +51,31 @@ public class AccountMoneyDetailsServiceImpl implements AccountMoneyDetailsServic
         return this.accountMoneyDetailsDao.getByCode(code);
     }
 
+    @Override
+    public AccountMoneyDetails insert(AccountMoneyDetails accountMoneyDetails) {
+        accountMoneyDetailsDao.insert(accountMoneyDetails);
+         return accountMoneyDetails;
+    }
+
     /**
      * 新增数据
      *
-     * @param accountMoneyDetails 实例对象
+     * @param accountMoneyParam 实例对象
      * @return 实例对象
      */
     @Override
-    public AccountMoneyDetails insert(AccountMoneyDetails accountMoneyDetails) {
-        this.accountMoneyDetailsDao.insert(accountMoneyDetails);
+    @Transactional
+    public AccountMoneyDetails insert( AccountMoneyParam accountMoneyParam) {
+        logger.info("合同打款、扣款操作|data="+ QmDataConvertUtils.obj2JsonStr(accountMoneyParam));
+        String contractCode = accountMoneyParam.getContractCode();
+        Contractdetails contractdetails = contractdetailsService.getByCode(contractCode);
+        if(contractdetails ==null ){
+            throw  new BizException("保存打款/扣款金额错误！找不到合同code="+contractCode);
+        }
+        AccountMoneyDetails accountMoneyDetails =new AccountMoneyDetails();
+        BeanUtils.copyProperties(accountMoneyParam,accountMoneyDetails);
+        crtAccountDetails(accountMoneyDetails,contractCode,contractdetails.getCustCode());
+        accountMoneySumService.calcAndUpdateAccountSum(contractdetails.getCode(),contractdetails.getCustCode());
         return accountMoneyDetails;
     }
 
@@ -71,16 +102,18 @@ public class AccountMoneyDetailsServiceImpl implements AccountMoneyDetailsServic
     }
 
     @Override
-    public void crtAccountDetails(AccountMoneyDetails accountMoneyDetails, String contractCode, String custCode, String type) {
+    public AccountMoneyDetails crtAccountDetails(AccountMoneyDetails accountMoneyDetails, String contractCode, String custCode) {
+        accountMoneyDetails.setId(null);
         accountMoneyDetails.setCode(PersistentUtil.getBizEntity(AccountMoneyDetails.class));
         accountMoneyDetails.setContractCode(contractCode);
         accountMoneyDetails.setCustCode(custCode);
         accountMoneyDetails.setStatus(AccountMoneyDict.ACCOUNT_MONEY_STATUS_VALID);
         accountMoneyDetails.setCreateTime(new Date());
         accountMoneyDetails.setUpdateTime(new Date());
-        accountMoneyDetails.setType(type);
+        accountMoneyDetails.setOperatorCode(QMENV.getUser().userCode);
+        accountMoneyDetails.setOperatorName(QMENV.getUser().userName);
         this.insert(accountMoneyDetails);
-        accountMoneySumService.crtAccountSum(accountMoneyDetails);
+        return accountMoneyDetails;
     }
 
     @Override

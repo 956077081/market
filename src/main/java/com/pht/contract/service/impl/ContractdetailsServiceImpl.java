@@ -5,6 +5,7 @@ import com.github.pagehelper.PageHelper;
 import com.pht.account.constant.AccountMoneyDict;
 import com.pht.account.entity.AccountMoneyDetails;
 import com.pht.account.service.AccountMoneyDetailsService;
+import com.pht.account.service.AccountMoneySumService;
 import com.pht.common.BizException;
 import com.pht.config.utils.PersistentUtil;
 import com.pht.contract.constant.ContractDict;
@@ -43,6 +44,8 @@ public class ContractdetailsServiceImpl implements ContractdetailsService {
    @Autowired
    private ContractdetailsTmpService contractdetailsTmpService;
 
+   @Autowired
+     private AccountMoneySumService accountMoneySumService;
    @Autowired
    private CustomerService customerService;
     /**
@@ -119,8 +122,10 @@ public class ContractdetailsServiceImpl implements ContractdetailsService {
         contractdetails.setStatus(ContractDict.CONTRACT_STATUS_VALID);
         contractdetails.setUpdateTime(new Date());
         contractdetails.setCreateTime(new Date());
+        accountMoneyDetails.setType(AccountMoneyDict.ACCOUNT_TYPE_IN);
         contractdetailsTmpService.crtContractTmp(contractdetails,ContractDict.OPERATE_CREATE);
-        accountMoneyDetailsService.crtAccountDetails(accountMoneyDetails,contractdetails.getCode(),customer.getCode(),AccountMoneyDict.ACCOUNT_TYPE_IN);
+        accountMoneyDetailsService.crtAccountDetails(accountMoneyDetails,contractdetails.getCode(),customer.getCode());
+        accountMoneySumService.crtAccountSum(accountMoneyDetails.getContractCode(),accountMoneyDetails.getCustCode(),accountMoneyDetails.getPayMoney());
         contractdetailsDao.insert(contractdetails);
     }
 

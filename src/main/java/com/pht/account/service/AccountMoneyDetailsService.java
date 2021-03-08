@@ -1,5 +1,6 @@
 package com.pht.account.service;
 
+import com.pht.account.dto.AccountMoneyParam;
 import com.pht.account.entity.AccountMoneyDetails;
 
 import java.util.List;
@@ -27,7 +28,12 @@ public interface AccountMoneyDetailsService {
      * @param accountMoneyDetails 实例对象
      * @return 实例对象
      */
-    AccountMoneyDetails insert(AccountMoneyDetails accountMoneyDetails);
+
+    AccountMoneyDetails insert(AccountMoneyDetails  accountMoneyDetails);
+
+
+    AccountMoneyDetails insert(AccountMoneyParam  accountMoneyParam);
+
 
     /**
      * 修改数据
@@ -45,7 +51,7 @@ public interface AccountMoneyDetailsService {
      */
     boolean deleteByCode(String code);
 
-    void crtAccountDetails(AccountMoneyDetails accountMoneyDetails, String code, String code1, String accountTypeIn);
+    AccountMoneyDetails crtAccountDetails(AccountMoneyDetails accountMoneyDetails, String code, String code1);
 
     List<AccountMoneyDetails> queryByContractCode(String contractCode);
      void invalidAccoutByContract(String contractCode);

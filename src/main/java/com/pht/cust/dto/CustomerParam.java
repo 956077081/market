@@ -8,9 +8,9 @@ import java.util.Date;
 @Data
 public class CustomerParam  {
     private Long id;
-    @NotEmpty
+
     private String operatorCode;
-    @NotEmpty
+
     private String operatorName;
     private String code;
     @NotEmpty

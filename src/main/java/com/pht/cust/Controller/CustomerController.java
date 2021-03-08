@@ -10,6 +10,7 @@ import com.pht.cust.service.CustomerService;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -29,7 +30,7 @@ public class CustomerController {
 
     @RequestMapping("/create")
     @ResponseBody
-    public CommonResult create(@RequestBody CustomerParam customerParam) {
+    public CommonResult create(@RequestBody @Validated CustomerParam customerParam) {
         Customer customer = customerService.getByCust3Val(customerParam.getCustType(), customerParam.getIdType(), customerParam.getIdNum());
         if (customer != null) {
             return CommonResult.success("当前客户已存在", false);
@@ -52,7 +53,7 @@ public class CustomerController {
     }
     @RequestMapping("/update/{code}")
     @ResponseBody
-    public CommonResult update( @RequestBody CustomerParam customerParam,@PathVariable String code) {
+    public CommonResult update(@RequestBody  CustomerParam customerParam, @PathVariable String code) {
         if(StringUtils.isBlank(code)){
             throw  new BizException("当前客户编号不存在！");
         }
