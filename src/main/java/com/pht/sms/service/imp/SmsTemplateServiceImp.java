@@ -1,5 +1,6 @@
 package com.pht.sms.service.imp;
 
+import com.pht.base.frame.LoggerFormator;
 import com.pht.sms.dao.SmsTemplateDao;
 import com.pht.sms.entity.SmsTemplate;
 import com.pht.sms.service.SmsTemplateService;
@@ -13,6 +14,7 @@ import java.util.Map;
 
 @Service
 public class SmsTemplateServiceImp  implements SmsTemplateService {
+    private static LoggerFormator logger = LoggerFormator.getLogger(SmsTemplateServiceImp.class);
     @Autowired
     private SmsTemplateDao smsTemplateDao;
 

@@ -46,7 +46,7 @@ public class MainController {
     @ResponseBody
     public CommonResult getUserInfo(Principal principal){
         if(principal==null){
-            return CommonResult.failed("获取用户信息错误",null);
+            return CommonResult.failed("获取用户信息错误");
         }
         User user = userService.getUserByUserName(principal.getName());
         Map<String, Object> map = new HashMap<>();
@@ -59,6 +59,7 @@ public class MainController {
     @ResponseBody
     public CommonResult queryComp(){
         return CommonResult.success(DataSourceFactory.getCompServerConfig().get(QMENV.getCompCode()));
+
     }
 
 }

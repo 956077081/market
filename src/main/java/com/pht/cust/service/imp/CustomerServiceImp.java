@@ -1,6 +1,10 @@
 package com.pht.cust.service.imp;
 
 import com.github.pagehelper.PageHelper;
+import com.pht.base.frame.LoggerFormator;
+import com.pht.base.system.constant.SysParam;
+import com.pht.config.utils.SysParamFactory;
+import com.pht.contract.service.impl.ContractdetailsServiceImpl;
 import com.pht.cust.constant.CustDict;
 import com.pht.cust.dao.CustomerDao;
 import com.pht.cust.dto.CustomerParam;
@@ -14,8 +18,12 @@ import org.springframework.stereotype.Service;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
+
 @Service
 public class CustomerServiceImp implements CustomerService {
+    private static LoggerFormator logger = LoggerFormator.getLogger(CustomerServiceImp.class);
+
     @Autowired
     private CustomerDao customerDao;
     @Override
@@ -85,5 +93,11 @@ public class CustomerServiceImp implements CustomerService {
         customer.setRegisterTime(customerParam.getRegisterTime());
         customer.setUpdateTime(new Date());
         customerDao.updateByCode(customer);
+    }
+
+    @Override
+    public List<Customer> queryRecentNewCust() {
+        String recentNewCustlimit = SysParamFactory.getSysParam(SysParam.recentNewCustLimit, "7");
+         return   customerDao.queryRecentNewCust(recentNewCustlimit,new Date());
     }
 }

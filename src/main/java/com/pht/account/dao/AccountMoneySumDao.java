@@ -4,6 +4,7 @@ import com.pht.account.entity.AccountMoneySum;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.security.core.parameters.P;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 /**
@@ -64,5 +65,6 @@ public interface AccountMoneySumDao {
      */
     int deleteByCustAndContract(@Param("custCode") String custCode,@Param("contractCode") String contractCode);
 
+    BigDecimal calcAndUpdateAccountSum(@Param("contractCode") String contractCode,@Param("custCode") String custCode);
 }
 

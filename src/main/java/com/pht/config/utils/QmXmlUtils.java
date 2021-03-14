@@ -1,6 +1,8 @@
 package com.pht.config.utils;
 
 import com.alibaba.fastjson.JSONObject;
+import com.pht.base.frame.LoggerFormator;
+import com.pht.common.factory.datasource.DataSourceFactory;
 import com.pht.config.utils.meta.FieldMetaUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.dom4j.Attribute;
@@ -21,7 +23,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 public class QmXmlUtils {
-    private static Logger log = LoggerFactory.getLogger( QmXmlUtils.class );
+    private static LoggerFormator log = LoggerFormator.getLogger(QmXmlUtils.class);
 
     //从字符串中生成document对象
     public static Document getDocFromStr(String xmlStr ) throws Exception {

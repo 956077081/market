@@ -12,4 +12,16 @@ public class BizException  extends RuntimeException{
     public BizException(String message) {
         this.message = message;
     }
+
+    public  String getErrMesg(){
+        return this.message;
+    }
+
+    public String getErrCode() {
+        return errCode;
+    }
+
+    public void setErrCode(String errCode) {
+        this.errCode = errCode;
+    }
 }

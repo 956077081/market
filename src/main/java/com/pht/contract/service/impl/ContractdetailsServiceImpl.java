@@ -6,6 +6,9 @@ import com.pht.account.constant.AccountMoneyDict;
 import com.pht.account.entity.AccountMoneyDetails;
 import com.pht.account.service.AccountMoneyDetailsService;
 import com.pht.account.service.AccountMoneySumService;
+import com.pht.account.service.impl.AccountMoneySumServiceImpl;
+import com.pht.base.frame.LoggerFormator;
+import com.pht.base.frame.QMENV;
 import com.pht.common.BizException;
 import com.pht.config.utils.PersistentUtil;
 import com.pht.contract.constant.ContractDict;
@@ -27,6 +30,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 /**
  * 合同表(Contractdetails)表服务实现类
@@ -36,7 +40,7 @@ import java.util.List;
  */
 @Service("contractdetailsService")
 public class ContractdetailsServiceImpl implements ContractdetailsService {
-    private static Logger logger = LoggerFactory.getLogger(ContractdetailsServiceImpl.class);
+    private static LoggerFormator logger = LoggerFormator.getLogger(ContractdetailsServiceImpl.class);
     @Autowired
     private ContractdetailsDao contractdetailsDao;
    @Autowired
@@ -120,12 +124,13 @@ public class ContractdetailsServiceImpl implements ContractdetailsService {
         contractdetails.setCode(PersistentUtil.getBizEntity(ContractParams.class));
         contractdetails.setCustCode(customer.getCode());
         contractdetails.setStatus(ContractDict.CONTRACT_STATUS_VALID);
+        contractdetails.setOperatorCode(QMENV.getUser().userCode);
+        contractdetails.setOperatorName(QMENV.getUser().userName);
         contractdetails.setUpdateTime(new Date());
         contractdetails.setCreateTime(new Date());
         accountMoneyDetails.setType(AccountMoneyDict.ACCOUNT_TYPE_IN);
         contractdetailsTmpService.crtContractTmp(contractdetails,ContractDict.OPERATE_CREATE);
         accountMoneyDetailsService.crtAccountDetails(accountMoneyDetails,contractdetails.getCode(),customer.getCode());
-        accountMoneySumService.crtAccountSum(accountMoneyDetails.getContractCode(),accountMoneyDetails.getCustCode(),accountMoneyDetails.getPayMoney());
         contractdetailsDao.insert(contractdetails);
     }
 
@@ -153,6 +158,16 @@ public class ContractdetailsServiceImpl implements ContractdetailsService {
         updateContractStatus(code,contractdetails.getStatus());
         accountMoneyDetailsService.invalidAccoutByContract(code);
         contractdetailsTmpService.crtContractTmp(contractdetails,ContractDict.OPERATE_UPDATE);
+    }
+
+    @Override
+    public List<Map<String,Object>> queryRecentNewContract(String contractTimeLimit) {
+        return    contractdetailsDao.queryRecentNewContract(contractTimeLimit,new Date());
+    }
+
+    @Override
+    public List<Map<String,Object>> queryRecentOverTimeContract(String contractTimeLimit) {
+     return    contractdetailsDao.queryRecentOverTimeContract(contractTimeLimit,new Date());
     }
 
 

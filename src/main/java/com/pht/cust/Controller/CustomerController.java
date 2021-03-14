@@ -14,6 +14,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 
 @Controller
 @RequestMapping("/customer")
@@ -64,5 +65,11 @@ public class CustomerController {
         customerParam.setCode(code);
         customerService.update(customerParam,customer);
         return CommonResult.success(true);
+    }
+    @ResponseBody
+    @RequestMapping("/recentNewCust")
+    public CommonResult queryRecentNewCust(){
+        List<Customer> customers =customerService.queryRecentNewCust();
+        return CommonResult.success(customers);
     }
 }

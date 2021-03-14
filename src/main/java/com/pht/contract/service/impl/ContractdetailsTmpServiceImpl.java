@@ -1,5 +1,6 @@
 package com.pht.contract.service.impl;
 
+import com.pht.base.frame.LoggerFormator;
 import com.pht.config.utils.PersistentUtil;
 import com.pht.contract.entity.Contractdetails;
 import com.pht.contract.entity.ContractdetailsTmp;
@@ -19,6 +20,8 @@ import java.util.Date;
  */
 @Service("contractdetailsTmpService")
 public class ContractdetailsTmpServiceImpl implements ContractdetailsTmpService {
+    private static LoggerFormator logger = LoggerFormator.getLogger(ContractdetailsServiceImpl.class);
+
     @Resource
     private ContractdetailsTmpDao contractdetailsTmpDao;
 

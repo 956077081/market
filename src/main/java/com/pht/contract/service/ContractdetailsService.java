@@ -7,6 +7,7 @@ import com.pht.contract.dto.ContractViews;
 import com.pht.contract.entity.Contractdetails;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * 合同表(Contractdetails)表服务接口
@@ -63,4 +64,18 @@ public interface ContractdetailsService {
     ContractViews getContractDetails(String code);
 
     void delete(String code);
+
+    /**
+     * 获取近期合同
+     * @param contractTimeLimit
+     * @return
+     */
+    List<Map<String,Object>> queryRecentNewContract(String contractTimeLimit);
+
+    /**
+     * 即将过期合同
+     * @param contractTimeLimit
+     * @return
+     */
+    List<Map<String,Object>> queryRecentOverTimeContract(String contractTimeLimit);
 }

@@ -5,6 +5,7 @@ import com.pht.cust.dto.CustomerQueryParam;
 import com.pht.cust.entity.Customer;
 
 import java.util.List;
+import java.util.Map;
 
 public interface CustomerService {
      List<Customer> queryAll();
@@ -16,4 +17,6 @@ public interface CustomerService {
     Customer getByCust3Val(String custType, String idType, String idNum);
 
     void update(CustomerParam customerParam,Customer  customer);
+
+    List<Customer> queryRecentNewCust();
 }

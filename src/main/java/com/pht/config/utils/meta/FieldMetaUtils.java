@@ -1,6 +1,8 @@
 package com.pht.config.utils.meta;
 
+import com.pht.base.frame.LoggerFormator;
 import com.pht.config.utils.QmDateUtils;
+import com.pht.config.utils.QmXmlUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -11,7 +13,7 @@ import java.math.BigDecimal;
 import java.util.Date;
 
 public class FieldMetaUtils {
-    private static Logger log = LoggerFactory.getLogger(FieldMetaUtils.class);
+    private static LoggerFormator log = LoggerFormator.getLogger(FieldMetaUtils.class);
     /**
      * 根据字段类型来转换数据类型
      */

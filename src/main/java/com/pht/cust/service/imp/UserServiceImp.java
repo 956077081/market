@@ -1,5 +1,6 @@
 package com.pht.cust.service.imp;
 
+import com.pht.base.frame.LoggerFormator;
 import com.pht.common.BizException;
 import com.pht.security.bo.AdminUserDetails;
 import com.pht.cust.dao.UseDao;
@@ -17,6 +18,8 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class UserServiceImp implements UserService {
+    private static LoggerFormator logger = LoggerFormator.getLogger(UserServiceImp.class);
+
     @Autowired
     private PasswordEncoder passwordEncoder;
     @Autowired

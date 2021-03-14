@@ -88,4 +88,10 @@
         select  *
         from customer where code =#{code}
     </select>
+
+    <select id="queryRecentNewCust" resultType="com.pht.cust.entity.Customer">
+        select *
+        from customer
+        where <![CDATA[create_time >=date_add(#{curDate,jdbcType=TIMESTAMP},interval  -#{limitDay} day ) and create_time <=#{curDate,jdbcType=TIMESTAMP} ]]>
+    </select>
 </mapper>

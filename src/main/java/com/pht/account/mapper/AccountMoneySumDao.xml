@@ -3,12 +3,7 @@
 <mapper namespace="com.pht.account.dao.AccountMoneySumDao">
     <!--查询单个-->
     <select id="getByCustAndContract" resultType="com.pht.account.entity.AccountMoneySum">
-        select id,
-               contract_code,
-               cust_code,
-               total_money,
-               update_time,
-               create_time
+        select  *
         from market.account_money_sum
         where  cust_code=#{custCode} and contract_code =#{contractCode}
     </select>
@@ -16,8 +11,7 @@
 
     <!--通过实体作为筛选条件查询-->
     <select id="queryAll" resultType="com.pht.account.entity.AccountMoneySum">
-        select
-        id, contract_code, cust_code, total_money, update_time, create_time
+        select *
         from market.account_money_sum
         <where>
             <if test="id != null">
@@ -68,7 +62,7 @@
 
             update_time   = #{updateTime},
 
-            create_time   = #{createTime},
+            create_time   = #{createTime}
             where cust_code = #{custCode} and contract_code =#{contractCode}
     </update>
 
@@ -78,5 +72,11 @@
         from market.account_money_sum
         where cust_code=#{c}
     </delete>
+
+    <select id="calcAndUpdateAccountSum" resultType="java.math.BigDecimal">
+        select sum(case when type='0' then  ifnull(pay_money,0) else  ifnull(pay_money,0)*(-1) end )paymoney
+        from market.account_money_details
+        where cust_code =#{custCode} and  contract_code =#{contractCode}
+    </select>
 </mapper>
 

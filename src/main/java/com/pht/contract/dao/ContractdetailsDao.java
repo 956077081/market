@@ -5,7 +5,9 @@ import com.pht.contract.dto.ContractReturnParam;
 import com.pht.contract.entity.Contractdetails;
 import org.apache.ibatis.annotations.Param;
 
+import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 /**
  * 合同表(Contractdetails)表数据库访问层
@@ -76,6 +78,10 @@ public interface ContractdetailsDao {
 
     String getContractName();
 
-    void updateContractStatus(@Param("code") String code,@Param("status") String status);
+    void updateContractStatus(@Param("code") String code, @Param("status") String status);
+
+    List<Map<String, Object>> queryRecentNewContract(@Param("contractTimeLimit") String contractTimeLimit, @Param("curTime") Date date);
+
+    List<Map<String, Object>> queryRecentOverTimeContract(@Param("contractTimeLimit") String contractTimeLimit, @Param("curTime") Date date);
 }
 

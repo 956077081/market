@@ -18,8 +18,8 @@ public class CommonResult<T> {
     public static <T> CommonResult<T> success( T data){
         return new CommonResult<T>(ResultCode.SUCCESS.getCode(),ResultCode.SUCCESS.getMessage(),data);
     }
-    public static <T> CommonResult<T> failed(String mess, T data){
-        return new CommonResult<T>(ResultCode.Fail.getCode(),mess,data);
+    public static <T> CommonResult<T> failed(String mess){
+        return new CommonResult<T>(ResultCode.Fail.getCode(),mess,null);
     }
     public static <T> CommonResult<T> failed( ){
         return new CommonResult<T>(ResultCode.Fail.getCode(),ResultCode.Fail.getMessage(),null);

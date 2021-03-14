@@ -4,6 +4,7 @@ import com.pht.account.entity.AccountMoneyDetails;
 import com.pht.account.entity.AccountMoneySum;
 import com.pht.account.dao.AccountMoneySumDao;
 import com.pht.account.service.AccountMoneySumService;
+import com.pht.base.frame.LoggerFormator;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -19,9 +20,13 @@ import java.util.List;
  */
 @Service("accountMoneySumService")
 public class AccountMoneySumServiceImpl implements AccountMoneySumService {
+    private static LoggerFormator logger = LoggerFormator.getLogger(AccountMoneySumServiceImpl.class);
     @Resource
     private AccountMoneySumDao accountMoneySumDao;
 
+    public AccountMoneySum getAccountSum(String custCode,String contractCode){
+      return   accountMoneySumDao.getByCustAndContract(custCode,contractCode);
+    }
     /**
      * 新增数据
      *
@@ -46,19 +51,29 @@ public class AccountMoneySumServiceImpl implements AccountMoneySumService {
     }
 
 
+
     @Override
-    public void crtAccountSum(String contractCode, String custCode, BigDecimal sumMoney) {
-        AccountMoneySum sum = new AccountMoneySum();
-        sum.setCustCode(custCode);
-        sum.setContractCode(contractCode);
-        sum.setTotalMoney(sumMoney);
-        sum.setUpdateTime(new Date());
-        sum.setCreateTime(new Date());
-        insert(sum);
+    public void crtOrUpdateAccountSum(String contractCode, String custCode, BigDecimal sumMoney) {
+        AccountMoneySum accountSum = getAccountSum(custCode, contractCode);
+        if(accountSum == null){
+            AccountMoneySum sum = new AccountMoneySum();
+            sum.setCustCode(custCode);
+            sum.setContractCode(contractCode);
+            sum.setTotalMoney(sumMoney);
+            sum.setUpdateTime(new Date());
+            sum.setCreateTime(new Date());
+            insert(sum);
+        }else{
+            accountSum.setUpdateTime(new Date());
+            accountSum.setTotalMoney(sumMoney);
+            update(accountSum);
+        }
+
     }
 
     @Override
     public BigDecimal calcAndUpdateAccountSum(String contractCode, String custCode) {
-        return null;
+       BigDecimal sum= accountMoneySumDao.calcAndUpdateAccountSum(contractCode,custCode);
+        return sum;
     }
 }

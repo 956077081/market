@@ -2,8 +2,11 @@ package com.pht.account.dao;
 
 import com.pht.account.entity.AccountMoneyDetails;
 import org.apache.ibatis.annotations.Param;
+import org.springframework.security.core.parameters.P;
 
+import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 /**
  * 支付金额明细(AccountMoneyDetails)表数据库访问层
@@ -67,5 +70,7 @@ public interface AccountMoneyDetailsDao {
     List<AccountMoneyDetails> queryByContractCode(@Param("contractCode") String contractCode);
 
     void invalidAccoutByContract(@Param("contractCode") String contractCode);
+
+    List<Map<String, Object>> queryRecentNewPayDetails(@Param("timeLimie")String timeLimit, @Param("curDate")Date date);
 }
 

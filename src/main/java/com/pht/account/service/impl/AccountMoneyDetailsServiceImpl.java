@@ -6,10 +6,13 @@ import com.pht.account.entity.AccountMoneyDetails;
 import com.pht.account.dao.AccountMoneyDetailsDao;
 import com.pht.account.service.AccountMoneyDetailsService;
 import com.pht.account.service.AccountMoneySumService;
+import com.pht.base.frame.LoggerFormator;
 import com.pht.base.frame.QMENV;
+import com.pht.base.system.constant.SysParam;
 import com.pht.common.BizException;
 import com.pht.config.utils.PersistentUtil;
 import com.pht.config.utils.QmDataConvertUtils;
+import com.pht.config.utils.SysParamFactory;
 import com.pht.contract.entity.Contractdetails;
 import com.pht.contract.service.ContractdetailsService;
 import com.pht.cust.service.CustomerService;
@@ -20,8 +23,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 /**
  * 支付金额明细(AccountMoneyDetails)表服务实现类
@@ -31,7 +36,7 @@ import java.util.List;
  */
 @Service("accountMoneyDetailsService")
 public class AccountMoneyDetailsServiceImpl implements AccountMoneyDetailsService {
-    private static Logger logger = LoggerFactory.getLogger(AccountMoneyDetailsServiceImpl.class);
+    private static LoggerFormator logger = LoggerFormator.getLogger(AccountMoneyDetailsServiceImpl.class);
     @Autowired
     private CustomerService customerService;
     @Autowired
@@ -75,7 +80,6 @@ public class AccountMoneyDetailsServiceImpl implements AccountMoneyDetailsServic
         AccountMoneyDetails accountMoneyDetails =new AccountMoneyDetails();
         BeanUtils.copyProperties(accountMoneyParam,accountMoneyDetails);
         crtAccountDetails(accountMoneyDetails,contractCode,contractdetails.getCustCode());
-        accountMoneySumService.calcAndUpdateAccountSum(contractdetails.getCode(),contractdetails.getCustCode());
         return accountMoneyDetails;
     }
 
@@ -112,7 +116,15 @@ public class AccountMoneyDetailsServiceImpl implements AccountMoneyDetailsServic
         accountMoneyDetails.setUpdateTime(new Date());
         accountMoneyDetails.setOperatorCode(QMENV.getUser().userCode);
         accountMoneyDetails.setOperatorName(QMENV.getUser().userName);
-        this.insert(accountMoneyDetails);
+        BigDecimal payMoneyAll = accountMoneySumService.calcAndUpdateAccountSum(contractCode, custCode);
+        if(payMoneyAll==null){
+            payMoneyAll=new BigDecimal(0);
+        }
+        if(AccountMoneyDict.ACCOUNT_TYPE_OUT.equals(accountMoneyDetails.getType())&&payMoneyAll.compareTo(accountMoneyDetails.getPayMoney())<0){
+            throw new BizException("账户金额不够扣减！");
+        }
+        this.insert(accountMoneyDetails);//打款
+        accountMoneySumService.crtOrUpdateAccountSum(contractCode,custCode,accountMoneyDetails.getPayMoney());//打款金额
         return accountMoneyDetails;
     }
 
@@ -124,5 +136,11 @@ public class AccountMoneyDetailsServiceImpl implements AccountMoneyDetailsServic
     @Override
     public void invalidAccoutByContract(String contractCode) {
          accountMoneyDetailsDao.invalidAccoutByContract(contractCode);
+    }
+
+    @Override
+    public List<Map<String,Object>> queryRecentNewPayDetails() {
+        String timeLimit = SysParamFactory.getSysParam(SysParam.recentPayLimit, "7");
+        return   accountMoneyDetailsDao.queryRecentNewPayDetails(timeLimit,new Date());
     }
 }

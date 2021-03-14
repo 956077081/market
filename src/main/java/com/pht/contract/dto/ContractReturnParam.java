@@ -9,7 +9,6 @@ public class ContractReturnParam extends Contractdetails {
     private String custName;
     private String idType;
     private String idNum;
-
     public String getCustType() {
         return custType;
     }

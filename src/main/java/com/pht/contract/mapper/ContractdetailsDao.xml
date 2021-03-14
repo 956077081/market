@@ -2,7 +2,29 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.pht.contract.dao.ContractdetailsDao">
 
-
+    <resultMap id="BaseResultMap" type="hashmap">
+        <result property="id" column="id" jdbcType="INTEGER"/>
+        <result property="code" column="code" jdbcType="VARCHAR"/>
+        <result property="custCode" column="cust_code" jdbcType="VARCHAR"/>
+        <result property="contractName" column="contract_name" jdbcType="VARCHAR"/>
+        <result property="startTime" column="start_time" jdbcType="TIMESTAMP"/>
+        <result property="endTime" column="end_time" jdbcType="TIMESTAMP"/>
+        <result property="term" column="term" jdbcType="VARCHAR"/>
+        <result property="totalMoney" column="total_money" jdbcType="NUMERIC"/>
+        <result property="status" column="status" jdbcType="VARCHAR"/>
+        <result property="type" column="type" jdbcType="VARCHAR"/>
+        <result property="memo" column="memo" jdbcType="VARCHAR"/>
+        <result property="managerCode" column="manager_code" jdbcType="VARCHAR"/>
+        <result property="operatorCode" column="operator_code" jdbcType="VARCHAR"/>
+        <result property="operatorName" column="operator_name" jdbcType="VARCHAR"/>
+        <result property="updateTime" column="update_time" jdbcType="TIMESTAMP"/>
+        <result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
+        <result property="custName" column="cust_name" jdbcType="VARCHAR"/>
+        <result property="custType" column="cust_type" jdbcType="VARCHAR"/>
+        <result property="idType" column="id_type" jdbcType="VARCHAR"/>
+        <result property="idNum" column="id_num" jdbcType="VARCHAR"/>
+        <result property="phone" column="phone" jdbcType="VARCHAR"/>
+    </resultMap>
     <!--查询单个-->
     <select id="getByCode" resultType="com.pht.contract.entity.Contractdetails">
         select  *
@@ -152,6 +174,9 @@
         select *,b.cust_name,b.cust_type,b.id_type,b.id_num
         from market.contractdetails a left join market.customer b on a.cust_code =b.code
         <where>
+            <if test='contractQueryParam.contractName != "" and contractQueryParam.contractName != null '>
+                and a.contract_name like concat("%",#{contractQueryParam.contractName},"%")
+            </if>
             <if test='contractQueryParam.custName != "" and contractQueryParam.custName != null '>
                   and b.cust_name like concat("%",#{contractQueryParam.custName},"%")
             </if>
@@ -182,5 +207,26 @@
         select concat('第',count(*)+1,'号合同')
         from market.contractdetails ;
     </select>
+
+    <select id="queryRecentNewContract"  resultMap="BaseResultMap">
+        select a.*,b.cust_name,b.cust_type,b.id_type,b.id_num,b.phone
+        from market.contractdetails a left join  market.customer b on a.cust_code =b.code
+        where
+          <![CDATA[
+                a.create_time >=date_add(#{curTime,jdbcType=TIMESTAMP},interval  -${contractTimeLimit} DAY )  and a.create_time <=#{curTime,jdbcType=TIMESTAMP}
+          ]]>
+        order by a.create_time DESC
+    </select>
+    <select id="queryRecentOverTimeContract" resultMap="BaseResultMap">
+        select a.*,b.cust_name,b.cust_type,b.id_type,b.id_num,b.phone
+        from market.contractdetails a left join  market.customer b on a.cust_code =b.code
+        where
+          <![CDATA[
+                a.end_time >=date_add(#{curTime,jdbcType=TIMESTAMP},interval  -${contractTimeLimit} DAY )  and a.end_time <=#{curTime,jdbcType=TIMESTAMP}
+          ]]>
+          and a.status ='01'
+        order by a.end_time DESC
+    </select>
+
 </mapper>
 

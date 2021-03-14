@@ -1,5 +1,6 @@
 package com.pht.config.utils;
 
+import com.pht.base.frame.LoggerFormator;
 import org.apache.commons.lang3.time.DateFormatUtils;
 import org.apache.commons.lang3.time.DateUtils;
 import org.slf4j.Logger;
@@ -14,7 +15,7 @@ import java.util.Locale;
 
 public class QmDateUtils extends DateUtils {
 
-    private static final Logger logger = LoggerFactory.getLogger(DateUtils.class);
+    private static LoggerFormator log = LoggerFormator.getLogger(QmDateUtils.class);
     private static final String[] parsePatterns = {"yyyy-MM-dd", "yyyy-MM-dd HH:mm:ss", "yyyy-MM-dd HH:mm", "yyyy-MM", "yyyy/MM/dd", "yyyy/MM/dd HH:mm:ss", "yyyy/MM/dd HH:mm", "yyyy/MM",
             "yyyy.MM.dd", "yyyy.MM.dd HH:mm:ss", "yyyy.MM.dd HH:mm", "yyyy.MM", "yyyyMMdd", "yyyyMMddHHmmss"};
 
@@ -37,7 +38,7 @@ public class QmDateUtils extends DateUtils {
             Date end = parseDate(endDate, DATE_PATTERN);
             return getDaysFromDate(begin, end);
         } catch (ParseException e) {
-            logger.error("parse date error", e);
+            log.error("parse date error", e);
             throw new RuntimeException(e);
         }
     }
@@ -488,7 +489,7 @@ public class QmDateUtils extends DateUtils {
             Date date = parseDate(dailyDate, DATE_PATTERN);
             return DateFormatUtils.format(addDays(date, i), DATE_PATTERN);
         } catch (ParseException e) {
-            logger.error("parse date error", e);
+            log.error("parse date error", e);
             throw new RuntimeException(e);
         }
     }

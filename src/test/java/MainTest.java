@@ -4,10 +4,13 @@ import com.pht.cust.dto.CustomerQueryParam;
 import com.pht.cust.entity.User;
 import com.pht.cust.service.CustomerService;
 import com.pht.cust.service.UserService;
+import com.pht.security.bo.AdminUserDetails;
+import com.pht.security.util.JwtTokenUtil;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -17,30 +20,22 @@ public class MainTest {
     UserService userService;
 @Autowired
     CustomerService customerService;
-    @Test
-    public void testUser(){
-        User user =  userService.getUserByUserName("pht");
-        System.out.println(user);
-    }
+@Autowired
+    JwtTokenUtil jwtTokenUtil;
+
+    /**
+     * 生成 登录token
+     */
     @Test
     public void testCustomerCrt(){
-        CustomerParam customerParam= new CustomerParam();
-        customerParam.setCustType("00");
-        customerParam.setCustName("张三");
-        customerParam.setIdNum("610321199603122772");
-        customerService.save(customerParam);
+        User user = new User();
+        user.setUserName("admin");
+        user.setPassWord("123456");
+        UserDetails userDetails = new AdminUserDetails(user);
+        String s = jwtTokenUtil.generateToken(userDetails);
+        System.out.println(s);
+
     }
 
-    @Test
-    public void queryList(){
-        CustomerQueryParam customerQueryParam = new CustomerQueryParam();
-        customerQueryParam.setIdType("00");
-        customerQueryParam.setIdNum("610321199603122772");
-        customerQueryParam.setCustName("新");
-
-
-        customerQueryParam.setProfession("");
-        customerService.queryList(customerQueryParam,1,1);
-    }
 
 }

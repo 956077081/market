@@ -1,7 +1,10 @@
 package com.pht.contract.controller;
 
+import com.pht.base.system.constant.SysParam;
 import com.pht.common.CommonPage;
 import com.pht.common.CommonResult;
+import com.pht.config.utils.QmDataConvertUtils;
+import com.pht.config.utils.SysParamFactory;
 import com.pht.contract.dto.ContractParams;
 import com.pht.contract.dto.ContractQueryParam;
 import com.pht.contract.dto.ContractReturnParam;
@@ -13,6 +16,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import java.util.List;
+import java.util.Map;
 
 /**
  * 合同表(Contractdetails)表控制层
@@ -28,8 +32,6 @@ public class ContractdetailsController {
      */
     @Autowired
     private ContractdetailsService contractdetailsService;
-
-
 
     @RequestMapping("/list")
     public CommonResult list(ContractQueryParam contractQueryParam, @RequestParam(value = "pageSize", defaultValue = "10") Integer pageSize, @RequestParam(value = "currPage", defaultValue = "1") Integer currPage){
@@ -64,6 +66,28 @@ public class ContractdetailsController {
     public CommonResult  delete(@RequestParam(required = true,name = "code") String code){
         contractdetailsService.delete(code);
         return CommonResult.success(true);
+    }
+
+    /**
+     * 近期创建合同
+     * @return
+     */
+    @RequestMapping("/recentNewContracts")
+    public CommonResult queryRecentNewContract(){
+        String contractTimeLimit = SysParamFactory.getSysParam(SysParam.recentContractLimit, "7");
+       List<Map<String,Object>> contractdetails= contractdetailsService.queryRecentNewContract(contractTimeLimit);
+        return CommonResult.success(contractdetails);
+    }
+
+    /**
+     * 即将到期合同
+     * @return
+     */
+    @RequestMapping("/recentOverContracts")
+    public CommonResult queryRecentOverTimeContract(){
+        String contractTimeLimit = SysParamFactory.getSysParam(SysParam.overTimeContractLimit, "7");
+        List<Map<String,Object>> contractdetails= contractdetailsService.queryRecentOverTimeContract(contractTimeLimit);
+        return CommonResult.success(contractdetails);
     }
 
 }

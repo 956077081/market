@@ -3,12 +3,16 @@ package com.pht.account.controller;
 import com.pht.account.dto.AccountMoneyParam;
 import com.pht.account.entity.AccountMoneyDetails;
 import com.pht.account.service.AccountMoneyDetailsService;
+import com.pht.common.BizException;
+import com.pht.common.CommonResult;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import java.util.List;
+import java.util.Map;
 
 /**
  * 支付金额明细(AccountMoneyDetails)表控制层
@@ -27,8 +31,18 @@ public class AccountMoneyDetailsController {
 
 
     @RequestMapping("/insert" )
-    public void insert(@RequestBody @Validated AccountMoneyParam accountMoneyParam){
+    public CommonResult insert(@RequestBody @Validated AccountMoneyParam accountMoneyParam){
         accountMoneyDetailsService.insert(accountMoneyParam);
+        return CommonResult.success(true);
+    }
 
+    /**
+     * 近期打款
+     * @return
+     */
+    @RequestMapping("/recentNewPayDetails")
+    public CommonResult recentNewPayDetails(){
+        List<Map<String,Object>> lists=  accountMoneyDetailsService.queryRecentNewPayDetails();
+        return CommonResult.success(lists);
     }
 }

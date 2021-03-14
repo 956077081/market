@@ -4,7 +4,9 @@ import com.pht.cust.dto.CustomerQueryParam;
 import com.pht.cust.entity.Customer;
 import org.apache.ibatis.annotations.Param;
 
+import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 public interface CustomerDao {
     List<Customer> queryAll();
@@ -17,4 +19,6 @@ public interface CustomerDao {
     List<Customer> queryList(@Param("customerQueryParam") CustomerQueryParam customerQueryParam);
 
     Customer getByCode(@Param("code") String code);
+
+    List<Customer> queryRecentNewCust(@Param("limitDay") String recentNewCustlimit,@Param("curDate") Date date);
 }

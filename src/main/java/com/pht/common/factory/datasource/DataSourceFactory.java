@@ -2,6 +2,8 @@ package com.pht.common.factory.datasource;
 
 import com.alibaba.druid.filter.logging.Slf4jLogFilter;
 import com.alibaba.druid.pool.DruidDataSource;
+import com.pht.account.service.impl.AccountMoneyDetailsServiceImpl;
+import com.pht.base.frame.LoggerFormator;
 import com.pht.common.CommonDict;
 import com.pht.base.frame.QMENV;
 import com.pht.config.utils.QmDataConvertUtils;
@@ -15,11 +17,11 @@ import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 
 public class DataSourceFactory  {
-    private static Logger log = LoggerFactory.getLogger(DataSourceFactory.class);
+    private static LoggerFormator log = LoggerFormator.getLogger(DataSourceFactory.class);
     @Autowired
     private DefDataSourceConfig defDataSourceConfig;
     private static DataSource defaultDataSource=null;
-    private static JdbcServerConfig defaultServerConfig =null;
+    private static JdbcServerConfig defaultServerConfig =new JdbcServerConfig();
     private static Map<Object,Object> dataSourceMap= new ConcurrentHashMap<>();
     private static Map<String,JdbcServerConfig> compServers =new HashMap<>();
     private static List<String> compCodes= new ArrayList();

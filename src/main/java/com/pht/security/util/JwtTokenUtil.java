@@ -1,5 +1,9 @@
 package com.pht.security.util;
 
+import com.pht.base.frame.LoggerFormator;
+import com.pht.base.frame.QMENV;
+import com.pht.config.utils.meta.FieldMetaUtils;
+import com.pht.security.config.JwtAuthenticationTokenFilter;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jws;
 import io.jsonwebtoken.Jwts;
@@ -14,7 +18,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class JwtTokenUtil {
-    private static final Logger logger =LoggerFactory.getLogger(JwtTokenUtil.class);
+    private static LoggerFormator logger = LoggerFormator.getLogger(JwtTokenUtil.class);
     private static final String CLAIM_KEY_USUERNAME ="sub";
     private static final String CLAIM_KEY_CREATE_TIME="created";
     private static final String CLAIM_KEY_EXP ="exp";
@@ -25,6 +29,9 @@ public class JwtTokenUtil {
     /**
      * 更具用户信息生成token
      */
+    private String getCompSecret(){
+        return new StringBuffer(secret).append(QMENV.getCompCode()).toString();
+    }
     public  String generateToken(UserDetails userDetails){
         Map<String,Object> claims =new HashMap<>();
         claims.put(CLAIM_KEY_USUERNAME,userDetails.getUsername());
@@ -32,7 +39,7 @@ public class JwtTokenUtil {
         return generateToken(claims);
     }
     private  String  generateToken(Map<String,Object> claim){
-        return Jwts.builder().setClaims(claim).setExpiration(generateExpirationDate()).signWith(SignatureAlgorithm.HS512,secret).compact();
+        return Jwts.builder().setClaims(claim).setExpiration(generateExpirationDate()).signWith(SignatureAlgorithm.HS512,getCompSecret()).compact();
     }
     /**
      * 从token中获取登录用户名
@@ -54,7 +61,7 @@ public class JwtTokenUtil {
         Claims claims = null;
         try {
             claims = Jwts.parser()
-                    .setSigningKey(secret)
+                    .setSigningKey(getCompSecret())
                     .parseClaimsJws(token)
                     .getBody();
         } catch (Exception e) {

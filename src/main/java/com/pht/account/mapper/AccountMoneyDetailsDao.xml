@@ -1,22 +1,29 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.pht.account.dao.AccountMoneyDetailsDao">
+    <resultMap id="BaseResultMap" type="hashmap">
+        <!--@Table account_money_details-->
+        <result property="id" column="id" jdbcType="INTEGER"/>
+        <result property="code" column="code" jdbcType="VARCHAR"/>
+        <result property="custCode" column="cust_code" jdbcType="VARCHAR"/>
+        <result property="contractCode" column="contract_code" jdbcType="VARCHAR"/>
+        <result property="status" column="status" jdbcType="VARCHAR"/>
+        <result property="payMethod" column="pay_method" jdbcType="VARCHAR"/>
+        <result property="payType" column="pay_type" jdbcType="VARCHAR"/>
+        <result property="accountNum" column="account_num" jdbcType="VARCHAR"/>
+        <result property="payMoney" column="pay_money" jdbcType="NUMERIC"/>
+        <result property="type" column="type" jdbcType="VARCHAR"/>
+        <result property="operatorCode" column="operator_code" jdbcType="VARCHAR"/>
+        <result property="operatorName" column="operator_name" jdbcType="VARCHAR"/>
+        <result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
+        <result property="updateTime" column="update_time" jdbcType="TIMESTAMP"/>
+        <result property="contractName" column="contract_name" jdbcType="VARCHAR"/>
+        <result property="custName" column="cust_name" jdbcType="VARCHAR"/>
+        <result property="idNum" column="id_num" jdbcType="VARCHAR"/>
+    </resultMap>
     <!--查询单个-->
     <select id="getByCode" resultType="com.pht.account.entity.AccountMoneyDetails">
-        select id,
-               code,
-               cust_code,
-               contract_code,
-               status,
-               pay_method,
-               pay_type,
-               account_num,
-               pay_money,
-               type,
-               operator_code,
-               operator_name,
-               create_time,
-               update_time
+        select *
         from market.account_money_details
         where code = #{code}
     </select>
@@ -135,12 +142,24 @@
     <select id="queryByContractCode" resultType="com.pht.account.entity.AccountMoneyDetails">
         select *
         from market.account_money_details
-        where contract_code =#{contractCode}
+        where contract_code = #{contractCode}
     </select>
     <update id="invalidAccoutByContract">
-        update  market.account_money_details
+        update market.account_money_details
         set status ='00'
         where contract_code = #{contractCode}
     </update>
+
+    <select id="queryRecentNewPayDetails" resultMap="BaseResultMap">
+        select a.*,b.contract_name,c.cust_name,c.id_num
+        from account_money_details a
+                     left join contractdetails b on a.contract_code = b.code
+                     left join customer c on a.cust_code = c.code
+        where
+        <![CDATA[a.create_time >= date_add(#{curDate,jdbcType=TIMESTAMP}, interval -#{timeLimie,jdbcType=VARCHAR} day)
+          and a.create_time <= #{curDate,jdbcType=TIMESTAMP}
+        ]]>
+        order By a.create_time Desc
+    </select>
 </mapper>
 

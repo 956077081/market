@@ -4,6 +4,7 @@ import com.pht.account.dto.AccountMoneyParam;
 import com.pht.account.entity.AccountMoneyDetails;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * 支付金额明细(AccountMoneyDetails)表服务接口
@@ -55,5 +56,7 @@ public interface AccountMoneyDetailsService {
 
     List<AccountMoneyDetails> queryByContractCode(String contractCode);
      void invalidAccoutByContract(String contractCode);
+
+    List<Map<String,Object>> queryRecentNewPayDetails();
 }
 

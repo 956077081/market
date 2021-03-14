@@ -1,9 +1,11 @@
 package com.pht.security.config;
 
+import com.pht.base.frame.LoggerFormator;
 import com.pht.common.factory.datasource.DataSourceFactory;
 import com.pht.base.frame.QMENV;
 import com.pht.base.frame.QMRunTimeContext;
 import com.pht.base.frame.UserInfo;
+import com.pht.config.utils.meta.FieldMetaUtils;
 import com.pht.cust.entity.User;
 import com.pht.cust.service.UserService;
 import com.pht.security.util.JwtTokenUtil;
@@ -35,7 +37,7 @@ import java.util.List;
  * OncePerRequestFilter Filter 保证在一次请求 只执行一次
  */
 public class JwtAuthenticationTokenFilter extends OncePerRequestFilter {
-    private static final Logger log = LoggerFactory.getLogger(JwtAuthenticationTokenFilter.class);
+    private static LoggerFormator log = LoggerFormator.getLogger(JwtAuthenticationTokenFilter.class);
     @Autowired
     private UserDetailsService userDetailsService;
     @Autowired

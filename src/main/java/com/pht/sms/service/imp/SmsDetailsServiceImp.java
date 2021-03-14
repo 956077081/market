@@ -1,8 +1,10 @@
 package com.pht.sms.service.imp;
 
+import com.pht.base.frame.LoggerFormator;
 import com.pht.common.CommonDict;
 import com.pht.base.frame.QMENV;
 import com.pht.cust.entity.Customer;
+import com.pht.cust.service.imp.UserServiceImp;
 import com.pht.sms.constant.SmsDict;
 import com.pht.sms.dao.SmsDetailsDao;
 import com.pht.sms.dto.SmsRet;
@@ -19,6 +21,8 @@ import java.math.BigDecimal;
 import java.util.Map;
 
 public class SmsDetailsServiceImp implements SmsDetailsService {
+    private static LoggerFormator logger = LoggerFormator.getLogger(SmsDetailsServiceImp.class);
+
     @Autowired
     private SmsDetailsDao smsDetailsDao;
     @Autowired
