@@ -1,12 +1,16 @@
-package com.pht.cust.service.imp;
+package com.pht.cust.service.impI;
 
 import com.pht.base.frame.LoggerFormator;
 import com.pht.common.BizException;
+import com.pht.common.CommonDict;
+import com.pht.config.utils.PersistentUtil;
+import com.pht.cust.constant.CustDict;
 import com.pht.security.bo.AdminUserDetails;
 import com.pht.cust.dao.UseDao;
 import com.pht.cust.entity.User;
 import com.pht.cust.service.UserService;
 import com.pht.security.util.JwtTokenUtil;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -15,6 +19,8 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+
+import java.util.Date;
 
 @Service
 public class UserServiceImp implements UserService {
@@ -54,5 +60,22 @@ public class UserServiceImp implements UserService {
     @Override
     public User getUserByUserName(String userNmae) {
         return userDao.getUserByName(userNmae);
+    }
+
+    @Override
+    public User insert(User user) {
+        userDao.insert(user);
+        return user;
+    }
+    public User crtUser(String userName){
+        User user = new User();
+        user.setUserName(userName);
+        user.setPassWord(passwordEncoder.encode("1111111"));//默认密码1111111
+        user.setCode(PersistentUtil.getBizEntity(User.class));
+        user.setStatus(CommonDict.VALID);
+        user.setCreateTime(new Date());
+        user.setUserType(CustDict.USERCUSTTYPE_EMPLOYEE);
+        insert(user);
+        return user;
     }
 }

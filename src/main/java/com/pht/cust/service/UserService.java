@@ -7,5 +7,6 @@ public interface UserService {
      String login(String  userName,String passWord) ;
      UserDetails loadUserDetails(String userName);
      User getUserByUserName(String userNmae);
-
+     User insert(User user);
+     User crtUser(String userName);
 }

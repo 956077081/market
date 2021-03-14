@@ -1,5 +1,6 @@
 package com.pht.security.bo;
 
+import com.pht.common.CommonDict;
 import com.pht.cust.entity.User;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -54,6 +55,6 @@ public class AdminUserDetails implements UserDetails {
 
     @Override
     public boolean isEnabled() {
-        return true;
+        return CommonDict.VALID.equals(user.getStatus());
     }
 }

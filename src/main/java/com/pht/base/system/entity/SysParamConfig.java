@@ -6,42 +6,43 @@ import java.io.Serializable;
 /**
  * 系统配置(SysParamConfig)实体类
  *
- * @author makejava
- * @since 2021-03-04 16:57:13
+ * @author pht
+ * @since 2021-03-14 12:30:40
  */
 public class SysParamConfig implements Serializable {
-    private static final long serialVersionUID = 176823133510999655L;
+    private static final long serialVersionUID = -33398939647793620L;
     /**
-     * 自增id
-     */
+    * 自增id
+    */
     private Long id;
     /**
-     * 级别
-     */
+    * 级别
+
+    */
     private String level;
     /**
-     * 模块
-     */
+    * 模块
+    */
     private String module;
     /**
-     * 配置名称
-     */
+    * 配置名称
+    */
     private String name;
     /**
-     * 描述
-     */
+    * 描述
+    */
     private String dsc;
     /**
-     * 值
-     */
+    * 值
+    */
     private String value;
     /**
-     * 默认值
-     */
+    * 默认值
+    */
     private String defValue;
     /**
-     * 创建时间
-     */
+    * 创建时间
+    */
     private Date createTime;
 
 

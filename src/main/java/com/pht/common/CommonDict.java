@@ -5,4 +5,7 @@ public class CommonDict {
     public static String ERROR = "0";
     public static String YES = "Y";
     public static String NO = "N";
+
+    public static  String VALID="1";
+    public static String INVALID ="0";
 }

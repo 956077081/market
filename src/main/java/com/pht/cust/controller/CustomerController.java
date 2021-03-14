@@ -1,4 +1,4 @@
-package com.pht.cust.Controller;
+package com.pht.cust.controller;
 
 import com.pht.common.BizException;
 import com.pht.common.CommonPage;
@@ -14,7 +14,6 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Map;
 
 @Controller
 @RequestMapping("/customer")

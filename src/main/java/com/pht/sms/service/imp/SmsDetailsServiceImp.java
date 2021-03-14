@@ -4,7 +4,6 @@ import com.pht.base.frame.LoggerFormator;
 import com.pht.common.CommonDict;
 import com.pht.base.frame.QMENV;
 import com.pht.cust.entity.Customer;
-import com.pht.cust.service.imp.UserServiceImp;
 import com.pht.sms.constant.SmsDict;
 import com.pht.sms.dao.SmsDetailsDao;
 import com.pht.sms.dto.SmsRet;

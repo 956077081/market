@@ -6,4 +6,9 @@
               from user
               where user_name =#{userName}
     </select>
+
+    <insert id="insert">
+        insert  into market.user (code, user_name, pass_word, user_type,status)
+        values (#{code},#{userName},#{passWord},#{userType},#{status})
+    </insert>
 </mapper>

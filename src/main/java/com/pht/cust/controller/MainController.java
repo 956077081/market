@@ -1,4 +1,4 @@
-package com.pht.cust.Controller;
+package com.pht.cust.controller;
 
 import com.pht.common.CommonResult;
 import com.pht.common.factory.datasource.DataSourceFactory;
@@ -52,6 +52,7 @@ public class MainController {
         Map<String, Object> map = new HashMap<>();
         map.put("userCode",user.getCode());
         map.put("userName",user.getUserName());
+
         return CommonResult.success(map);
     }
 

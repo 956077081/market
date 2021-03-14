@@ -16,6 +16,8 @@ public class User implements Serializable {
 
     private Date createTime;
 
+    private String status;
+
     private static final long serialVersionUID = 1L;
 
     public Long getId() {
@@ -66,20 +68,24 @@ public class User implements Serializable {
         this.createTime = createTime;
     }
 
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
     @Override
     public String toString() {
-        StringBuilder sb = new StringBuilder();
-        sb.append(getClass().getSimpleName());
-        sb.append(" [");
-        sb.append("Hash = ").append(hashCode());
-        sb.append(", id=").append(id);
-        sb.append(", code=").append(code);
-        sb.append(", userName=").append(userName);
-        sb.append(", passWord=").append(passWord);
-        sb.append(", userType=").append(userType);
-        sb.append(", createTime=").append(createTime);
-        sb.append(", serialVersionUID=").append(serialVersionUID);
-        sb.append("]");
-        return sb.toString();
+        return "User{" +
+                "id=" + id +
+                ", code='" + code + '\'' +
+                ", userName='" + userName + '\'' +
+                ", passWord='" + passWord + '\'' +
+                ", userType='" + userType + '\'' +
+                ", createTime=" + createTime +
+                ", status='" + status + '\'' +
+                '}';
     }
 }
