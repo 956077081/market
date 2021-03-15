@@ -1,8 +1,10 @@
 package com.pht.cust.service;
 
+import com.pht.cust.dto.EmployeeQueryParam;
 import com.pht.cust.dto.EmployeeResourceParam;
 import com.pht.cust.entity.Employee;
 import java.util.List;
+import java.util.Map;
 
 /**
  * 员工(Employee)表服务接口
@@ -52,4 +54,5 @@ public interface EmployeeService {
      */
     boolean deleteByCode(String code);
 
+    List<Map<String, Object>> queryList(EmployeeQueryParam employeeQueryParam, Integer curPage, Integer pageSize);
 }

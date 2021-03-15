@@ -9,4 +9,8 @@ public interface UserService {
      User getUserByUserName(String userNmae);
      User insert(User user);
      User crtUser(String userName);
+
+    User getUserByCode(String usercode);
+
+     void operateStatus(String usercode, String operStatus);
 }

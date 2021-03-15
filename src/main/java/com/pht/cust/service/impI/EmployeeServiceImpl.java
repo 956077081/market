@@ -1,5 +1,6 @@
 package com.pht.cust.service.impI;
 
+import com.github.pagehelper.PageHelper;
 import com.pht.base.role.entity.SysRoleLnkEmployee;
 import com.pht.base.role.entity.SysRoleType;
 import com.pht.base.role.service.SysRoleLnkEmployeeService;
@@ -7,6 +8,7 @@ import com.pht.common.BizException;
 import com.pht.common.CommonResult;
 import com.pht.config.utils.PersistentUtil;
 import com.pht.cust.constant.CustDict;
+import com.pht.cust.dto.EmployeeQueryParam;
 import com.pht.cust.dto.EmployeeResourceParam;
 import com.pht.cust.entity.Employee;
 import com.pht.cust.dao.EmployeeDao;
@@ -23,6 +25,7 @@ import javax.annotation.Resource;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 /**
  * 员工(Employee)表服务实现类
@@ -38,6 +41,7 @@ public class EmployeeServiceImpl implements EmployeeService {
     private UserService userService;
     @Autowired
     private SysRoleLnkEmployeeService sysRoleLnkEmployeeService;
+
     /**
      * 通过ID查询单条数据
      *
@@ -45,7 +49,7 @@ public class EmployeeServiceImpl implements EmployeeService {
      * @return 实例对象
      */
     @Override
-    public Employee queryByCode(String  code) {
+    public Employee queryByCode(String code) {
         return this.employeeDao.queryByCode(code);
     }
 
@@ -64,13 +68,16 @@ public class EmployeeServiceImpl implements EmployeeService {
     @Override
     @Transactional
     public Employee insert(@RequestBody EmployeeResourceParam employeeResourceParam) {
-        Employee employee =employeeResourceParam.getEmployee();//员工信息
-        String [] sysRoleType = employeeResourceParam.getSysRoleType();//角色
-        if( employee ==null){
+        Employee employee = employeeResourceParam.getEmployee();//员工信息
+        String[] sysRoleType = employeeResourceParam.getSysRoleType();//角色
+        if (employee == null) {
             throw new BizException("创建员工失败！员工信息不全");
         }
-        if(StringUtils.isBlank(employee.getCardNum())){
-            throw  new BizException("创建员工失败，员工编号不能为空");
+        if (StringUtils.isBlank(employee.getCardNum())) {
+            throw new BizException("创建员工失败，员工编号不能为空");
+        }
+        if (employeeDao.getByCardNum(employee.getCardNum()) != null) {
+            throw new BizException("创建员工失败，该员工编号已被占用！");
         }
         User user = userService.crtUser(employee.getCardNum());//创建用户登录账户
         employee.setUserCode(user.getCode());
@@ -78,7 +85,7 @@ public class EmployeeServiceImpl implements EmployeeService {
         employee.setIdType(CustDict.PERIDTYPE_PASSPORT);
         crtEmployee(employee);//创建员工
         List<SysRoleLnkEmployee> list = new ArrayList<>();
-        if(sysRoleType !=null){
+        if (sysRoleType != null) {
             for (String roleType : sysRoleType) {
                 SysRoleLnkEmployee lnkEmployee = new SysRoleLnkEmployee();
                 lnkEmployee.setEmployeeCode(employee.getCode());
@@ -92,7 +99,7 @@ public class EmployeeServiceImpl implements EmployeeService {
 
     }
 
-    private Employee crtEmployee(Employee employee){
+    private Employee crtEmployee(Employee employee) {
         employee.setCode(PersistentUtil.getBizEntity(Employee.class));
         employee.setCreateTime(new Date());
         employee.setUpdateTime(new Date());
@@ -121,5 +128,11 @@ public class EmployeeServiceImpl implements EmployeeService {
     @Override
     public boolean deleteByCode(String code) {
         return this.employeeDao.deleteByCode(code) > 0;
+    }
+
+    @Override
+    public List<Map<String, Object>> queryList(EmployeeQueryParam employeeQueryParam, Integer curPage, Integer pageSize) {
+        PageHelper.startPage(curPage, pageSize);
+        return employeeDao.queryList(employeeQueryParam);
     }
 }

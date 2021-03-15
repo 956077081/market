@@ -11,4 +11,14 @@
         insert  into market.user (code, user_name, pass_word, user_type,status)
         values (#{code},#{userName},#{passWord},#{userType},#{status})
     </insert>
+
+    <select id="getUserByCode" resultType="com.pht.cust.entity.User">
+        select *
+        from  market.user
+        where code =#{code}
+    </select>
+
+    <update id="updateUserStatus">
+        update  market.user set  status=#{status} where code=#{code}
+    </update>
 </mapper>

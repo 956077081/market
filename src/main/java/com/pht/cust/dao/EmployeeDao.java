@@ -1,8 +1,10 @@
 package com.pht.cust.dao;
 
+import com.pht.cust.dto.EmployeeQueryParam;
 import com.pht.cust.entity.Employee;
 import org.apache.ibatis.annotations.Param;
 import java.util.List;
+import java.util.Map;
 
 /**
  * 员工(Employee)表数据库访问层
@@ -52,4 +54,7 @@ public interface EmployeeDao {
      */
     int deleteByCode(String code);
 
+    List<Map<String, Object>> queryList(EmployeeQueryParam employeeQueryParam);
+
+    Employee getByCardNum(@Param("cardNum") String cardNum);
 }

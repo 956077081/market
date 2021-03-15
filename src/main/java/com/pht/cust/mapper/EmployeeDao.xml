@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.pht.cust.dao.EmployeeDao">
-
-    <resultMap id="BaseResultMap" type="com.pht.cust.entity.Employee">
+    <resultMap id="BaseResultMap" type="hashmap">
         <!--@Table employee-->
         <result property="id" column="id" jdbcType="INTEGER"/>
         <result property="code" column="code" jdbcType="VARCHAR"/>
@@ -15,6 +14,9 @@
         <result property="phone" column="phone" jdbcType="VARCHAR"/>
         <result property="updateTime" column="update_time" jdbcType="TIMESTAMP"/>
         <result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
+        <result property="roleType" column="role_type" jdbcType="VARCHAR"/>
+        <result property="roleName" column="role_name" jdbcType="VARCHAR"/>
+        <result property="status" column="status" jdbcType="VARCHAR"/>
     </resultMap>
 
     <!--查询单个-->
@@ -23,7 +25,6 @@
         from market.employee
         where code = #{code}
     </select>
-
 
 
     <!--通过实体作为筛选条件查询-->
@@ -68,30 +69,70 @@
     </select>
 
     <!--新增所有列-->
-    <insert id="insert" >
-        insert into market.employee(user_code, code,card_num, cust_name, cust_type, id_type, id_num,phone, update_time, create_time)
-        values (#{userCode}, #{code}, #{cardNum},#{custName}, #{custType}, #{idType}, #{idNum},#{phone}, #{updateTime}, #{createTime})
+    <insert id="insert">
+        insert into market.employee(user_code, code, card_num, cust_name, cust_type, id_type, id_num, phone,
+                                    update_time, create_time)
+        values (#{userCode}, #{code}, #{cardNum}, #{custName}, #{custType}, #{idType}, #{idNum}, #{phone},
+                #{updateTime}, #{createTime})
     </insert>
 
     <!--通过主键修改数据-->
     <update id="update">
         update market.employee
         <set>
-                user_code = #{userCode},
-                cust_name = #{custName},
-                card_num=#{cardNum},
-                cust_type = #{custType},
-                id_type = #{idType},
-                id_num = #{idNum},
-                phone =#{phone},
-                update_time = #{updateTime,jdbcType=TIMESTAMP}
+            user_code = #{userCode},
+            cust_name = #{custName},
+            card_num=#{cardNum},
+            cust_type = #{custType},
+            id_type = #{idType},
+            id_num = #{idNum},
+            phone =#{phone},
+            update_time = #{updateTime,jdbcType=TIMESTAMP}
         </set>
         where code = #{code}
     </update>
 
     <!--通过主键删除-->
     <delete id="deleteByCode">
-        delete from market.employee where code = #{code}
+        delete
+        from market.employee
+        where code = #{code}
     </delete>
 
+    <select id="queryList" resultMap="BaseResultMap">
+        select *
+        from (
+                     select a.*,f.role_type,f.role_name,u.status
+                     from employee a
+                                  left join user u on a.user_code = u.code
+                                  left join (select e.employee_code,group_concat(e.name) role_name,group_concat(e.role_type) role_type
+                                             from (
+                                                          select b.id, b.role_type, b.employee_code, b.create_time,c.name
+                                                          from market.sys_role_lnk_employee b
+                                                                       left join sys_role_type c on b.role_type = c.type
+                                                          order by b.employee_code,b.role_type
+                                                          ) e
+                                             group by e.employee_code) f on a.code = f.employee_code
+                     ) employee
+        <where>
+            <if test="custName != null and custName != ''">
+                and employee.cust_name  like concat('%',#{custName},'%')
+            </if>
+            <if test="cardNum != null and cardNum != ''">
+                and employee.card_num  like concat('%',#{cardNum},'%')
+            </if>
+            <if test="roleType!=null and roleType != ''">
+                and locate(#{roleType,jdbcType=VARCHAR},employee.role_type) >0
+            </if>
+            <if test="status != null and  status != ''">
+                and employee.status =#{status}
+            </if>
+        </where>
+        order by employee.create_time Desc
+    </select>
+
+    <select id="getByCardNum" resultType="com.pht.cust.entity.Employee">
+        select *
+        from market.employee where card_num =#{cardNum}
+    </select>
 </mapper>

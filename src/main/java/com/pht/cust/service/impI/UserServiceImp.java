@@ -70,12 +70,36 @@ public class UserServiceImp implements UserService {
     public User crtUser(String userName){
         User user = new User();
         user.setUserName(userName);
-        user.setPassWord(passwordEncoder.encode("1111111"));//默认密码1111111
+        user.setPassWord(passwordEncoder.encode("11111111"));//默认密码11111111
         user.setCode(PersistentUtil.getBizEntity(User.class));
         user.setStatus(CommonDict.VALID);
         user.setCreateTime(new Date());
         user.setUserType(CustDict.USERCUSTTYPE_EMPLOYEE);
         insert(user);
         return user;
+    }
+
+    @Override
+    public User getUserByCode(String usercode) {
+        return  userDao.getUserByCode(usercode);
+    }
+
+    @Override
+    public void operateStatus(String usercode, String operStatus) {
+        User user = getUserByCode(usercode);
+        if(user == null){
+             throw new BizException("当前用户不存在！");
+        }
+        String newStatus ="";
+        if(CommonDict.VALID.equals(operStatus)){
+            newStatus=CommonDict.VALID;
+        }else {
+            newStatus=CommonDict.INVALID;
+        }
+        updateUserStatus(usercode,newStatus);
+    }
+
+    private void updateUserStatus(String usercode, String newStatus) {
+        userDao.updateUserStatus(usercode,newStatus);
     }
 }
