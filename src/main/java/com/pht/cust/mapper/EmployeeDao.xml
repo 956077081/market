@@ -135,4 +135,15 @@
         select *
         from market.employee where card_num =#{cardNum}
     </select>
+
+    <select id="getByUserCode" resultType="com.pht.cust.entity.Employee">
+        select *
+        from market.employee where user_code =#{userCode}
+    </select>
+
+    <select id="queryEmployeeRoles" resultType="com.pht.base.role.entity.SysRoleType">
+        select b.*
+        from market.sys_role_lnk_employee a left join market.sys_role_type b on a.role_type =b.type
+        where a.employee_code =#{empCode}
+    </select>
 </mapper>

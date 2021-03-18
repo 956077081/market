@@ -14,4 +14,6 @@ public interface UseDao {
     User getUserByCode(@Param("code")String code);
 
     void updateUserStatus(@Param("code") String usercode,@Param("status") String newStatus);
+
+    void updatePassword(@Param("code") String code, @Param("password") String newPassword);
 }

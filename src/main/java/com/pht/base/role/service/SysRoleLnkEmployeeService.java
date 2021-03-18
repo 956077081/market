@@ -1,7 +1,9 @@
 package com.pht.base.role.service;
 
 import com.pht.base.role.dao.SysRoleLnkEmployeeDao;
+import com.pht.base.role.dto.MenuParam;
 import com.pht.base.role.entity.SysRoleLnkEmployee;
+import com.pht.base.role.entity.SysRoleType;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -18,4 +20,6 @@ public class SysRoleLnkEmployeeService {
     public int insertBatch(List<SysRoleLnkEmployee> sysRoleLnkEmployees){
          return sysRoleLnkEmployeeDao.insertBatch(sysRoleLnkEmployees);
     }
+
+
 }

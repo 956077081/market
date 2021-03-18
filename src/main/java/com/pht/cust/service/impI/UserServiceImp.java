@@ -99,6 +99,20 @@ public class UserServiceImp implements UserService {
         updateUserStatus(usercode,newStatus);
     }
 
+    @Override
+    public boolean updateWord(String code, String passWord) {
+        User user = userDao.getUserByCode(code);
+        if(user ==null){
+            throw  new BizException("修改失败！当前用户找不到！");
+        }
+        if (StringUtils.isBlank(passWord)) {
+            throw  new BizException("修改失败！修改后面不能为空！");
+        }
+        String newPassword = passwordEncoder.encode(passWord);
+        userDao.updatePassword(code,newPassword);
+        return true;
+    }
+
     private void updateUserStatus(String usercode, String newStatus) {
         userDao.updateUserStatus(usercode,newStatus);
     }

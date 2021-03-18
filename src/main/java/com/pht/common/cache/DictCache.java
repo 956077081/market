@@ -107,4 +107,8 @@ public class DictCache  {
         return list;
     }
 
+    public static Map<String,List<SysDict>> getAllDict(){
+        return paramMap.get(QMENV.getCompCode());
+    }
+
 }

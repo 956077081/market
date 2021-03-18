@@ -21,4 +21,8 @@
     <update id="updateUserStatus">
         update  market.user set  status=#{status} where code=#{code}
     </update>
+
+    <update id="updatePassword">
+        update market.user set  pass_word =#{password} where code=#{code}
+    </update>
 </mapper>

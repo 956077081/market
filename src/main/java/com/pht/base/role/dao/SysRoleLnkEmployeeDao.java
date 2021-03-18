@@ -1,6 +1,8 @@
 package com.pht.base.role.dao;
 
+import com.pht.base.role.dto.MenuParam;
 import com.pht.base.role.entity.SysRoleLnkEmployee;
+import com.pht.base.role.entity.SysRoleType;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
@@ -14,4 +16,6 @@ public interface SysRoleLnkEmployeeDao {
      int insert(SysRoleLnkEmployee sysRoleLnkEmployee);
 
     int insertBatch(@Param("roleEmployees")List<SysRoleLnkEmployee> sysRoleLnkEmployees);
+
+
 }

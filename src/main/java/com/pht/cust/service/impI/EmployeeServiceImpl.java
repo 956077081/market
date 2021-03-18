@@ -53,6 +53,11 @@ public class EmployeeServiceImpl implements EmployeeService {
         return this.employeeDao.queryByCode(code);
     }
 
+    @Override
+    public Employee getByUserCode(String userCode) {
+        return this.employeeDao.getByUserCode(userCode);
+    }
+
     /**
      * 新增数据
      *
@@ -64,7 +69,9 @@ public class EmployeeServiceImpl implements EmployeeService {
         this.employeeDao.insert(employee);
         return employee;
     }
-
+    public List<SysRoleType> queryEmployeeRoles(String empCode){
+        return employeeDao.queryEmployeeRoles(empCode);
+    }
     @Override
     @Transactional
     public Employee insert(@RequestBody EmployeeResourceParam employeeResourceParam) {

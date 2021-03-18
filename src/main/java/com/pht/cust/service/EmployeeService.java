@@ -1,5 +1,6 @@
 package com.pht.cust.service;
 
+import com.pht.base.role.entity.SysRoleType;
 import com.pht.cust.dto.EmployeeQueryParam;
 import com.pht.cust.dto.EmployeeResourceParam;
 import com.pht.cust.entity.Employee;
@@ -22,6 +23,13 @@ public interface EmployeeService {
      */
     Employee queryByCode(String code);
 
+    /**
+     * 更具usercode查找
+     * @param userCode
+     * @return
+     */
+    Employee getByUserCode(String userCode);
+
 
     /**
      * 新增数据
@@ -30,6 +38,13 @@ public interface EmployeeService {
      * @return 实例对象
      */
     Employee insert(Employee employee);
+
+    /**
+     * 获取员工角色
+     * @param empCode
+     * @return
+     */
+    public List<SysRoleType> queryEmployeeRoles(String empCode);
 
     /**
      * 插入员工（员工以及用户）
@@ -55,4 +70,5 @@ public interface EmployeeService {
     boolean deleteByCode(String code);
 
     List<Map<String, Object>> queryList(EmployeeQueryParam employeeQueryParam, Integer curPage, Integer pageSize);
+
 }

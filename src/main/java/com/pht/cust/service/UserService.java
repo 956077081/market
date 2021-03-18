@@ -13,4 +13,6 @@ public interface UserService {
     User getUserByCode(String usercode);
 
      void operateStatus(String usercode, String operStatus);
+
+    boolean updateWord(String code, String passWord);
 }

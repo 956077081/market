@@ -1,5 +1,6 @@
 package com.pht.cust.dao;
 
+import com.pht.base.role.entity.SysRoleType;
 import com.pht.cust.dto.EmployeeQueryParam;
 import com.pht.cust.entity.Employee;
 import org.apache.ibatis.annotations.Param;
@@ -57,4 +58,9 @@ public interface EmployeeDao {
     List<Map<String, Object>> queryList(EmployeeQueryParam employeeQueryParam);
 
     Employee getByCardNum(@Param("cardNum") String cardNum);
+
+    Employee getByUserCode(@Param("userCode") String userCode);
+
+
+    List<SysRoleType> queryEmployeeRoles(@Param("empCode") String empCode);
 }
