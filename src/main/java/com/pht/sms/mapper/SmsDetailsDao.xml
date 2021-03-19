@@ -6,7 +6,7 @@
     <!--查询单个-->
     <select id="getByCode" resultType="com.pht.sms.entity.SmsDetails">
         select *
-        from market.sms_details
+        from sms_details
         where code = #{code}
     </select>
 
@@ -14,7 +14,7 @@
     <!--通过实体作为筛选条件查询-->
     <select id="queryAll" resultType="com.pht.sms.entity.SmsDetails">
         select  *
-        from market.sms_details
+        from sms_details
         <where>
             <if test="id != null">
                 and id = #{id}
@@ -72,7 +72,7 @@
 
     <!--新增所有列-->
     <insert id="insert">
-        insert into market.sms_details(code, status, cust_code, sms_template_code, tel_phone, template_param, content,
+        insert into sms_details(code, status, cust_code, sms_template_code, tel_phone, template_param, content,
                                        sms_status, ssm_id, Consumption, tmoney, sms_send, dsc, update_time, create_time,
                                        operate_name)
         values (#{code}, #{status}, #{custCode}, #{smsTemplateCode}, #{telPhone}, #{templateParam}, #{content},
@@ -81,7 +81,7 @@
     </insert>
 
     <insert id="insertBatch">
-        insert into market.sms_details(code, status, cust_code, sms_template_code, tel_phone, template_param, content,
+        insert into sms_details(code, status, cust_code, sms_template_code, tel_phone, template_param, content,
         sms_status, ssm_id, Consumption, tmoney, sms_send, dsc, update_time, create_time, operate_name)
         values
         <foreach collection="entities" item="entity" separator=",">
@@ -95,7 +95,7 @@
 
     <!--通过主键修改数据-->
     <update id="update">
-        update market.sms_details
+        update sms_details
         <set>
             code = #{code},
             status = #{status},
@@ -120,7 +120,7 @@
     <!--通过主键删除-->
     <delete id="deleteByCode">
         delete
-        from market.sms_details
+        from sms_details
         where code = #{code}
     </delete>
 

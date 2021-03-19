@@ -86,8 +86,9 @@ public class DataSourceFactory  {
     }
     public DataSource crtDuridDataSource(JdbcServerConfig jdbcBean){
         DruidDataSource dataSource =new DruidDataSource();
-        setDuridCommConfig(dataSource);
-        dataSource.setUrl(jdbcBean.getUserName());
+        DataSourceBean.setDuridCommConfig(dataSource,defDataSourceConfig);
+        dataSource.setUrl(jdbcBean.getJdbcUrl());
+        dataSource.setUsername(jdbcBean.getUserName());
         dataSource.setPassword(jdbcBean.getPassWord());
         return dataSource;
     }
@@ -98,32 +99,7 @@ public class DataSourceFactory  {
             return sql;
     }
 
-    /**
-     * 数据源默认配置
-     * @param dataSource
-     */
-    private void setDuridCommConfig(DruidDataSource dataSource){
-        dataSource.setDriverClassName(defDataSourceConfig.getDriverClassName());
-        dataSource.setInitialSize(defDataSourceConfig.getInitialSize());
-        dataSource.setMinIdle(defDataSourceConfig.getMinIdle());
-        dataSource.setMaxActive(defDataSourceConfig.getMaxWait());
-        dataSource.setTimeBetweenEvictionRunsMillis(60000);
-        dataSource.setValidationQuery("select 1");
-        dataSource.setTestWhileIdle(true);
-        dataSource.setTestOnBorrow(false);
-        dataSource.setTestOnReturn(false);
-        try {
-            dataSource.setFilters("stat");
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        Slf4jLogFilter log4jFilter = new Slf4jLogFilter();
-        log4jFilter.setConnectionLogEnabled(false);
-        log4jFilter.setStatementLogEnabled(false);
-        log4jFilter.setResultSetLogEnabled(true);
-        log4jFilter.setStatementExecutableSqlLogEnable(true);
-        dataSource.setProxyFilters(Arrays.asList(log4jFilter));
-    }
+
     public static Map<Object, Object> queryAllDataSource(){
         return dataSourceMap;
     }

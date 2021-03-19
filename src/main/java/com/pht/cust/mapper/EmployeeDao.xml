@@ -22,7 +22,7 @@
     <!--查询单个-->
     <select id="queryByCode" resultType="com.pht.cust.entity.Employee">
         select *
-        from market.employee
+        from employee
         where code = #{code}
     </select>
 
@@ -30,7 +30,7 @@
     <!--通过实体作为筛选条件查询-->
     <select id="queryAll" resultType="com.pht.cust.entity.Employee">
         select *
-        from market.employee
+        from employee
         <where>
             <if test="id != null">
                 and id = #{id}
@@ -70,7 +70,7 @@
 
     <!--新增所有列-->
     <insert id="insert">
-        insert into market.employee(user_code, code, card_num, cust_name, cust_type, id_type, id_num, phone,
+        insert into employee(user_code, code, card_num, cust_name, cust_type, id_type, id_num, phone,
                                     update_time, create_time)
         values (#{userCode}, #{code}, #{cardNum}, #{custName}, #{custType}, #{idType}, #{idNum}, #{phone},
                 #{updateTime}, #{createTime})
@@ -78,7 +78,7 @@
 
     <!--通过主键修改数据-->
     <update id="update">
-        update market.employee
+        update employee
         <set>
             user_code = #{userCode},
             cust_name = #{custName},
@@ -95,7 +95,7 @@
     <!--通过主键删除-->
     <delete id="deleteByCode">
         delete
-        from market.employee
+        from employee
         where code = #{code}
     </delete>
 
@@ -108,7 +108,7 @@
                                   left join (select e.employee_code,group_concat(e.name) role_name,group_concat(e.role_type) role_type
                                              from (
                                                           select b.id, b.role_type, b.employee_code, b.create_time,c.name
-                                                          from market.sys_role_lnk_employee b
+                                                          from sys_role_lnk_employee b
                                                                        left join sys_role_type c on b.role_type = c.type
                                                           order by b.employee_code,b.role_type
                                                           ) e
@@ -133,17 +133,17 @@
 
     <select id="getByCardNum" resultType="com.pht.cust.entity.Employee">
         select *
-        from market.employee where card_num =#{cardNum}
+        from employee where card_num =#{cardNum}
     </select>
 
     <select id="getByUserCode" resultType="com.pht.cust.entity.Employee">
         select *
-        from market.employee where user_code =#{userCode}
+        from employee where user_code =#{userCode}
     </select>
 
     <select id="queryEmployeeRoles" resultType="com.pht.base.role.entity.SysRoleType">
         select b.*
-        from market.sys_role_lnk_employee a left join market.sys_role_type b on a.role_type =b.type
+        from sys_role_lnk_employee a left join sys_role_type b on a.role_type =b.type
         where a.employee_code =#{empCode}
     </select>
 </mapper>

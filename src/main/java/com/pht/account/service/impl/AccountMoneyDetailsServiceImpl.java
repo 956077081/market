@@ -38,8 +38,6 @@ import java.util.Map;
 public class AccountMoneyDetailsServiceImpl implements AccountMoneyDetailsService {
     private static LoggerFormator logger = LoggerFormator.getLogger(AccountMoneyDetailsServiceImpl.class);
     @Autowired
-    private CustomerService customerService;
-    @Autowired
     private AccountMoneySumService accountMoneySumService;
     @Autowired
     private ContractdetailsService contractdetailsService;

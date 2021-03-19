@@ -12,7 +12,7 @@
                create_time,
                update_time,
                calc_type
-        from market.sms_template
+        from sms_template
         where code = #{code}
     </select>
 
@@ -20,7 +20,7 @@
     <select id="queryAll" resultType="com.pht.sms.entity.SmsTemplate">
         select
         id, code, content, create_time, update_time, calc_type
-        from market.sms_template
+        from sms_template
         <where>
             <if test="id != null">
                 and id = #{id}
@@ -45,12 +45,12 @@
 
     <!--新增所有列-->
     <insert id="insert">
-        insert into market.sms_template(code, content, create_time, update_time, calc_type)
+        insert into sms_template(code, content, create_time, update_time, calc_type)
         values (#{code}, #{content}, #{createTime}, #{updateTime}, #{calcType})
     </insert>
 
     <insert id="insertBatch">
-        insert into market.sms_template(code, content, create_time, update_time, calc_type)
+        insert into sms_template(code, content, create_time, update_time, calc_type)
         values
         <foreach collection="entities" item="entity" separator=",">
             (#{entity.code}, #{entity.content}, #{entity.createTime}, #{entity.updateTime}, #{entity.calcType})
@@ -59,7 +59,7 @@
 
     <!--通过主键修改数据-->
     <update id="update">
-        update market.sms_template
+        update sms_template
         <set>
             <if test="code != null and code != ''">
                 code = #{code},
@@ -83,7 +83,7 @@
     <!--通过主键删除-->
     <delete id="deleteByCode">
         delete
-        from market.sms_template
+        from sms_template
         where code = #{code}
     </delete>
 

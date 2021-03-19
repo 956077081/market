@@ -4,7 +4,7 @@
     <!--查询单个-->
     <select id="getByCustAndContract" resultType="com.pht.account.entity.AccountMoneySum">
         select  *
-        from market.account_money_sum
+        from account_money_sum
         where  cust_code=#{custCode} and contract_code =#{contractCode}
     </select>
 
@@ -12,7 +12,7 @@
     <!--通过实体作为筛选条件查询-->
     <select id="queryAll" resultType="com.pht.account.entity.AccountMoneySum">
         select *
-        from market.account_money_sum
+        from account_money_sum
         <where>
             <if test="id != null">
                 and id = #{id}
@@ -37,12 +37,12 @@
 
     <!--新增所有列-->
     <insert id="insert">
-        insert into market.account_money_sum(contract_code, cust_code, total_money, update_time, create_time)
+        insert into account_money_sum(contract_code, cust_code, total_money, update_time, create_time)
         values (#{contractCode}, #{custCode}, #{totalMoney}, #{updateTime}, #{createTime})
     </insert>
 
     <insert id="insertBatch">
-        insert into market.account_money_sum(contract_code, cust_code, total_money, update_time, create_time)
+        insert into account_money_sum(contract_code, cust_code, total_money, update_time, create_time)
         values
         <foreach collection="entities" item="entity" separator=",">
             (#{entity.contractCode}, #{entity.custCode}, #{entity.totalMoney}, #{entity.updateTime},
@@ -53,7 +53,7 @@
 
     <!--通过主键修改数据-->
     <update id="update">
-        update market.account_money_sum
+        update account_money_sum
         set contract_code = #{contractCode},
 
             cust_code     = #{custCode},
@@ -69,13 +69,13 @@
     <!--通过主键删除-->
     <delete id="deleteByCustAndContract">
         delete
-        from market.account_money_sum
+        from account_money_sum
         where cust_code=#{c}
     </delete>
 
     <select id="calcAndUpdateAccountSum" resultType="java.math.BigDecimal">
         select sum(case when type='0' then  ifnull(pay_money,0) else  ifnull(pay_money,0)*(-1) end )paymoney
-        from market.account_money_details
+        from account_money_details
         where cust_code =#{custCode} and  contract_code =#{contractCode}
     </select>
 </mapper>

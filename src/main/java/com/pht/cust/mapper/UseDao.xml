@@ -8,21 +8,21 @@
     </select>
 
     <insert id="insert">
-        insert  into market.user (code, user_name, pass_word, user_type,status)
+        insert  into user (code, user_name, pass_word, user_type,status)
         values (#{code},#{userName},#{passWord},#{userType},#{status})
     </insert>
 
     <select id="getUserByCode" resultType="com.pht.cust.entity.User">
         select *
-        from  market.user
+        from  user
         where code =#{code}
     </select>
 
     <update id="updateUserStatus">
-        update  market.user set  status=#{status} where code=#{code}
+        update  user set  status=#{status} where code=#{code}
     </update>
 
     <update id="updatePassword">
-        update market.user set  pass_word =#{password} where code=#{code}
+        update user set  pass_word =#{password} where code=#{code}
     </update>
 </mapper>

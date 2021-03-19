@@ -4,23 +4,33 @@ import com.pht.base.frame.QmThreadPoolExecutor;
 import com.pht.common.cache.DictCache;
 import com.pht.common.cache.SysParamCache;
 import com.pht.common.factory.datasource.DataSourceFactory;
+import com.pht.common.factory.datasource.DefDataSourceConfig;
+import com.pht.common.factory.datasource.DynamicDataSource;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.core.annotation.Order;
+import org.springframework.context.annotation.DependsOn;
 import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 
+import javax.sql.DataSource;
 import java.util.concurrent.Executor;
 import java.util.concurrent.ThreadPoolExecutor;
-
 @Configuration
 public class GenerateBeans {
-    @Order(-1)
     @Bean(initMethod = "init")
     public DataSourceFactory dataSourceFactory() {
         return new DataSourceFactory();
     }
 
+    @Bean
+    @DependsOn(value = {"dataSourceFactory"})
+    DataSource dataSource(DefDataSourceConfig defDataSourceConfig){
+//        DruidDataSource dataSource = new DruidDataSource();
+//        DataSourceBean.setDuridCommConfig(dataSource,defDataSourceConfig);
+//        return dataSource;
+          DataSource dataSource =new DynamicDataSource();
+          return dataSource;
+    }
     @Bean(initMethod = "init")
     @ConditionalOnBean(name = "dataSourceFactory")
     public DictCache dictCache() {
@@ -48,7 +58,7 @@ public class GenerateBeans {
         threadPoolExecutor.setCorePoolSize(3);
         threadPoolExecutor.setMaxPoolSize(5);
         threadPoolExecutor.setKeepAliveSeconds(5);//5秒
-        threadPoolExecutor.setQueueCapacity(100);
+        threadPoolExecutor.setQueueCapacity(200);
         /**
          * abortPolicy  队列满时最接抛出异常
          * DiscardOLderstPolicy  丢弃前面的任务，重置后面的任务有效执行

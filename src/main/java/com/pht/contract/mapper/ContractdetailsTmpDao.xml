@@ -21,7 +21,7 @@
                operator_name,
                update_time,
                create_time
-        from market.contractdetails_tmp
+        from contractdetails_tmp
         where code = #{code}
     </select>
 
@@ -32,7 +32,7 @@
         select
         id, code, contract_code, contract_name, cust_code, start_time, end_time, term, total_money, status, type, memo,
         operate, manager_code, operator_code, operator_name, update_time, create_time
-        from market.contractdetails_tmp
+        from contractdetails_tmp
         <where>
             <if test="id != null">
                 and id = #{id}
@@ -93,7 +93,7 @@
 
     <!--新增所有列-->
     <insert id="insert">
-        insert into market.contractdetails_tmp(code, contract_code, contract_name, cust_code, start_time, end_time,
+        insert into contractdetails_tmp(code, contract_code, contract_name, cust_code, start_time, end_time,
                                                term, total_money, status, type, memo, operate, manager_code,
                                                operator_code, operator_name, update_time, create_time)
         values (#{code}, #{contractCode}, #{contractName}, #{custCode}, #{startTime}, #{endTime}, #{term},
@@ -102,7 +102,7 @@
     </insert>
 
     <insert id="insertBatch">
-        insert into market.contractdetails_tmp(code, contract_code, contract_name, cust_code, start_time, end_time,
+        insert into contractdetails_tmp(code, contract_code, contract_name, cust_code, start_time, end_time,
         term, total_money, status, type, memo, operate, manager_code, operator_code, operator_name, update_time,
         create_time)
         values
@@ -118,7 +118,7 @@
 
     <!--通过主键修改数据-->
     <update id="update">
-        update market.contractdetails_tmp set
+        update contractdetails_tmp set
                 contract_code = #{contractCode},
                 contract_name = #{contractName},
                 cust_code = #{custCode},
@@ -141,7 +141,7 @@
     <!--通过主键删除-->
     <delete id="deleteByCode">
         delete
-        from market.contractdetails_tmp
+        from contractdetails_tmp
         where code = #{code}
     </delete>
 </mapper>

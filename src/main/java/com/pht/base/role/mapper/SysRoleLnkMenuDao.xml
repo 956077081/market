@@ -5,8 +5,8 @@
         select *
         from sys_menu where code in(
             select a.menu_code
-            from market.sys_role_lnk_menu a
-            left join market.sys_menu b on a.menu_code = b.code
+            from sys_role_lnk_menu a
+            left join sys_menu b on a.menu_code = b.code
             where
             a.role_type in
             <foreach collection="roles" item="role" separator="," open=" (" close=")">

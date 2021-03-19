@@ -4,12 +4,17 @@ import com.alibaba.druid.pool.DruidDataSource;
 import com.pht.base.frame.QMENV;
 import org.springframework.beans.factory.DisposableBean;
 import org.springframework.beans.factory.InitializingBean;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.jdbc.datasource.lookup.AbstractRoutingDataSource;
+import org.springframework.stereotype.Component;
 
 import java.util.Map;
+public class DynamicDataSource  extends AbstractRoutingDataSource implements DisposableBean {
 
-public class DynamicDataSource  extends AbstractRoutingDataSource implements InitializingBean, DisposableBean {
-
+    @Autowired
+    private DataSourceFactory dataSourceFactory;
     //容器销毁
     @Override
     public void destroy() throws Exception {
@@ -18,8 +23,8 @@ public class DynamicDataSource  extends AbstractRoutingDataSource implements Ini
     //初始化
     @Override
     public void afterPropertiesSet() {
-        this.setTargetDataSources(DataSourceFactory.queryAllDataSource());
-        this.setDefaultTargetDataSource(DataSourceFactory.getDefaultDataSource());
+        this.setTargetDataSources(dataSourceFactory.queryAllDataSource());
+        this.setDefaultTargetDataSource(dataSourceFactory.getDefaultDataSource());
         super.afterPropertiesSet();
     }
 
@@ -40,7 +45,7 @@ public class DynamicDataSource  extends AbstractRoutingDataSource implements Ini
     }
 
     public void close(){
-        DataSourceFactory.queryAllDataSource().forEach((key,value)->{
+        dataSourceFactory.queryAllDataSource().forEach((key,value)->{
             DruidDataSource  dataSource =(DruidDataSource)value;
             dataSource.close();
         });

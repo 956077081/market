@@ -28,7 +28,7 @@
     <!--查询单个-->
     <select id="getByCode" resultType="com.pht.contract.entity.Contractdetails">
         select  *
-        from  market.contractdetails
+        from  contractdetails
         where code = #{code}
     </select>
 
@@ -37,7 +37,7 @@
     <!--通过实体作为筛选条件查询-->
     <select id="queryAll" resultType="com.pht.contract.entity.Contractdetails">
         select *
-        from market.contractdetails
+        from contractdetails
         <where>
             <if test="id != null">
                 and id = #{id}
@@ -83,12 +83,12 @@
 
     <!--新增所有列-->
     <insert id="insert">
-        insert into market.contractdetails(cust_code, code, contract_name,start_time, end_time, term, total_money, status, type,memo,manager_code,operator_code, operator_name, update_time, create_time)
+        insert into contractdetails(cust_code, code, contract_name,start_time, end_time, term, total_money, status, type,memo,manager_code,operator_code, operator_name, update_time, create_time)
         values (#{custCode}, #{code},#{contractName}, #{startTime}, #{endTime}, #{term}, #{totalMoney}, #{status}, #{type},#{memo},#{managerCode}, #{operatorCode}, #{operatorName}, #{updateTime}, #{createTime})
     </insert>
 
     <insert id="insertBatch">
-        insert into market.contractdetails(cust_code, code, contract_name,start_time, end_time, term, total_money, status, type,memo,manager_code,
+        insert into contractdetails(cust_code, code, contract_name,start_time, end_time, term, total_money, status, type,memo,manager_code,
         operator_code, operator_name, update_time, create_time)
         values
         <foreach collection="entities" item="entity" separator=",">
@@ -99,7 +99,7 @@
     </insert>
 
     <insert id="insertOrUpdateBatch">
-        insert into market.contractdetails(cust_code, code, start_time, end_time, term, total_money, status, type,
+        insert into contractdetails(cust_code, code, start_time, end_time, term, total_money, status, type,
         operator_code, operator_name, update_time, create_time)
         values
         <foreach collection="entities" item="entity" separator=",">
@@ -116,7 +116,7 @@
 
     <!--通过主键修改数据-->
     <update id="update">
-        update market.contractdetails
+        update contractdetails
         <set>
             <if test="custCode != null and custCode != ''">
                 cust_code = #{custCode},
@@ -158,7 +158,7 @@
         where code = #{code}
     </update>
     <update id="updateContractStatus">
-         update market.contractdetails
+         update contractdetails
          set status =#{status}
          where code= #{code}
     </update>
@@ -166,13 +166,13 @@
     <!--通过主键删除-->
     <delete id="deleteByCode">
         delete
-        from market.contractdetails
+        from contractdetails
         where code = #{code}
     </delete>
 
     <select id="queryList" resultType="com.pht.contract.dto.ContractReturnParam">
         select *,b.cust_name,b.cust_type,b.id_type,b.id_num
-        from market.contractdetails a left join market.customer b on a.cust_code =b.code
+        from contractdetails a left join customer b on a.cust_code =b.code
         <where>
             <if test='contractQueryParam.contractName != "" and contractQueryParam.contractName != null '>
                 and a.contract_name like concat("%",#{contractQueryParam.contractName},"%")
@@ -205,12 +205,12 @@
 
     <select id="getContractName" resultType="java.lang.String">
         select concat('第',count(*)+1,'号合同')
-        from market.contractdetails ;
+        from contractdetails ;
     </select>
 
     <select id="queryRecentNewContract"  resultMap="BaseResultMap">
         select a.*,b.cust_name,b.cust_type,b.id_type,b.id_num,b.phone
-        from market.contractdetails a left join  market.customer b on a.cust_code =b.code
+        from contractdetails a left join  customer b on a.cust_code =b.code
         where
           <![CDATA[
                 a.create_time >=date_add(#{curTime,jdbcType=TIMESTAMP},interval  -${contractTimeLimit} DAY )  and a.create_time <=#{curTime,jdbcType=TIMESTAMP}
@@ -219,7 +219,7 @@
     </select>
     <select id="queryRecentOverTimeContract" resultMap="BaseResultMap">
         select a.*,b.cust_name,b.cust_type,b.id_type,b.id_num,b.phone
-        from market.contractdetails a left join  market.customer b on a.cust_code =b.code
+        from contractdetails a left join  customer b on a.cust_code =b.code
         where
           <![CDATA[
                 a.end_time >=date_add(#{curTime,jdbcType=TIMESTAMP},interval  -${contractTimeLimit} DAY )  and a.end_time <=#{curTime,jdbcType=TIMESTAMP}

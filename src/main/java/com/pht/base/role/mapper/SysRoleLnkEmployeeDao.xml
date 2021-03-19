@@ -3,12 +3,12 @@
 <mapper namespace="com.pht.base.role.dao.SysRoleLnkEmployeeDao">
     <!--新增所有列-->
     <insert id="insert" >
-        insert into market.sys_role_lnk_employee(role_type, employee_code,create_time)
+        insert into sys_role_lnk_employee(role_type, employee_code,create_time)
         values (#{roleType}, #{employeeCode},#{createTime})
     </insert>
 
     <delete id="insertBatch">
-        insert into market.sys_role_lnk_employee (role_type, employee_code, create_time)
+        insert into sys_role_lnk_employee (role_type, employee_code, create_time)
         values
             <foreach collection="roleEmployees" separator=","  item="roleEmployee">
                 (#{roleEmployee.roleType},#{roleEmployee.employeeCode},#{roleEmployee.createTime})

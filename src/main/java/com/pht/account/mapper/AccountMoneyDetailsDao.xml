@@ -24,7 +24,7 @@
     <!--查询单个-->
     <select id="getByCode" resultType="com.pht.account.entity.AccountMoneyDetails">
         select *
-        from market.account_money_details
+        from account_money_details
         where code = #{code}
     </select>
 
@@ -34,7 +34,7 @@
         select
         id, code, cust_code, contract_code, status, pay_method, pay_type, account_num, pay_money, type, operator_code,
         operator_name, create_time, update_time
-        from market.account_money_details
+        from account_money_details
         <where>
             <if test="id != null">
                 and id = #{id}
@@ -83,7 +83,7 @@
 
     <!--新增所有列-->
     <insert id="insert">
-        insert into market.account_money_details(code, cust_code, contract_code, status, pay_method, pay_type,
+        insert into account_money_details(code, cust_code, contract_code, status, pay_method, pay_type,
                                                  account_num, pay_money, type, operator_code, operator_name,
                                                  create_time, update_time)
         values (#{code}, #{custCode}, #{contractCode}, #{status}, #{payMethod}, #{payType}, #{accountNum}, #{payMoney},
@@ -91,7 +91,7 @@
     </insert>
 
     <insert id="insertBatch">
-        insert into market.account_money_details(code, cust_code, contract_code, status, pay_method, pay_type,
+        insert into account_money_details(code, cust_code, contract_code, status, pay_method, pay_type,
         account_num, pay_money, type, operator_code, operator_name, create_time, update_time)
         values
         <foreach collection="entities" item="entity" separator=",">
@@ -104,7 +104,7 @@
 
     <!--通过主键修改数据-->
     <update id="update">
-        update market.account_money_details
+        update account_money_details
         set code          = #{code},
 
             cust_code     = #{custCode},
@@ -136,16 +136,16 @@
     <!--通过主键删除-->
     <delete id="deleteByCode">
         delete
-        from market.account_money_details
+        from account_money_details
         where code = #{code}
     </delete>
     <select id="queryByContractCode" resultType="com.pht.account.entity.AccountMoneyDetails">
         select *
-        from market.account_money_details
+        from account_money_details
         where contract_code = #{contractCode}
     </select>
     <update id="invalidAccoutByContract">
-        update market.account_money_details
+        update account_money_details
         set status ='00'
         where contract_code = #{contractCode}
     </update>
