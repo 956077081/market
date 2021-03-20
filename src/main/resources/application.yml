@@ -4,7 +4,7 @@ spring:
   application:
     name: marketMgr
   profiles:
-    active: dev #默认配置
+    active: prod #默认配置
   servlet:
     multipart:
       enabled: true
