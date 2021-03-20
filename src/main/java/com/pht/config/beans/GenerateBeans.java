@@ -25,9 +25,6 @@ public class GenerateBeans {
     @Bean
     @DependsOn(value = {"dataSourceFactory"})
     DataSource dataSource(DefDataSourceConfig defDataSourceConfig){
-//        DruidDataSource dataSource = new DruidDataSource();
-//        DataSourceBean.setDuridCommConfig(dataSource,defDataSourceConfig);
-//        return dataSource;
           DataSource dataSource =new DynamicDataSource();
           return dataSource;
     }

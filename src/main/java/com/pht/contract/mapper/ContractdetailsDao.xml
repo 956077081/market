@@ -204,7 +204,7 @@
     </select>
 
     <select id="getContractName" resultType="java.lang.String">
-        select concat('第',count(*)+1,'号合同')
+        select concat('第',count(*)+1,'号合同') ss
         from contractdetails ;
     </select>
 

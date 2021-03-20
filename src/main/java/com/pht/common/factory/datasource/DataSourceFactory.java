@@ -87,9 +87,10 @@ public class DataSourceFactory  {
     public DataSource crtDuridDataSource(JdbcServerConfig jdbcBean){
         DruidDataSource dataSource =new DruidDataSource();
         DataSourceBean.setDuridCommConfig(dataSource,defDataSourceConfig);
-        dataSource.setUrl(jdbcBean.getJdbcUrl());
+        dataSource.setUrl(jdbcBean.getJdbcUrl()+"?useUnicode=true&characterEncoding=utf-8&serverTimezone=Asia/Shanghai");
         dataSource.setUsername(jdbcBean.getUserName());
         dataSource.setPassword(jdbcBean.getPassWord());
+
         return dataSource;
     }
 

@@ -13,7 +13,7 @@ public class DataSourceBean {
      */
     public static void setDuridCommConfig(DruidDataSource dataSource, DefDataSourceConfig defDataSourceConfig){
         dataSource.setDriverClassName(defDataSourceConfig.getDriverClassName());
-        dataSource.setUrl(defDataSourceConfig.getJdbcUrl());
+        dataSource.setUrl(defDataSourceConfig.getJdbcUrl()+"?useUnicode=true&characterEncoding=utf-8&serverTimezone=Asia/Shanghai");
         dataSource.setUsername(defDataSourceConfig.getUserName());
         dataSource.setPassword(defDataSourceConfig.getPassWord());
 
