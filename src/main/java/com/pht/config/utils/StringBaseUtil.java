@@ -1,6 +1,8 @@
 package com.pht.config.utils;
 
+import com.google.common.collect.Maps;
 import org.apache.commons.collections.MapUtils;
+import org.junit.Test;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -8,6 +10,14 @@ import java.util.List;
 import java.util.Map;
 
 public class StringBaseUtil {
+
+    @Test
+    public void test() {
+        Map<String, Object> maps = Maps.newHashMap();
+        maps.put("loanXcxName", "网贷小程序");
+        maps.put("creditAmt", "10000.00");
+        System.out.println(handleDollarNamedParamByRegex("恭喜你，您在${loanXcxName}申请的贷款已通过，授信额度为${creditAmt}元，请尽快完成签约", maps));
+    }
 
     public static String handleDollarNamedParamByRegex(String templateStr, Map<String, Object> paraMap) {
         if (paraMap == null) {
@@ -45,8 +55,10 @@ public class StringBaseUtil {
 
         return retStr;
     }
+
     /**
      * 获取需要替换的参数
+     *
      * @param retStr
      * @return
      */
