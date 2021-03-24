@@ -1,4 +1,6 @@
 logging:
   level:
     root: info
-    com.pht: debug
+    com.pht: info
+logstash:
+  host: localhost

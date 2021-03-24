@@ -4,7 +4,7 @@ import com.pht.base.system.entity.SysDict;
 import com.pht.base.system.service.SysDictService;
 import com.pht.common.factory.datasource.DataSourceFactory;
 import com.pht.common.factory.datasource.JdbcServerConfig;
-import com.pht.base.frame.QMENV;
+import com.pht.common.frame.QMENV;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.*;

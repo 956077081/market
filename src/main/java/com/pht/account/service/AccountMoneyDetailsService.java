@@ -1,8 +1,10 @@
 package com.pht.account.service;
 
+import com.pht.account.dto.AccountFormsDto;
 import com.pht.account.dto.AccountMoneyParam;
 import com.pht.account.entity.AccountMoneyDetails;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -58,5 +60,7 @@ public interface AccountMoneyDetailsService {
      void invalidAccoutByContract(String contractCode);
 
     List<Map<String,Object>> queryRecentNewPayDetails();
+
+    AccountFormsDto queryAccountForms(String type, Date formDate);
 }
 

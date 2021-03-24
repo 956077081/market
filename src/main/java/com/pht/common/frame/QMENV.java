@@ -1,4 +1,4 @@
-package com.pht.base.frame;
+package com.pht.common.frame;
 
 import com.pht.common.factory.datasource.DataSourceFactory;
 import com.pht.cust.entity.User;

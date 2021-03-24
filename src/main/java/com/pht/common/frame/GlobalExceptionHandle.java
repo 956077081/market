@@ -1,4 +1,4 @@
-package com.pht.base.frame;
+package com.pht.common.frame;
 
 import com.pht.common.BizException;
 import com.pht.common.CommonResult;

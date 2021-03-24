@@ -78,4 +78,8 @@ public interface ContractdetailsService {
      * @return
      */
     List<Map<String,Object>> queryRecentOverTimeContract(String contractTimeLimit);
+
+    List<Contractdetails> queryOverTimeContract(String invalidContractOverTime);
+
+    void invalidContract(Contractdetails contractdetails);
 }

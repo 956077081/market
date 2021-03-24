@@ -5,7 +5,7 @@ import com.pht.base.system.entity.SysParamConfig;
 import com.pht.base.system.service.SysParamConfigService;
 import com.pht.common.factory.datasource.DataSourceFactory;
 import com.pht.common.factory.datasource.JdbcServerConfig;
-import com.pht.base.frame.QMENV;
+import com.pht.common.frame.QMENV;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 

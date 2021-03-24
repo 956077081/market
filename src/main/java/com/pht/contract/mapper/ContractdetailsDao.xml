@@ -159,7 +159,7 @@
     </update>
     <update id="updateContractStatus">
          update contractdetails
-         set status =#{status}
+         set status =#{status} , update_time =#{updateTime,jdbcType=TIMESTAMP}
          where code= #{code}
     </update>
 
@@ -228,5 +228,9 @@
         order by a.end_time DESC
     </select>
 
+    <select id="queryOverTimeContract" resultType="com.pht.contract.entity.Contractdetails">
+        select *
+        from contractdetails where status = '01' and #{curTime,jdbcType=TIMESTAMP} >= date_add(end_time,interval  ${invalidContractOverTime} day )
+    </select>
 </mapper>
 

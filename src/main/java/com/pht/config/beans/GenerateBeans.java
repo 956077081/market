@@ -1,6 +1,6 @@
 package com.pht.config.beans;
 
-import com.pht.base.frame.QmThreadPoolExecutor;
+import com.pht.common.frame.QmThreadPoolExecutor;
 import com.pht.common.cache.DictCache;
 import com.pht.common.cache.SysParamCache;
 import com.pht.common.factory.datasource.DataSourceFactory;
@@ -10,11 +10,14 @@ import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.DependsOn;
+import org.springframework.scheduling.TaskScheduler;
 import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
+import org.springframework.scheduling.concurrent.ThreadPoolTaskScheduler;
 
 import javax.sql.DataSource;
 import java.util.concurrent.Executor;
 import java.util.concurrent.ThreadPoolExecutor;
+
 @Configuration
 public class GenerateBeans {
     @Bean(initMethod = "init")
@@ -24,10 +27,11 @@ public class GenerateBeans {
 
     @Bean
     @DependsOn(value = {"dataSourceFactory"})
-    DataSource dataSource(DefDataSourceConfig defDataSourceConfig){
-          DataSource dataSource =new DynamicDataSource();
-          return dataSource;
+    DataSource dataSource(DefDataSourceConfig defDataSourceConfig) {
+        DataSource dataSource = new DynamicDataSource();
+        return dataSource;
     }
+
     @Bean(initMethod = "init")
     @ConditionalOnBean(name = "dataSourceFactory")
     public DictCache dictCache() {
@@ -37,11 +41,11 @@ public class GenerateBeans {
     @Bean(initMethod = "init")
     @ConditionalOnBean(name = "dataSourceFactory")
     public SysParamCache sysParamCache() {
-        return  new SysParamCache();
+        return new SysParamCache();
     }
 
     @Bean
-    public Executor qmThreadPoolExecutor(){
+    public QmThreadPoolExecutor executor() {
         /**
          * int corePoolSize,  核心一直存活的线程数量
          *                               int maximumPoolSize,//最大线程数量
@@ -51,7 +55,7 @@ public class GenerateBeans {
          *                               ThreadFactory threadFactory,//线程工厂
          *                               RejectedExecutionHandler handler//拒绝策略  队列满足最大队列是 请求的拒绝策略
          */
-        ThreadPoolTaskExecutor threadPoolExecutor = new QmThreadPoolExecutor();
+        QmThreadPoolExecutor threadPoolExecutor = new QmThreadPoolExecutor();
         threadPoolExecutor.setCorePoolSize(3);
         threadPoolExecutor.setMaxPoolSize(5);
         threadPoolExecutor.setKeepAliveSeconds(5);//5秒
@@ -63,9 +67,19 @@ public class GenerateBeans {
          * CallerRunsPolicy  调用任务调用的线程处理该任务
          *
          */
-        ThreadPoolExecutor.AbortPolicy policy =  new  ThreadPoolExecutor.AbortPolicy();
+        ThreadPoolExecutor.AbortPolicy policy = new ThreadPoolExecutor.AbortPolicy();
         threadPoolExecutor.setRejectedExecutionHandler(policy);
         return threadPoolExecutor;
     }
 
+    /**
+     * job任务调度
+     * @return
+     */
+    @Bean
+    public TaskScheduler taskScheduler() {
+        ThreadPoolTaskScheduler threadPoolTaskScheduler = new ThreadPoolTaskScheduler();
+        threadPoolTaskScheduler.setPoolSize(5);//线程数量
+        return threadPoolTaskScheduler;
+    }
 }

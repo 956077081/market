@@ -84,8 +84,8 @@
     <!--新增所有列-->
     <insert id="insert">
         insert into account_money_details(code, cust_code, contract_code, status, pay_method, pay_type,
-                                                 account_num, pay_money, type, operator_code, operator_name,
-                                                 create_time, update_time)
+                                          account_num, pay_money, type, operator_code, operator_name,
+                                          create_time, update_time)
         values (#{code}, #{custCode}, #{contractCode}, #{status}, #{payMethod}, #{payType}, #{accountNum}, #{payMoney},
                 #{type}, #{operatorCode}, #{operatorName}, #{createTime}, #{updateTime})
     </insert>
@@ -160,6 +160,25 @@
           and a.create_time <= #{curDate,jdbcType=TIMESTAMP}
         ]]>
         order By a.create_time Desc
+    </select>
+
+    <select id="queryAccountMonthForms" resultType="com.pht.account.dto.AccountFormsDto">
+        select a.*,(a.pay - a.reduce) remainMoney
+        from (
+                     select sum(if(ifnull(u.type, '0') = '1', 0, u.pay_money)) payMoney,
+                            sum(if(ifnull(u.type, '0') = '0', 0, u.pay_money)) reduceMoney,
+                            u.day xtimes,
+                            sum(if(ifnull(u.type, '0') = '0', 1, 0))           payNum
+                     from (
+                                  select *, DAY(create_time) day
+                                  from market.account_money_details
+                                  where status = '01'
+                                    and
+        <![CDATA[create_time > #{firstDayOfMonth,jdbcType=TIMESTAMP}
+                                    and create_time < #{lastDayOfMonth,jdbcType=TIMESTAMP}]]>
+                                  ) u
+                     group by u.day
+                     ) a
     </select>
 </mapper>
 

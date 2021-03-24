@@ -1,6 +1,6 @@
 package com.pht.config.intercept;
 
-import com.pht.base.frame.QMRunTimeContext;
+import com.pht.common.frame.QMRunTimeContext;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 

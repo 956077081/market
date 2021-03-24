@@ -1,7 +1,7 @@
 package com.pht.cust.service.impI;
 
 import com.github.pagehelper.PageHelper;
-import com.pht.base.frame.LoggerFormator;
+import com.pht.common.frame.LoggerFormator;
 import com.pht.base.system.constant.SysParam;
 import com.pht.config.utils.SysParamFactory;
 import com.pht.cust.constant.CustDict;
@@ -95,7 +95,7 @@ public class CustomerServiceImp implements CustomerService {
 
     @Override
     public List<Customer> queryRecentNewCust() {
-        String recentNewCustlimit = SysParamFactory.getSysParam(SysParam.recentNewCustLimit, "7");
+        String recentNewCustlimit = SysParamFactory.getSysParam("recentNewCustLimit",SysParam.recentNewCustLimit);
          return   customerDao.queryRecentNewCust(recentNewCustlimit,new Date());
     }
 }

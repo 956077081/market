@@ -1,8 +1,8 @@
 package com.pht.sms.service.imp;
 
-import com.pht.base.frame.LoggerFormator;
+import com.pht.common.frame.LoggerFormator;
 import com.pht.common.CommonDict;
-import com.pht.base.frame.QMENV;
+import com.pht.common.frame.QMENV;
 import com.pht.cust.entity.Customer;
 import com.pht.sms.constant.SmsDict;
 import com.pht.sms.dao.SmsDetailsDao;

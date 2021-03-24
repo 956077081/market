@@ -1,16 +1,14 @@
 package com.pht.account.service.impl;
 
-import com.pht.account.entity.AccountMoneyDetails;
 import com.pht.account.entity.AccountMoneySum;
 import com.pht.account.dao.AccountMoneySumDao;
 import com.pht.account.service.AccountMoneySumService;
-import com.pht.base.frame.LoggerFormator;
+import com.pht.common.frame.LoggerFormator;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
 import java.math.BigDecimal;
 import java.util.Date;
-import java.util.List;
 
 /**
  * 资金总额管理(AccountMoneySum)表服务实现类

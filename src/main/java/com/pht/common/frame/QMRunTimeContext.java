@@ -1,4 +1,4 @@
-package com.pht.base.frame;
+package com.pht.common.frame;
 
 import java.util.HashMap;
 import java.util.Map;

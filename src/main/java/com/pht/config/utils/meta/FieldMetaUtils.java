@@ -1,10 +1,7 @@
 package com.pht.config.utils.meta;
 
-import com.pht.base.frame.LoggerFormator;
+import com.pht.common.frame.LoggerFormator;
 import com.pht.config.utils.QmDateUtils;
-import com.pht.config.utils.QmXmlUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.ParameterizedType;

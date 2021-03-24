@@ -16,7 +16,7 @@ public class DefDataSourceConfig {
     private String dataGroup;//数据源组
 
     private Integer initialSize;//初始化连接池大小
-    private Integer minIdle;//最小
+    private Integer minIdle;//最小空闲连接数
     private Integer maxActive;//存活时间
     private Integer maxWait;//超时等待时间单位毫秒 5000
     private String driverClassName;//驱动名称

@@ -1,8 +1,7 @@
 package com.pht.config.utils;
 
 import com.alibaba.fastjson.JSONObject;
-import com.pht.base.frame.LoggerFormator;
-import com.pht.common.factory.datasource.DataSourceFactory;
+import com.pht.common.frame.LoggerFormator;
 import com.pht.config.utils.meta.FieldMetaUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.dom4j.Attribute;
@@ -12,8 +11,6 @@ import org.dom4j.Element;
 import org.dom4j.io.OutputFormat;
 import org.dom4j.io.SAXReader;
 import org.dom4j.io.XMLWriter;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.io.File;
 import java.io.FileOutputStream;

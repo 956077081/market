@@ -1,4 +1,4 @@
-package com.pht.base.frame.thread;
+package com.pht.common.frame;
 
 import org.springframework.core.task.TaskDecorator;
 import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;

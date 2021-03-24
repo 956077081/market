@@ -1,17 +1,14 @@
 package com.pht.security.config;
 
-import com.pht.base.frame.LoggerFormator;
+import com.pht.common.frame.LoggerFormator;
 import com.pht.common.factory.datasource.DataSourceFactory;
-import com.pht.base.frame.QMENV;
-import com.pht.base.frame.QMRunTimeContext;
-import com.pht.base.frame.UserInfo;
-import com.pht.config.utils.meta.FieldMetaUtils;
+import com.pht.common.frame.QMENV;
+import com.pht.common.frame.QMRunTimeContext;
+import com.pht.common.frame.UserInfo;
 import com.pht.cust.entity.User;
 import com.pht.cust.service.UserService;
 import com.pht.security.util.JwtTokenUtil;
 import org.apache.commons.lang3.StringUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpMethod;

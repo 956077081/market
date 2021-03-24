@@ -1,14 +1,10 @@
 package com.pht.common.factory.datasource;
 
-import com.alibaba.druid.filter.logging.Slf4jLogFilter;
 import com.alibaba.druid.pool.DruidDataSource;
-import com.pht.account.service.impl.AccountMoneyDetailsServiceImpl;
-import com.pht.base.frame.LoggerFormator;
+import com.pht.common.frame.LoggerFormator;
 import com.pht.common.CommonDict;
-import com.pht.base.frame.QMENV;
+import com.pht.common.frame.QMENV;
 import com.pht.config.utils.QmDataConvertUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.sql.DataSource;

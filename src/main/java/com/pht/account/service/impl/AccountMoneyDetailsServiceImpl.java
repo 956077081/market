@@ -1,32 +1,31 @@
 package com.pht.account.service.impl;
 
+import cn.hutool.core.date.DateUtil;
 import com.pht.account.constant.AccountMoneyDict;
+import com.pht.account.dto.AccountFormsDto;
 import com.pht.account.dto.AccountMoneyParam;
 import com.pht.account.entity.AccountMoneyDetails;
 import com.pht.account.dao.AccountMoneyDetailsDao;
 import com.pht.account.service.AccountMoneyDetailsService;
 import com.pht.account.service.AccountMoneySumService;
-import com.pht.base.frame.LoggerFormator;
-import com.pht.base.frame.QMENV;
+import com.pht.common.frame.LoggerFormator;
+import com.pht.common.frame.QMENV;
 import com.pht.base.system.constant.SysParam;
 import com.pht.common.BizException;
 import com.pht.config.utils.PersistentUtil;
 import com.pht.config.utils.QmDataConvertUtils;
+import com.pht.config.utils.QmDateUtils;
 import com.pht.config.utils.SysParamFactory;
 import com.pht.contract.entity.Contractdetails;
 import com.pht.contract.service.ContractdetailsService;
-import com.pht.cust.service.CustomerService;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.apache.commons.lang3.time.DateUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
-import java.util.Date;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * 支付金额明细(AccountMoneyDetails)表服务实现类
@@ -138,7 +137,36 @@ public class AccountMoneyDetailsServiceImpl implements AccountMoneyDetailsServic
 
     @Override
     public List<Map<String,Object>> queryRecentNewPayDetails() {
-        String timeLimit = SysParamFactory.getSysParam(SysParam.recentPayLimit, "7");
+        String timeLimit = SysParamFactory.getSysParam("recentPayLimit", SysParam.recentPayLimit);
         return   accountMoneyDetailsDao.queryRecentNewPayDetails(timeLimit,new Date());
+    }
+
+    @Override
+    public AccountFormsDto queryAccountForms(String type, Date formDate) {
+        AccountFormsDto accountFormsDto =new AccountFormsDto();
+        Calendar instance = Calendar.getInstance();
+        instance.setTime(formDate);
+        int month = instance.get(Calendar.MONTH);
+        int year =instance.get(Calendar.YEAR);
+        accountFormsDto.setXtimes(getFormsXDate(type,year,month+1));
+        if("month".equals(type)){
+            Date lastDayOfMonth = QmDateUtils.getLastDayOfMonth(formDate);
+            Date firstDayOfMonth = QmDateUtils.getFirstDayOfMonth(formDate);
+            AccountFormsDto  monthForms =  accountMoneyDetailsDao.queryAccountMonthForms(firstDayOfMonth,lastDayOfMonth);
+        }else{
+
+        }
+        return null;
+    }
+    private  List<String> getFormsXDate(String type,int year,int month){
+        List<String> lists = new ArrayList<>();
+        int days =0;
+        if("month".equals(type)){
+            days = QmDateUtils.getDaysByYearMonth(year, month);
+        }
+        for (int i = 1; i <= days; i++) {
+            lists.add(String.valueOf(i));
+        }
+        return lists;
     }
 }

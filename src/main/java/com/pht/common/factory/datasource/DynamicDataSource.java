@@ -1,14 +1,10 @@
 package com.pht.common.factory.datasource;
 
 import com.alibaba.druid.pool.DruidDataSource;
-import com.pht.base.frame.QMENV;
+import com.pht.common.frame.QMENV;
 import org.springframework.beans.factory.DisposableBean;
-import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
 import org.springframework.jdbc.datasource.lookup.AbstractRoutingDataSource;
-import org.springframework.stereotype.Component;
 
 import java.util.Map;
 public class DynamicDataSource  extends AbstractRoutingDataSource implements DisposableBean {

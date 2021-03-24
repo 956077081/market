@@ -74,7 +74,7 @@ public class ContractdetailsController {
      */
     @RequestMapping("/recentNewContracts")
     public CommonResult queryRecentNewContract(){
-        String contractTimeLimit = SysParamFactory.getSysParam(SysParam.recentContractLimit, "7");
+        String contractTimeLimit = SysParamFactory.getSysParam("recentContractLimit", SysParam.recentContractLimit);
        List<Map<String,Object>> contractdetails= contractdetailsService.queryRecentNewContract(contractTimeLimit);
         return CommonResult.success(contractdetails);
     }
@@ -85,7 +85,7 @@ public class ContractdetailsController {
      */
     @RequestMapping("/recentOverContracts")
     public CommonResult queryRecentOverTimeContract(){
-        String contractTimeLimit = SysParamFactory.getSysParam(SysParam.overTimeContractLimit, "7");
+        String contractTimeLimit = SysParamFactory.getSysParam("overTimeContractLimit",SysParam.overTimeContractLimit);
         List<Map<String,Object>> contractdetails= contractdetailsService.queryRecentOverTimeContract(contractTimeLimit);
         return CommonResult.success(contractdetails);
     }

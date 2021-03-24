@@ -6,9 +6,8 @@ import com.pht.account.constant.AccountMoneyDict;
 import com.pht.account.entity.AccountMoneyDetails;
 import com.pht.account.service.AccountMoneyDetailsService;
 import com.pht.account.service.AccountMoneySumService;
-import com.pht.account.service.impl.AccountMoneySumServiceImpl;
-import com.pht.base.frame.LoggerFormator;
-import com.pht.base.frame.QMENV;
+import com.pht.common.frame.LoggerFormator;
+import com.pht.common.frame.QMENV;
 import com.pht.common.BizException;
 import com.pht.config.utils.PersistentUtil;
 import com.pht.contract.constant.ContractDict;
@@ -22,8 +21,6 @@ import com.pht.contract.service.ContractdetailsService;
 import com.pht.contract.service.ContractdetailsTmpService;
 import com.pht.cust.entity.Customer;
 import com.pht.cust.service.CustomerService;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -170,8 +167,17 @@ public class ContractdetailsServiceImpl implements ContractdetailsService {
      return    contractdetailsDao.queryRecentOverTimeContract(contractTimeLimit,new Date());
     }
 
+    @Override
+    public List<Contractdetails> queryOverTimeContract(String invalidContractOverTime) {
+        return contractdetailsDao.queryOverTimeContract(invalidContractOverTime,new Date());
+    }
+
+    @Override
+    public void invalidContract(Contractdetails contractdetails) {
+        updateContractStatus(contractdetails.getCode(),ContractDict.CONTRACT_STATUS_FINISH);
+    }
 
     private void updateContractStatus(String code,String status){
-         contractdetailsDao.updateContractStatus(code,status);
+         contractdetailsDao.updateContractStatus(code,status,new Date());
     }
 }

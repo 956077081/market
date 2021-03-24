@@ -1,14 +1,12 @@
 package com.pht.cust.controller;
 
 import com.pht.base.role.dto.MenuParam;
-import com.pht.base.role.entity.SysMenu;
 import com.pht.base.role.entity.SysRoleType;
-import com.pht.base.role.service.SysRoleLnkEmployeeService;
 import com.pht.base.role.service.SysRoleLnkMenuService;
 import com.pht.base.system.entity.SysDict;
 import com.pht.common.CommonResult;
 import com.pht.common.factory.datasource.DataSourceFactory;
-import com.pht.base.frame.QMENV;
+import com.pht.common.frame.QMENV;
 import com.pht.config.utils.DictFactory;
 import com.pht.cust.dto.AdminLoginParam;
 import com.pht.cust.entity.Employee;

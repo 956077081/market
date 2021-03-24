@@ -1,6 +1,6 @@
 package com.pht.contract.service.impl;
 
-import com.pht.base.frame.LoggerFormator;
+import com.pht.common.frame.LoggerFormator;
 import com.pht.config.utils.PersistentUtil;
 import com.pht.contract.entity.Contractdetails;
 import com.pht.contract.entity.ContractdetailsTmp;

@@ -78,10 +78,12 @@ public interface ContractdetailsDao {
 
     String getContractName();
 
-    void updateContractStatus(@Param("code") String code, @Param("status") String status);
+    void updateContractStatus(@Param("code") String code, @Param("status") String status,@Param("updateTime") Date updateTime);
 
     List<Map<String, Object>> queryRecentNewContract(@Param("contractTimeLimit") String contractTimeLimit, @Param("curTime") Date date);
 
     List<Map<String, Object>> queryRecentOverTimeContract(@Param("contractTimeLimit") String contractTimeLimit, @Param("curTime") Date date);
+
+    List<Contractdetails> queryOverTimeContract(@Param("invalidContractOverTime") String invalidContractOverTime, @Param("curTime")Date date);
 }
 

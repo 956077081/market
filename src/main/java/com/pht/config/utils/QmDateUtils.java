@@ -1,10 +1,9 @@
 package com.pht.config.utils;
 
-import com.pht.base.frame.LoggerFormator;
+import com.pht.common.frame.LoggerFormator;
 import org.apache.commons.lang3.time.DateFormatUtils;
 import org.apache.commons.lang3.time.DateUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.junit.Test;
 
 import java.lang.reflect.Field;
 import java.text.ParseException;
@@ -62,7 +61,18 @@ public class QmDateUtils extends DateUtils {
         Date date = QmDateUtils.addDays(new Date(), days);
         return date;
     }
-
+    /**
+     *获取月 天数
+     */
+    public static int getDaysByYearMonth(int year,int month){
+        Calendar cal = Calendar.getInstance();
+        cal.set(Calendar.YEAR, year);
+        cal.set(Calendar.MONTH,month-1);
+        cal.set(Calendar.DATE,1);
+        cal.roll(Calendar.DATE,-1);
+        int maxDate =cal.get(Calendar.DATE);
+        return maxDate;
+    }
     /**
      * 获取相对于的某一天的时间
      * @param days
@@ -542,6 +552,8 @@ public class QmDateUtils extends DateUtils {
         ca.set(Calendar.DAY_OF_MONTH, ca.getActualMaximum(Calendar.DAY_OF_MONTH));
         return ca.getTime();
     }
+
+
 
     /**
      * 判断当前时间是否为所在月第一天

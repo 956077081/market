@@ -1,6 +1,8 @@
 package com.pht.account.dao;
 
+import com.pht.account.dto.AccountFormsDto;
 import com.pht.account.entity.AccountMoneyDetails;
+import lombok.Data;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.security.core.parameters.P;
 
@@ -72,5 +74,7 @@ public interface AccountMoneyDetailsDao {
     void invalidAccoutByContract(@Param("contractCode") String contractCode);
 
     List<Map<String, Object>> queryRecentNewPayDetails(@Param("timeLimie")String timeLimit, @Param("curDate")Date date);
+
+    AccountFormsDto queryAccountMonthForms(@Param("firstDayOfMonth") Date firstDayOfMonth,@Param("lastDayOfMonth") Date lastDayOfMonth);
 }
 
