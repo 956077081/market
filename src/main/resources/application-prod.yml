@@ -1,4 +1,4 @@
 logging:
   level:
-    root: debug
-    com.pht: debug
+    root: info
+    com.pht: info

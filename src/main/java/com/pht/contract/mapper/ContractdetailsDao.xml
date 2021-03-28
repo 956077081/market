@@ -6,8 +6,8 @@
         <result property="code" column="code" jdbcType="VARCHAR"/>
         <result property="custCode" column="cust_code" jdbcType="VARCHAR"/>
         <result property="contractName" column="contract_name" jdbcType="VARCHAR"/>
-        <result property="startTime" column="start_time" jdbcType="TIMESTAMP"/>
-        <result property="endTime" column="end_time" jdbcType="TIMESTAMP"/>
+        <result property="startTime" column="start_time" jdbcType="DATE"/>
+        <result property="endTime" column="end_time" jdbcType="DATE"/>
         <result property="term" column="term" jdbcType="VARCHAR"/>
         <result property="totalMoney" column="total_money" jdbcType="NUMERIC"/>
         <result property="status" column="status" jdbcType="VARCHAR"/>

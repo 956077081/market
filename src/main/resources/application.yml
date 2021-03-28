@@ -36,4 +36,3 @@ secure:
       - /minio/upload
     defSourceUrl: #不需要数据源 即连接数据库操作只能是默认数据源
       - /admin/queryComp
-debug: true

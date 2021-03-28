@@ -160,7 +160,7 @@
                             sum(if(ifnull(u.type, '0') = '0', 1, 0))           payNum
                      from (
                                   select *, DAY(create_time) day
-                                  from market.account_money_details
+                                  from account_money_details
                                   where status = '01'
                                     and
         <![CDATA[create_time > #{firstDayOfMonth,jdbcType=TIMESTAMP}
@@ -179,7 +179,7 @@
                             sum(if(ifnull(u.type, '0') = '0', 1, 0))           payNum
                      from (
                                   select *, MONTH(create_time) month
-                                  from market.account_money_details
+                                  from account_money_details
                                   where status = '01'
                                     and YEAR(create_time) = #{year}
                                   ) u

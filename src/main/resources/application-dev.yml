@@ -5,3 +5,4 @@ logging:
     com.pht: debug
 logstash:
   host: localhost
+debug: true
