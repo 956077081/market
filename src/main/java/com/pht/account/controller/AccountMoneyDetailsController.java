@@ -1,11 +1,13 @@
 package com.pht.account.controller;
 
+import com.pht.account.dto.AccountFormRet;
 import com.pht.account.dto.AccountFormsDto;
 import com.pht.account.dto.AccountMoneyParam;
 import com.pht.account.entity.AccountMoneyDetails;
 import com.pht.account.service.AccountMoneyDetailsService;
 import com.pht.common.BizException;
 import com.pht.common.CommonResult;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
@@ -57,17 +59,22 @@ public class AccountMoneyDetailsController {
      * @return
      */
     @RequestMapping("/forms")
-    public CommonResult queryForm(@RequestParam String type, @RequestParam String date){
+    public CommonResult queryForm(@RequestParam String type, @RequestParam(required = false) String date){
+
         SimpleDateFormat simpleDateFormat =new SimpleDateFormat("yyyy-MM-dd");
         Date formDate =null;
         try {
-            formDate= simpleDateFormat.parse(date);
+            if(StringUtils.isBlank(date)){
+                formDate =new Date();
+            }else{
+                formDate= simpleDateFormat.parse(date);
+            }
         } catch (ParseException e) {
             e.printStackTrace();
             return CommonResult.failed("当前时间传入错误");
         }
-        AccountFormsDto accountFormsDto= accountMoneyDetailsService.queryAccountForms(type,formDate);
-        return CommonResult.success(accountFormsDto);
+        AccountFormRet accountFormRet= accountMoneyDetailsService.queryAccountForms(type,formDate);
+        return CommonResult.success(accountFormRet);
     }
 
 }

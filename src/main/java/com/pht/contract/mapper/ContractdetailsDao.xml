@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.pht.contract.dao.ContractdetailsDao">
-
     <resultMap id="BaseResultMap" type="hashmap">
         <result property="id" column="id" jdbcType="INTEGER"/>
         <result property="code" column="code" jdbcType="VARCHAR"/>
@@ -27,11 +26,10 @@
     </resultMap>
     <!--查询单个-->
     <select id="getByCode" resultType="com.pht.contract.entity.Contractdetails">
-        select  *
-        from  contractdetails
+        select *
+        from contractdetails
         where code = #{code}
     </select>
-
 
 
     <!--通过实体作为筛选条件查询-->
@@ -83,84 +81,39 @@
 
     <!--新增所有列-->
     <insert id="insert">
-        insert into contractdetails(cust_code, code, contract_name,start_time, end_time, term, total_money, status, type,memo,manager_code,operator_code, operator_name, update_time, create_time)
-        values (#{custCode}, #{code},#{contractName}, #{startTime}, #{endTime}, #{term}, #{totalMoney}, #{status}, #{type},#{memo},#{managerCode}, #{operatorCode}, #{operatorName}, #{updateTime}, #{createTime})
+        insert into contractdetails(cust_code, code, contract_name, start_time, end_time, term, total_money, status,
+                                    type, memo, manager_code, operator_code, operator_name, update_time, create_time)
+        values (#{custCode}, #{code}, #{contractName}, #{startTime}, #{endTime}, #{term}, #{totalMoney}, #{status},
+                #{type}, #{memo}, #{managerCode}, #{operatorCode}, #{operatorName}, #{updateTime}, #{createTime})
     </insert>
 
-    <insert id="insertBatch">
-        insert into contractdetails(cust_code, code, contract_name,start_time, end_time, term, total_money, status, type,memo,manager_code,
-        operator_code, operator_name, update_time, create_time)
-        values
-        <foreach collection="entities" item="entity" separator=",">
-            (#{entity.custCode}, #{entity.code},#{entity.contractName}, #{entity.startTime}, #{entity.endTime}, #{entity.term},
-            #{entity.totalMoney}, #{entity.status}, #{entity.type},#{entity.memo},#{entity.managerCode},#{entity.operatorCode}, #{entity.operatorName},
-            #{entity.updateTime}, #{entity.createTime})
-        </foreach>
-    </insert>
-
-    <insert id="insertOrUpdateBatch">
-        insert into contractdetails(cust_code, code, start_time, end_time, term, total_money, status, type,
-        operator_code, operator_name, update_time, create_time)
-        values
-        <foreach collection="entities" item="entity" separator=",">
-            (#{entity.custCode}, #{entity.code}, #{entity.startTime}, #{entity.endTime}, #{entity.term},
-            #{entity.totalMoney}, #{entity.status}, #{entity.type}, #{entity.operatorCode}, #{entity.operatorName},
-            #{entity.updateTime}, #{entity.createTime})
-        </foreach>
-        on duplicate key update
-        cust_code = values(cust_code) , code = values(code) , start_time = values(start_time) , end_time =
-        values(end_time) , term = values(term) , total_money = values(total_money) , status = values(status) , type =
-        values(type) , operator_code = values(operator_code) , operator_name = values(operator_name) , update_time =
-        values(update_time) , create_time = values(create_time)
-    </insert>
 
     <!--通过主键修改数据-->
     <update id="update">
         update contractdetails
         <set>
-            <if test="custCode != null and custCode != ''">
-                cust_code = #{custCode},
-            </if>
-            <if test="code != null and code != ''">
-                code = #{code},
-            </if>
-            <if test="startTime != null">
-                start_time = #{startTime},
-            </if>
-            <if test="endTime != null">
-                end_time = #{endTime},
-            </if>
-            <if test="term != null and term != ''">
-                term = #{term},
-            </if>
-            <if test="totalMoney != null">
-                total_money = #{totalMoney},
-            </if>
-            <if test="status != null and status != ''">
-                status = #{status},
-            </if>
-            <if test="type != null and type != ''">
-                type = #{type},
-            </if>
-            <if test="operatorCode != null and operatorCode != ''">
-                operator_code = #{operatorCode},
-            </if>
-            <if test="operatorName != null and operatorName != ''">
-                operator_name = #{operatorName},
-            </if>
-            <if test="updateTime != null">
-                update_time = #{updateTime},
-            </if>
-            <if test="createTime != null">
-                create_time = #{createTime},
-            </if>
+            cust_code = #{custCode},
+            contract_name=#{contractName},
+            start_time = #{startTime,jdbcType=DATE},
+            end_time = #{endTime,jdbcType=DATE},
+            term = #{term},
+            total_money = #{totalMoney},
+            status = #{status},
+            type = #{type},
+            memo=#{memo},
+            manager_code=#{managerCode},
+            operator_code = #{operatorCode},
+            operator_name = #{operatorName},
+            update_time = #{updateTime},
+            create_time = #{createTime},
         </set>
         where code = #{code}
     </update>
     <update id="updateContractStatus">
-         update contractdetails
-         set status =#{status} , update_time =#{updateTime,jdbcType=TIMESTAMP}
-         where code= #{code}
+        update contractdetails
+        set status      =#{status},
+            update_time =#{updateTime,jdbcType=TIMESTAMP}
+        where code = #{code}
     </update>
 
     <!--通过主键删除-->
@@ -171,32 +124,42 @@
     </delete>
 
     <select id="queryList" resultType="com.pht.contract.dto.ContractReturnParam">
-        select *,b.cust_name,b.cust_type,b.id_type,b.id_num
+        select a.*,b.cust_name,b.cust_type,b.id_type,b.id_num
         from contractdetails a left join customer b on a.cust_code =b.code
         <where>
             <if test='contractQueryParam.contractName != "" and contractQueryParam.contractName != null '>
                 and a.contract_name like concat("%",#{contractQueryParam.contractName},"%")
             </if>
             <if test='contractQueryParam.custName != "" and contractQueryParam.custName != null '>
-                  and b.cust_name like concat("%",#{contractQueryParam.custName},"%")
+                and b.cust_name like concat("%",#{contractQueryParam.custName},"%")
             </if>
             <if test='contractQueryParam.idType != "" and contractQueryParam.idType != null '>
-                and b.id_type  =#{contractQueryParam.idType}
+                and b.id_type =#{contractQueryParam.idType}
             </if>
             <if test='contractQueryParam.idNum != ""  and contractQueryParam.idNum != null '>
-                and b.id_num   like concat("%",#{contractQueryParam.idNum},"%")
+                and b.id_num like concat("%",#{contractQueryParam.idNum},"%")
             </if>
             <if test='contractQueryParam.status != ""  and contractQueryParam.status != null'>
-                and a.status  = #{contractQueryParam.status}
+                and a.status = #{contractQueryParam.status}
             </if>
             <if test='contractQueryParam.startEndTime != "" and contractQueryParam.startEndTime != null  '>
-                and  a.end_time <![CDATA[ >= #{contractQueryParam.startEndTime}]]>
+                and a.end_time <![CDATA[ >= #{contractQueryParam.startEndTime}]]>
             </if>
             <if test='contractQueryParam.endEndTime != "" and contractQueryParam.endEndTime != null  '>
-                and  a.end_time <![CDATA[ <= #{contractQueryParam.endEndTime}]]>
+                and a.end_time <![CDATA[ <= #{contractQueryParam.endEndTime}]]>
             </if>
             <if test='contractQueryParam.operatorName != "" and contractQueryParam.operatorName != null '>
-                and a.operator_name  like concat("%",#{contractQueryParam.operatorName},"%");
+                and a.operator_name like concat("%",#{contractQueryParam.operatorName},"%");
+            </if>
+            <if test='contractQueryParam.isOverTime != "" and contractQueryParam.isOverTime != null '>
+                <choose>
+                    <when test='contractQueryParam.isOverTime == "1" '>
+                        <![CDATA[and  date_format(a.end_time,'%Y-%m-%d') <= #{contractQueryParam.curTime,jdbcType=TIMESTAMP}]]>
+                    </when>
+                    <otherwise>
+                        <![CDATA[and  date_format(a.end_time,'%Y-%m-%d') >= #{contractQueryParam.curTime,jdbcType=TIMESTAMP}]]>
+                    </otherwise>
+                </choose>
             </if>
         </where>
 
@@ -204,33 +167,52 @@
     </select>
 
     <select id="getContractName" resultType="java.lang.String">
-        select concat('第',count(*)+1,'号合同') ss
-        from contractdetails ;
+        select concat('第', count(*) + 1, '号合同') ss
+        from contractdetails;
     </select>
 
-    <select id="queryRecentNewContract"  resultMap="BaseResultMap">
+    <select id="queryRecentNewContract" resultMap="BaseResultMap">
         select a.*,b.cust_name,b.cust_type,b.id_type,b.id_num,b.phone
-        from contractdetails a left join  customer b on a.cust_code =b.code
+        from contractdetails a
+                     left join customer b on a.cust_code = b.code
         where
           <![CDATA[
-                a.create_time >=date_add(#{curTime,jdbcType=TIMESTAMP},interval  -${contractTimeLimit} DAY )  and a.create_time <=#{curTime,jdbcType=TIMESTAMP}
+                a.create_time >= date_add(#{curTime,jdbcType=TIMESTAMP}, interval -${contractTimeLimit} DAY)
+          and a.create_time <= #{curTime,jdbcType=TIMESTAMP}
           ]]>
         order by a.create_time DESC
     </select>
     <select id="queryRecentOverTimeContract" resultMap="BaseResultMap">
         select a.*,b.cust_name,b.cust_type,b.id_type,b.id_num,b.phone
-        from contractdetails a left join  customer b on a.cust_code =b.code
+        from contractdetails a
+                     left join customer b on a.cust_code = b.code
         where
           <![CDATA[
-                a.end_time >=date_add(#{curTime,jdbcType=TIMESTAMP},interval  -${contractTimeLimit} DAY )  and a.end_time <=#{curTime,jdbcType=TIMESTAMP}
+                a.end_time <= date_add(#{curTime,jdbcType=TIMESTAMP}, interval ${contractTimeLimit} DAY)
+          and a.end_time >= #{curTime,jdbcType=TIMESTAMP}
           ]]>
-          and a.status ='01'
+          and a.status = '01'
         order by a.end_time DESC
     </select>
 
     <select id="queryOverTimeContract" resultType="com.pht.contract.entity.Contractdetails">
         select *
-        from contractdetails where status = '01' and #{curTime,jdbcType=TIMESTAMP} >= date_add(end_time,interval  ${invalidContractOverTime} day )
+        from contractdetails
+        where status = '01'
+          and #{curTime,jdbcType=TIMESTAMP} >= date_add(end_time, interval ${invalidContractOverTime} day)
+    </select>
+
+    <select id="queryHasOverContract" resultMap="BaseResultMap">
+        select a.*,b.cust_name,b.cust_type,b.id_type,b.id_num,b.phone
+        from contractdetails a
+                     left join customer b on a.cust_code = b.code
+        where
+          <![CDATA[
+                a.end_time >= date_add(#{curTime,jdbcType=TIMESTAMP}, interval -${hasOvercontractTimeLimit} DAY)
+          and a.end_time <= #{curTime,jdbcType=TIMESTAMP}
+          ]]>
+          and a.status = '01'
+        order by a.end_time DESC
     </select>
 </mapper>
 

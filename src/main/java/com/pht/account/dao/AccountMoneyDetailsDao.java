@@ -43,13 +43,6 @@ public interface AccountMoneyDetailsDao {
      */
     int insert(AccountMoneyDetails accountMoneyDetails);
 
-    /**
-     * 批量新增数据（MyBatis原生foreach方法）
-     *
-     * @param entities List<AccountMoneyDetails> 实例对象列表
-     * @return 影响行数
-     */
-    int insertBatch(@Param("entities") List<AccountMoneyDetails> entities);
 
 
 
@@ -75,6 +68,8 @@ public interface AccountMoneyDetailsDao {
 
     List<Map<String, Object>> queryRecentNewPayDetails(@Param("timeLimie")String timeLimit, @Param("curDate")Date date);
 
-    AccountFormsDto queryAccountMonthForms(@Param("firstDayOfMonth") Date firstDayOfMonth,@Param("lastDayOfMonth") Date lastDayOfMonth);
+    List<AccountFormsDto> queryAccountMonthForms(@Param("firstDayOfMonth") Date firstDayOfMonth,@Param("lastDayOfMonth") Date lastDayOfMonth);
+
+    List<AccountFormsDto> queryAccountYearForms(@Param("year") int year);
 }
 

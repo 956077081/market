@@ -20,7 +20,7 @@ public class DataSourceBean {
         dataSource.setInitialSize(defDataSourceConfig.getInitialSize());
         dataSource.setMinIdle(defDataSourceConfig.getMinIdle());
         dataSource.setMaxActive(defDataSourceConfig.getMaxWait());
-        dataSource.setTimeBetweenEvictionRunsMillis(60000);
+        dataSource.setTimeBetweenEvictionRunsMillis(100000);
         dataSource.setValidationQuery("select 1");
         dataSource.setTestWhileIdle(true);
         dataSource.setTestOnBorrow(false);

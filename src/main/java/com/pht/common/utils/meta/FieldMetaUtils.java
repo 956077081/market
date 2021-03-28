@@ -1,7 +1,7 @@
-package com.pht.config.utils.meta;
+package com.pht.common.utils.meta;
 
 import com.pht.common.frame.LoggerFormator;
-import com.pht.config.utils.QmDateUtils;
+import com.pht.common.utils.QmDateUtils;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.ParameterizedType;

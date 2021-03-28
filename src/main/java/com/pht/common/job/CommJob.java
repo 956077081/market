@@ -1,14 +1,12 @@
 package com.pht.common.job;
 
 import com.pht.base.system.constant.SysParam;
-import com.pht.common.CommonDict;
 import com.pht.common.factory.datasource.DataSourceFactory;
 import com.pht.common.frame.LoggerFormator;
 import com.pht.common.frame.QMENV;
-import com.pht.config.utils.SysParamFactory;
+import com.pht.common.utils.SysParamFactory;
 import com.pht.contract.constant.ContractDict;
 import com.pht.contract.entity.Contractdetails;
-import com.pht.contract.entity.ContractdetailsTmp;
 import com.pht.contract.service.ContractdetailsService;
 import com.pht.contract.service.ContractdetailsTmpService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,8 +17,11 @@ import org.springframework.scheduling.annotation.Scheduled;
 
 import java.util.List;
 
-@EnableScheduling
-@Configuration
+/**
+ * 暂定 有点客户不需要开启job
+ */
+//@EnableScheduling
+//@Configuration
 public class CommJob  {
     private static LoggerFormator logger =LoggerFormator.getLogger(CommJob.class);
     @Autowired
@@ -37,7 +38,7 @@ public class CommJob  {
         for (String code : codes) {
             QMENV.setCompCode(code);
             logger.info(QMENV.getCompCode()+"|"+Thread.currentThread().getName()+"|开始过期合同置结束");
-            String invalidContractOverTime = SysParamFactory.getSysParam("invalidContractOverTime", SysParam.invalidContractOverTime);
+            String invalidContractOverTime = SysParamFactory.getSysParam("endContractOverTime", SysParam.endContractOverTime);
             List<Contractdetails> contracts = contractdetailsService.queryOverTimeContract(invalidContractOverTime);
             if(contracts != null){
                 contracts.forEach(contract -> {

@@ -1,4 +1,4 @@
-package com.pht.config.utils;
+package com.pht.common.utils;
 
 import org.apache.commons.lang3.RandomStringUtils;
 import org.apache.commons.lang3.time.DateFormatUtils;

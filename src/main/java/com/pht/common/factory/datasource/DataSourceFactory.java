@@ -4,7 +4,7 @@ import com.alibaba.druid.pool.DruidDataSource;
 import com.pht.common.frame.LoggerFormator;
 import com.pht.common.CommonDict;
 import com.pht.common.frame.QMENV;
-import com.pht.config.utils.QmDataConvertUtils;
+import com.pht.common.utils.QmDataConvertUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.sql.DataSource;

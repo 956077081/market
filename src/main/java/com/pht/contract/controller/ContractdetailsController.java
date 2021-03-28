@@ -3,18 +3,15 @@ package com.pht.contract.controller;
 import com.pht.base.system.constant.SysParam;
 import com.pht.common.CommonPage;
 import com.pht.common.CommonResult;
-import com.pht.config.utils.QmDataConvertUtils;
-import com.pht.config.utils.SysParamFactory;
+import com.pht.common.utils.SysParamFactory;
 import com.pht.contract.dto.ContractParams;
 import com.pht.contract.dto.ContractQueryParam;
 import com.pht.contract.dto.ContractReturnParam;
 import com.pht.contract.dto.ContractViews;
-import com.pht.contract.entity.Contractdetails;
 import com.pht.contract.service.ContractdetailsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import javax.annotation.Resource;
 import java.util.List;
 import java.util.Map;
 
@@ -90,4 +87,20 @@ public class ContractdetailsController {
         return CommonResult.success(contractdetails);
     }
 
+
+    /**
+     * 有效 但是已过期合同
+     */
+    @RequestMapping("/hasOverContracts")
+    public CommonResult queryHasOverContract(){
+        String contractTimeLimit = SysParamFactory.getSysParam("endContractOverTime",SysParam.endContractOverTime);
+        List<Map<String,Object>> contractdetails= contractdetailsService.queryHasOverContract(contractTimeLimit);
+        return CommonResult.success(contractdetails);
+    }
+    @RequestMapping("/finishContract")
+    public CommonResult finishContract(@RequestParam String codes){
+        String[] split = codes.split(",");
+        contractdetailsService.finishContracts(codes);
+        return CommonResult.success(true);
+    }
 }

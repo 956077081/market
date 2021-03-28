@@ -9,7 +9,7 @@ import com.pht.account.service.AccountMoneySumService;
 import com.pht.common.frame.LoggerFormator;
 import com.pht.common.frame.QMENV;
 import com.pht.common.BizException;
-import com.pht.config.utils.PersistentUtil;
+import com.pht.common.utils.PersistentUtil;
 import com.pht.contract.constant.ContractDict;
 import com.pht.contract.dto.ContractParams;
 import com.pht.contract.dto.ContractQueryParam;
@@ -21,6 +21,7 @@ import com.pht.contract.service.ContractdetailsService;
 import com.pht.contract.service.ContractdetailsTmpService;
 import com.pht.cust.entity.Customer;
 import com.pht.cust.service.CustomerService;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -102,6 +103,7 @@ public class ContractdetailsServiceImpl implements ContractdetailsService {
 
     @Override
     public List<ContractReturnParam> queryList(ContractQueryParam contractQueryParam, Integer pageSize, Integer currPage) {
+       contractQueryParam.setCurTime(new Date());
         PageHelper.startPage(currPage,pageSize);
         return  contractdetailsDao.queryList(contractQueryParam);
     }
@@ -175,6 +177,27 @@ public class ContractdetailsServiceImpl implements ContractdetailsService {
     @Override
     public void invalidContract(Contractdetails contractdetails) {
         updateContractStatus(contractdetails.getCode(),ContractDict.CONTRACT_STATUS_FINISH);
+    }
+
+    @Override
+    public List<Map<String, Object>> queryHasOverContract(String contractTimeLimit) {
+        return  contractdetailsDao.queryHasOverContract(contractTimeLimit,new Date());
+    }
+
+    @Override
+    public void finishContracts(String codes) {
+        String[] codearr = codes.split(",");
+        for (int i = 0; i < codearr.length; i++) {
+            if(StringUtils.isNotBlank(codearr[i])){
+                Contractdetails contractdetails = contractdetailsDao.getByCode(codearr[i]);
+                if(contractdetails != null){
+                    contractdetails.setStatus(ContractDict.CONTRACT_STATUS_FINISH);
+                    contractdetails.setUpdateTime(new Date());
+                    contractdetailsDao.update(contractdetails);
+                    contractdetailsTmpService.crtContractTmp(contractdetails,ContractDict.CONTRACT_STATUS_FINISH);
+                }
+            }
+        }
     }
 
     private void updateContractStatus(String code,String status){

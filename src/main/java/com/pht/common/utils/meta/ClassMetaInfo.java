@@ -1,4 +1,4 @@
-package com.pht.config.utils.meta;
+package com.pht.common.utils.meta;
 
 import java.util.List;
 import java.util.Map;

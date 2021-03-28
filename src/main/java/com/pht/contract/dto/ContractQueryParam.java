@@ -11,13 +11,14 @@ public class ContractQueryParam {
     private String idType;
     private String idNum;
     private String status;
+    private String isOverTime;
     private String startEndTime;//合同到期开始时间
     private String endEndTime;//合同到期结束时间
     private String operatorName;
     private String currPage;
     private String pageSize;
     private String contractName;
-
+    private Date curTime;//当前时间
     public String getCustName() {
         return StringUtils.trim(custName);
     }
@@ -96,5 +97,21 @@ public class ContractQueryParam {
 
     public void setContractName(String contractName) {
         this.contractName = contractName;
+    }
+
+    public String getIsOverTime() {
+        return StringUtils.trim(isOverTime);
+    }
+
+    public void setIsOverTime(String isOverTime) {
+        this.isOverTime = isOverTime;
+    }
+
+    public Date getCurTime() {
+        return curTime;
+    }
+
+    public void setCurTime(Date curTime) {
+        this.curTime = curTime;
     }
 }

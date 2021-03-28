@@ -42,21 +42,6 @@ public interface ContractdetailsDao {
      */
     int insert(Contractdetails contractdetails);
 
-    /**
-     * 批量新增数据（MyBatis原生foreach方法）
-     *
-     * @param entities List<Contractdetails> 实例对象列表
-     * @return 影响行数
-     */
-    int insertBatch(@Param("entities") List<Contractdetails> entities);
-
-    /**
-     * 批量新增或按主键更新数据（MyBatis原生foreach方法）
-     *
-     * @param entities List<Contractdetails> 实例对象列表
-     * @return 影响行数
-     */
-    int insertOrUpdateBatch(@Param("entities") List<Contractdetails> entities);
 
     /**
      * 修改数据
@@ -85,5 +70,7 @@ public interface ContractdetailsDao {
     List<Map<String, Object>> queryRecentOverTimeContract(@Param("contractTimeLimit") String contractTimeLimit, @Param("curTime") Date date);
 
     List<Contractdetails> queryOverTimeContract(@Param("invalidContractOverTime") String invalidContractOverTime, @Param("curTime")Date date);
+
+    List<Map<String, Object>> queryHasOverContract(@Param("hasOvercontractTimeLimit") String contractTimeLimit,@Param("curTime") Date date);
 }
 

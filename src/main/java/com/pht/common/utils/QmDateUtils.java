@@ -1,9 +1,8 @@
-package com.pht.config.utils;
+package com.pht.common.utils;
 
 import com.pht.common.frame.LoggerFormator;
 import org.apache.commons.lang3.time.DateFormatUtils;
 import org.apache.commons.lang3.time.DateUtils;
-import org.junit.Test;
 
 import java.lang.reflect.Field;
 import java.text.ParseException;

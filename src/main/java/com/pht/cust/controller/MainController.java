@@ -7,7 +7,7 @@ import com.pht.base.system.entity.SysDict;
 import com.pht.common.CommonResult;
 import com.pht.common.factory.datasource.DataSourceFactory;
 import com.pht.common.frame.QMENV;
-import com.pht.config.utils.DictFactory;
+import com.pht.common.utils.DictFactory;
 import com.pht.cust.dto.AdminLoginParam;
 import com.pht.cust.entity.Employee;
 import com.pht.cust.entity.User;

@@ -68,7 +68,7 @@
                 and cust_name  like concat("%",#{customerQueryParam.custName},"%")
             </if>
             <if test="customerQueryParam.idNum != null and customerQueryParam.idNum != ''">
-                and id_num =#{customerQueryParam.idNum}
+                and id_num  like concat("%",#{customerQueryParam.idNum},"%")
             </if>
             <if test="customerQueryParam.profession != null and customerQueryParam.profession != ''">
                 and profession  like concat("%",#{customerQueryParam.profession},"%")

@@ -5,8 +5,7 @@ import com.pht.base.role.entity.SysRoleLnkEmployee;
 import com.pht.base.role.entity.SysRoleType;
 import com.pht.base.role.service.SysRoleLnkEmployeeService;
 import com.pht.common.BizException;
-import com.pht.common.CommonResult;
-import com.pht.config.utils.PersistentUtil;
+import com.pht.common.utils.PersistentUtil;
 import com.pht.cust.constant.CustDict;
 import com.pht.cust.dto.EmployeeQueryParam;
 import com.pht.cust.dto.EmployeeResourceParam;
@@ -21,7 +20,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.RequestBody;
 
-import javax.annotation.Resource;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;

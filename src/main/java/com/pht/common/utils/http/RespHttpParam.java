@@ -1,4 +1,4 @@
-package com.pht.config.utils.http;
+package com.pht.common.utils.http;
 
 public class RespHttpParam {
     private boolean isSuccess = true;

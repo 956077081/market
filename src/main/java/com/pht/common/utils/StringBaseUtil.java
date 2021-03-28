@@ -1,4 +1,4 @@
-package com.pht.config.utils;
+package com.pht.common.utils;
 
 import com.google.common.collect.Maps;
 import org.apache.commons.collections.MapUtils;

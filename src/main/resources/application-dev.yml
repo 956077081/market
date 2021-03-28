@@ -1,6 +1,7 @@
 logging:
+  config: classpath:logback-spring.xml
   level:
-    root: info
-    com.pht: info
+    root: debug
+    com.pht: debug
 logstash:
   host: localhost

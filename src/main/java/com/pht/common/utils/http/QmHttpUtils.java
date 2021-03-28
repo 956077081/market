@@ -1,4 +1,4 @@
-package com.pht.config.utils.http;
+package com.pht.common.utils.http;
 
 import com.alibaba.fastjson.JSONObject;
 import org.apache.http.HttpEntity;

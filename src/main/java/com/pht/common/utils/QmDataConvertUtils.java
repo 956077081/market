@@ -1,4 +1,4 @@
-package com.pht.config.utils;
+package com.pht.common.utils;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
@@ -10,6 +10,7 @@ import org.apache.commons.beanutils.BeanUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.dom4j.Document;
 
+import java.lang.reflect.Array;
 import java.lang.reflect.Field;
 import java.util.Arrays;
 import java.util.List;
@@ -176,4 +177,13 @@ public class QmDataConvertUtils {
         return null;
     }
 
+
+    public static   <T> T [] initEmptyArray( T [] a,T defaultValue ){
+        for (int i = 0; i < a.length; i++) {
+                if(a[i]==null){
+                    a[i]=defaultValue;
+                }
+        }
+        return a;
+    }
 }

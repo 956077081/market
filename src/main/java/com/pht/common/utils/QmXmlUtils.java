@@ -1,8 +1,8 @@
-package com.pht.config.utils;
+package com.pht.common.utils;
 
 import com.alibaba.fastjson.JSONObject;
 import com.pht.common.frame.LoggerFormator;
-import com.pht.config.utils.meta.FieldMetaUtils;
+import com.pht.common.utils.meta.FieldMetaUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.dom4j.Attribute;
 import org.dom4j.Document;

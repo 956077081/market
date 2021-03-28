@@ -6,18 +6,27 @@ import com.pht.common.cache.SysParamCache;
 import com.pht.common.factory.datasource.DataSourceFactory;
 import com.pht.common.factory.datasource.DefDataSourceConfig;
 import com.pht.common.factory.datasource.DynamicDataSource;
+import org.apache.ibatis.session.SqlSessionFactory;
+import org.mybatis.spring.SqlSessionFactoryBean;
+import org.mybatis.spring.SqlSessionTemplate;
+import org.mybatis.spring.boot.autoconfigure.MybatisProperties;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.boot.autoconfigure.AutoConfigureAfter;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.DependsOn;
+import org.springframework.core.annotation.Order;
+import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
+import org.springframework.jdbc.datasource.DataSourceTransactionManager;
 import org.springframework.scheduling.TaskScheduler;
 import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 import org.springframework.scheduling.concurrent.ThreadPoolTaskScheduler;
+import org.springframework.transaction.PlatformTransactionManager;
 
 import javax.sql.DataSource;
 import java.util.concurrent.Executor;
 import java.util.concurrent.ThreadPoolExecutor;
-
 @Configuration
 public class GenerateBeans {
     @Bean(initMethod = "init")
@@ -31,6 +40,17 @@ public class GenerateBeans {
         DataSource dataSource = new DynamicDataSource();
         return dataSource;
     }
+    @Bean
+    @DependsOn(value = {"dataSourceFactory"})
+    public SqlSessionFactory sqlSessionFactory(MybatisProperties mybatisProperties,DataSource dataSource) throws Exception {
+        SqlSessionFactoryBean sqlSessionFactoryBean = new SqlSessionFactoryBean();
+        org.apache.ibatis.session.Configuration configuration = mybatisProperties.getConfiguration();
+        configuration.setMapUnderscoreToCamelCase(true);
+        sqlSessionFactoryBean.setDataSource(dataSource);
+        sqlSessionFactoryBean.setConfiguration(configuration);
+        sqlSessionFactoryBean.setMapperLocations(new PathMatchingResourcePatternResolver().getResources("classpath*:com/pht/**/*.xml"));
+        return sqlSessionFactoryBean.getObject();
+    }
 
     @Bean(initMethod = "init")
     @ConditionalOnBean(name = "dataSourceFactory")
@@ -43,6 +63,7 @@ public class GenerateBeans {
     public SysParamCache sysParamCache() {
         return new SysParamCache();
     }
+
 
     @Bean
     public QmThreadPoolExecutor executor() {
@@ -72,14 +93,28 @@ public class GenerateBeans {
         return threadPoolExecutor;
     }
 
+    @Bean
+    public SqlSessionTemplate sqlSessionTemplate( SqlSessionFactory sqlSessionFactory) throws Exception {
+        return new SqlSessionTemplate(sqlSessionFactory);
+    }
+
     /**
-     * job任务调度
-     * @return
+     * 事务管理
+     *
+     * @return 事务管理实例
      */
     @Bean
-    public TaskScheduler taskScheduler() {
-        ThreadPoolTaskScheduler threadPoolTaskScheduler = new ThreadPoolTaskScheduler();
-        threadPoolTaskScheduler.setPoolSize(5);//线程数量
-        return threadPoolTaskScheduler;
+    public PlatformTransactionManager platformTransactionManager(DataSource dataSource) {
+        return new DataSourceTransactionManager(dataSource);
     }
+
+//     * job任务调度 暂定
+//     * @return
+//     */
+//    @Bean
+//    public TaskScheduler taskScheduler() {
+//        ThreadPoolTaskScheduler threadPoolTaskScheduler = new ThreadPoolTaskScheduler();
+//        threadPoolTaskScheduler.setPoolSize(5);//线程数量
+//        return threadPoolTaskScheduler;
+//    }
 }

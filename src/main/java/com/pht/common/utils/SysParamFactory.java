@@ -1,4 +1,4 @@
-package com.pht.config.utils;
+package com.pht.common.utils;
 
 import com.pht.common.cache.SysParamCache;
 

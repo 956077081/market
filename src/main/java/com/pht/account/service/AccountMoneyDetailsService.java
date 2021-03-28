@@ -1,5 +1,6 @@
 package com.pht.account.service;
 
+import com.pht.account.dto.AccountFormRet;
 import com.pht.account.dto.AccountFormsDto;
 import com.pht.account.dto.AccountMoneyParam;
 import com.pht.account.entity.AccountMoneyDetails;
@@ -61,6 +62,6 @@ public interface AccountMoneyDetailsService {
 
     List<Map<String,Object>> queryRecentNewPayDetails();
 
-    AccountFormsDto queryAccountForms(String type, Date formDate);
+    AccountFormRet queryAccountForms(String type, Date formDate);
 }
 

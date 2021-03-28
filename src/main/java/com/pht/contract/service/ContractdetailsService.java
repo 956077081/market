@@ -82,4 +82,8 @@ public interface ContractdetailsService {
     List<Contractdetails> queryOverTimeContract(String invalidContractOverTime);
 
     void invalidContract(Contractdetails contractdetails);
+
+    List<Map<String, Object>> queryHasOverContract(String contractTimeLimit);
+
+    void finishContracts(String codes);
 }

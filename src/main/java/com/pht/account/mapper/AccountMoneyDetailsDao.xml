@@ -90,23 +90,12 @@
                 #{type}, #{operatorCode}, #{operatorName}, #{createTime}, #{updateTime})
     </insert>
 
-    <insert id="insertBatch">
-        insert into account_money_details(code, cust_code, contract_code, status, pay_method, pay_type,
-        account_num, pay_money, type, operator_code, operator_name, create_time, update_time)
-        values
-        <foreach collection="entities" item="entity" separator=",">
-            (#{entity.code}, #{entity.custCode}, #{entity.contractCode}, #{entity.status}, #{entity.payMethod},
-            #{entity.payType}, #{entity.accountNum}, #{entity.payMoney}, #{entity.type}, #{entity.operatorCode},
-            #{entity.operatorName}, #{entity.createTime}, #{entity.updateTime})
-        </foreach>
-    </insert>
 
 
     <!--通过主键修改数据-->
     <update id="update">
         update account_money_details
-        set code          = #{code},
-
+        set
             cust_code     = #{custCode},
 
             contract_code = #{contractCode},
@@ -130,7 +119,7 @@
             create_time   = #{createTime},
 
             update_time   = #{updateTime},
-            where code = #{code}
+            where  code = #{code}
     </update>
 
     <!--通过主键删除-->
@@ -163,11 +152,11 @@
     </select>
 
     <select id="queryAccountMonthForms" resultType="com.pht.account.dto.AccountFormsDto">
-        select a.*,(a.pay - a.reduce) remainMoney
+        select a.*,(a.payMoney - a.reduceMoney) remainMoney
         from (
                      select sum(if(ifnull(u.type, '0') = '1', 0, u.pay_money)) payMoney,
                             sum(if(ifnull(u.type, '0') = '0', 0, u.pay_money)) reduceMoney,
-                            u.day xtimes,
+                            u.day                                              xtimes,
                             sum(if(ifnull(u.type, '0') = '0', 1, 0))           payNum
                      from (
                                   select *, DAY(create_time) day
@@ -178,6 +167,23 @@
                                     and create_time < #{lastDayOfMonth,jdbcType=TIMESTAMP}]]>
                                   ) u
                      group by u.day
+                     ) a
+    </select>
+
+    <select id="queryAccountYearForms" resultType="com.pht.account.dto.AccountFormsDto">
+        select a.*,(a.payMoney - a.reduceMoney) remainMoney
+        from (
+                     select sum(if(ifnull(u.type, '0') = '1', 0, u.pay_money)) payMoney,
+                            sum(if(ifnull(u.type, '0') = '0', 0, u.pay_money)) reduceMoney,
+                            u.month                                            xtimes,
+                            sum(if(ifnull(u.type, '0') = '0', 1, 0))           payNum
+                     from (
+                                  select *, MONTH(create_time) month
+                                  from market.account_money_details
+                                  where status = '01'
+                                    and YEAR(create_time) = #{year}
+                                  ) u
+                     group by u.month
                      ) a
     </select>
 </mapper>
