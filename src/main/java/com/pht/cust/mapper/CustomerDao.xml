@@ -74,10 +74,10 @@
                 and profession  like concat("%",#{customerQueryParam.profession},"%")
             </if>
             <if test="customerQueryParam.createTimeStart != null and customerQueryParam.createTimeStart != '' ">
-                  and create_time  >= #{param1.createTimeStart}
+                  and date_format(create_time,'%Y-%m-%d')  >= #{customerQueryParam.createTimeStart}
             </if>
             <if test="customerQueryParam.createTimeEnd != null and customerQueryParam.createTimeEnd != ''">
-                and create_time  <![CDATA[ <= #{param1.createTimeEnd}]]>
+                and date_format(create_time,'%Y-%m-%d')  <![CDATA[ <= #{customerQueryParam.createTimeEnd}]]>
             </if>
         </where>
         order by update_time  desc,id_type
