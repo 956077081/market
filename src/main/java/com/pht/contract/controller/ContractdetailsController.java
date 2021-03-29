@@ -53,6 +53,7 @@ public class ContractdetailsController {
         return CommonResult.success(contractViews);
     }
 
+
     @RequestMapping("/update")
     public CommonResult  update(@RequestBody ContractParams contractParams){
         contractdetailsService.update(contractParams.getContractdetails());
