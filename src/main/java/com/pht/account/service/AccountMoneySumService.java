@@ -48,4 +48,5 @@ public interface AccountMoneySumService {
 
     BigDecimal calcAndUpdateAccountSum(String contractCode, String custCode);
 
+    void deleteByContract(String code);
 }

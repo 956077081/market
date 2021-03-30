@@ -21,4 +21,6 @@ public interface CustomerDao {
     Customer getByCode(@Param("code") String code);
 
     List<Customer> queryRecentNewCust(@Param("limitDay") String recentNewCustlimit,@Param("curDate") Date date);
+
+    void deleteByCode(@Param("code") String code);
 }

@@ -78,5 +78,9 @@
         from account_money_details
         where cust_code =#{custCode} and  contract_code =#{contractCode}
     </select>
+
+    <delete id="deleteByContract">
+        delete  from account_money_sum where contract_code =#{contractCode};
+    </delete>
 </mapper>
 

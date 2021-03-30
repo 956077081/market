@@ -102,6 +102,16 @@ public class AccountMoneyDetailsServiceImpl implements AccountMoneyDetailsServic
         return this.accountMoneyDetailsDao.deleteByCode(code) > 0;
     }
 
+    /**
+     *  根据合同编号删除
+     * @param contractCode
+     * @return
+     */
+    @Override
+    public boolean deleteByContractCode(String contractCode) {
+     return  accountMoneyDetailsDao.deleteByContractCode(contractCode)>0?true:false;
+    }
+
     @Override
     public AccountMoneyDetails crtAccountDetails(AccountMoneyDetails accountMoneyDetails, String contractCode, String custCode) {
         accountMoneyDetails.setId(null);
@@ -154,7 +164,7 @@ public class AccountMoneyDetailsServiceImpl implements AccountMoneyDetailsServic
             Date firstDayOfMonth = QmDateUtils.getFirstDayOfMonth(formDate);
             forms = accountMoneyDetailsDao.queryAccountMonthForms(firstDayOfMonth, lastDayOfMonth);
         } else {
-            forms = accountMoneyDetailsDao.queryAccountYearForms( year);
+            forms = accountMoneyDetailsDao.queryAccountYearForms(year);
 
         }
         AccountFormRet formRet = crtForms(forms, formsXDate);

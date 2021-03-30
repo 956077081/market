@@ -63,7 +63,7 @@ public interface ContractdetailsService {
 
     ContractViews getContractDetails(String code);
 
-    void delete(String code);
+    void invalid(String code);
 
     /**
      * 获取近期合同
@@ -86,4 +86,10 @@ public interface ContractdetailsService {
     List<Map<String, Object>> queryHasOverContract(String contractTimeLimit);
 
     void finishContracts(String codes);
+
+    List<Contractdetails> checkExistContract(String custcode);
+
+
+
+    void delete(String code);
 }

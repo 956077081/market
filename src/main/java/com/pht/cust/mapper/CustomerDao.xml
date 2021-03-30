@@ -94,4 +94,8 @@
         from customer
         where <![CDATA[create_time >=date_add(#{curDate,jdbcType=TIMESTAMP},interval  -#{limitDay} day ) and create_time <=#{curDate,jdbcType=TIMESTAMP} ]]>
     </select>
+
+    <delete id="deleteByCode">
+        delete from  customer  where code =#{code}
+    </delete>
 </mapper>

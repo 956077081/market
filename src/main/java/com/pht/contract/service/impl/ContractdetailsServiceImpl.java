@@ -151,7 +151,7 @@ public class ContractdetailsServiceImpl implements ContractdetailsService {
 
     @Override
     @Transactional
-    public void delete(String code) {
+    public void invalid(String code) {
         Contractdetails contractdetails = getByCode(code);
         contractdetails.setStatus(ContractDict.CONTRACT_STATUS_INVALID);
         updateContractStatus(code,contractdetails.getStatus());
@@ -198,6 +198,31 @@ public class ContractdetailsServiceImpl implements ContractdetailsService {
                 }
             }
         }
+    }
+
+    @Override
+    public List<Contractdetails> checkExistContract(String custcode) {
+        return   contractdetailsDao.queryValidContractByCustCode(custcode);
+    }
+
+    /**
+     * check:无效合同才能删除
+     * 1 删除合同
+     * 2 删除打款
+     * @param code
+     */
+    @Override
+    @Transactional
+    public void delete(String code) {
+        Contractdetails contractdetails = contractdetailsDao.getByCode(code);
+        if (!ContractDict.CONTRACT_STATUS_INVALID.equals(contractdetails.getStatus())) {
+            throw new BizException("非无效合同无法删除！");
+        }
+        deleteByCode(contractdetails.getCode());//1 删除合同
+        contractdetailsTmpService.crtContractTmp(contractdetails,ContractDict.OPERATE_DELETE);
+
+        accountMoneyDetailsService.deleteByContractCode(contractdetails.getCode());// 2 删除打款详情
+        accountMoneySumService.deleteByContract(contractdetails.getCode());//3 删除资金打款金额
     }
 
     private void updateContractStatus(String code,String status){

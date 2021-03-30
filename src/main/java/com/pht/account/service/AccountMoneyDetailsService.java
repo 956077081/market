@@ -55,6 +55,7 @@ public interface AccountMoneyDetailsService {
      */
     boolean deleteByCode(String code);
 
+    boolean deleteByContractCode(String contractCode);
     AccountMoneyDetails crtAccountDetails(AccountMoneyDetails accountMoneyDetails, String code, String code1);
 
     List<AccountMoneyDetails> queryByContractCode(String contractCode);

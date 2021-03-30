@@ -186,5 +186,9 @@
                      group by u.month
                      ) a
     </select>
+
+    <delete id="deleteByContractCode">
+        delete  from account_money_details where contract_code =#{contractCode}
+    </delete>
 </mapper>
 

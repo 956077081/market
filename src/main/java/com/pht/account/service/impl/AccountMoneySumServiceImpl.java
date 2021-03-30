@@ -74,4 +74,9 @@ public class AccountMoneySumServiceImpl implements AccountMoneySumService {
        BigDecimal sum= accountMoneySumDao.calcAndUpdateAccountSum(contractCode,custCode);
         return sum;
     }
+
+    @Override
+    public void deleteByContract(String code) {
+        accountMoneySumDao.deleteByContract(code);
+    }
 }

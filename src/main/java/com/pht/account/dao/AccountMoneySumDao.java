@@ -66,5 +66,7 @@ public interface AccountMoneySumDao {
     int deleteByCustAndContract(@Param("custCode") String custCode,@Param("contractCode") String contractCode);
 
     BigDecimal calcAndUpdateAccountSum(@Param("contractCode") String contractCode,@Param("custCode") String custCode);
+
+    void deleteByContract(@Param("contractCode") String code);
 }
 

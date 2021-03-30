@@ -214,5 +214,12 @@
           and a.status = '01'
         order by a.end_time DESC
     </select>
+
+    <select id="queryValidContractByCustCode" resultType="com.pht.contract.entity.Contractdetails">
+        select count(*)
+        from contractdetails where status  !='00'  and cust_code =#{custCode};
+    </select>
+
+
 </mapper>
 

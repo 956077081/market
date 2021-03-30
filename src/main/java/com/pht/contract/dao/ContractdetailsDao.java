@@ -72,5 +72,8 @@ public interface ContractdetailsDao {
     List<Contractdetails> queryOverTimeContract(@Param("invalidContractOverTime") String invalidContractOverTime, @Param("curTime")Date date);
 
     List<Map<String, Object>> queryHasOverContract(@Param("hasOvercontractTimeLimit") String contractTimeLimit,@Param("curTime") Date date);
+
+    List<Contractdetails> queryValidContractByCustCode(@Param("custCode") String custCode);
+
 }
 

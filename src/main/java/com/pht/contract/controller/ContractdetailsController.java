@@ -60,8 +60,18 @@ public class ContractdetailsController {
         return CommonResult.success(true);
     }
 
-    @RequestMapping("/delete")
-    public CommonResult  delete(@RequestParam(required = true,name = "code") String code){
+    /**
+     * 置无效
+     * @param code
+     * @return
+     */
+    @RequestMapping("/invalid")
+    public CommonResult  invalid(@RequestParam(required = true,name = "code") String code){
+        contractdetailsService.invalid(code);
+        return CommonResult.success(true);
+    }
+
+    public CommonResult delete(@RequestParam(required = true,name = "code") String code){
         contractdetailsService.delete(code);
         return CommonResult.success(true);
     }

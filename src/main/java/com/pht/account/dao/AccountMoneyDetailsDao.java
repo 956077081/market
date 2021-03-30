@@ -71,5 +71,7 @@ public interface AccountMoneyDetailsDao {
     List<AccountFormsDto> queryAccountMonthForms(@Param("firstDayOfMonth") Date firstDayOfMonth,@Param("lastDayOfMonth") Date lastDayOfMonth);
 
     List<AccountFormsDto> queryAccountYearForms(@Param("year") int year);
+
+    int deleteByContractCode(@Param("contractCode") String contractCode);
 }
 

@@ -19,4 +19,8 @@ public interface CustomerService {
     void update(CustomerParam customerParam,Customer  customer);
 
     List<Customer> queryRecentNewCust();
+
+    void deleteByCode(String code);
+
+    void delete(String code);
 }
