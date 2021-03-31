@@ -11,7 +11,7 @@ public class SmsCrtContent {
     private String phone;
     private String template;
     private List<Map<String,Object>> params;
-    private List<String> paramTyps;
+    private List<String> specParamTypes;
 
     public String getPhone() {
         return phone;
@@ -37,11 +37,11 @@ public class SmsCrtContent {
         this.params = params;
     }
 
-    public List<String> getParamTyps() {
-        return paramTyps;
+    public List<String> getSpecParamTypes() {
+        return specParamTypes;
     }
 
-    public void setParamTyps(List<String> paramTyps) {
-        this.paramTyps = paramTyps;
+    public void setSpecParamTypes(List<String> specParamTypes) {
+        this.specParamTypes = specParamTypes;
     }
 }

@@ -220,7 +220,6 @@ public class ContractdetailsServiceImpl implements ContractdetailsService {
         }
         deleteByCode(contractdetails.getCode());//1 删除合同
         contractdetailsTmpService.crtContractTmp(contractdetails,ContractDict.OPERATE_DELETE);
-
         accountMoneyDetailsService.deleteByContractCode(contractdetails.getCode());// 2 删除打款详情
         accountMoneySumService.deleteByContract(contractdetails.getCode());//3 删除资金打款金额
     }

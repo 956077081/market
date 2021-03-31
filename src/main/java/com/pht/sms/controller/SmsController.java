@@ -25,7 +25,7 @@ public class SmsController {
         if(params != null){
             param=params.get(0);
         }
-        String content=   smsTemplateService.getSmsTemplateContent(smsCrtContent.getTemplate(),param);
+        String content= smsTemplateService.getSmsTemplateContent(smsCrtContent.getTemplate(),param);
       return CommonResult.success(StringUtils.trimToEmpty(content));
     }
 

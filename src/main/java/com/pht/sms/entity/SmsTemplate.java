@@ -15,7 +15,6 @@ public class SmsTemplate implements Serializable {
     private Long id;
     private String code;
     private String content;
-    private String calcType;//计算方式0直接映射
     private Date createTime;
     private Date updateTime;
 
@@ -42,14 +41,6 @@ public class SmsTemplate implements Serializable {
 
     public void setContent(String content) {
         this.content = content;
-    }
-
-    public String getCalcType() {
-        return calcType;
-    }
-
-    public void setCalcType(String calcType) {
-        this.calcType = calcType;
     }
 
     public Date getCreateTime() {

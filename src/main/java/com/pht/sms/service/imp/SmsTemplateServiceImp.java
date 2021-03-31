@@ -25,7 +25,6 @@ public class SmsTemplateServiceImp  implements SmsTemplateService {
         SmsTemplate template = new SmsTemplate();
         template.setContent(content);
         template.setCode(PersistentUtil.getBizEntity(SmsTemplate.class));
-        template.setCalcType(calcType);
         template.setCreateTime(new Date());
         template.setUpdateTime(new Date());
         smsTemplateDao.insert(template);
@@ -55,6 +54,8 @@ public class SmsTemplateServiceImp  implements SmsTemplateService {
         if(template.length() >60){
             throw  new BizException("短信长度不能超过60字符");
         }
-        return   StringBaseUtil.handleDollarNamedParamByRegex(template,params);
+        template=   StringBaseUtil.handleDollarNamedParamByRegex(template,params);//1 替换固定数值
+
+        return template;
     }
 }
