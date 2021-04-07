@@ -216,10 +216,13 @@
     </select>
 
     <select id="queryValidContractByCustCode" resultType="com.pht.contract.entity.Contractdetails">
-        select count(*)
+        select *
         from contractdetails where status  !='00'  and cust_code =#{custCode};
     </select>
 
-
+    <select id="queryInvalidContractBycustCode" resultType="com.pht.contract.entity.Contractdetails">
+        select *
+        from contractdetails where status  ='00'  and cust_code =#{custCode};
+    </select>
 </mapper>
 

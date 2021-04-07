@@ -17,6 +17,7 @@ import com.pht.common.utils.PersistentUtil;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Date;
 import java.util.List;
@@ -110,15 +111,17 @@ public class CustomerServiceImp implements CustomerService {
         customerDao.deleteByCode(code);
     }
 
+    @Transactional
     @Override
     public void delete(String code) {
         List<Contractdetails> contractdetails = contractdetailsService.checkExistContract(code);
         if (contractdetails != null && contractdetails.size() > 0) {
             throw new BizException("当前客户含有有效合同无法删除！");
         }
+        List<Contractdetails>  invalidContractdetails = contractdetailsService.queryInvalidContractBycustCode(code);
         //删除无效合同  //删除客户
-        contractdetails.forEach(contract -> {
-            contractdetailsService.delete(code);
+        invalidContractdetails.forEach(contract -> {
+            contractdetailsService.delete(contract.getCode());
         });
         this.deleteByCode(code);
 

@@ -92,4 +92,6 @@ public interface ContractdetailsService {
 
 
     void delete(String code);
+
+    List<Contractdetails> queryInvalidContractBycustCode(String code);
 }

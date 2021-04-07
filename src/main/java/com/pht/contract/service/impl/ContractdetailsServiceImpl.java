@@ -224,6 +224,11 @@ public class ContractdetailsServiceImpl implements ContractdetailsService {
         accountMoneySumService.deleteByContract(contractdetails.getCode());//3 删除资金打款金额
     }
 
+    @Override
+    public List<Contractdetails> queryInvalidContractBycustCode(String code) {
+        return contractdetailsDao.queryInvalidContractBycustCode(code);
+    }
+
     private void updateContractStatus(String code,String status){
          contractdetailsDao.updateContractStatus(code,status,new Date());
     }

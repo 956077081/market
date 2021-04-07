@@ -39,9 +39,9 @@ public class CustomerController {
         return CommonResult.success(true);
     }
 
-    @RequestMapping("/delete/{code}")
+    @RequestMapping("/delete")
     @ResponseBody
-    public CommonResult delete(@PathVariable String code) {
+    public CommonResult delete(@RequestParam(required = true,name = "code") String code) {
         customerService.delete(code);
         return CommonResult.success(true);
     }
