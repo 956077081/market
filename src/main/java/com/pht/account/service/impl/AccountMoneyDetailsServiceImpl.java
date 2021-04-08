@@ -177,10 +177,10 @@ public class AccountMoneyDetailsServiceImpl implements AccountMoneyDetailsServic
         String[] remainMoney = new String[formsXDate.size()];
         String[] payNum = new String[formsXDate.size()];
         monthForms.forEach(form -> {
-            payMoney[Integer.valueOf(form.getXtimes())] = form.getPayMoney();
-            reduceMoney[Integer.valueOf(form.getXtimes())] = form.getReduceMoney();
-            remainMoney[Integer.valueOf(form.getXtimes())] = form.getRemainMoney();
-            payNum[Integer.valueOf(form.getXtimes())] = form.getPayNum();
+            payMoney[Integer.valueOf(form.getXtimes())-1] = form.getPayMoney();
+            reduceMoney[Integer.valueOf(form.getXtimes())-1] = form.getReduceMoney();
+            remainMoney[Integer.valueOf(form.getXtimes())-1] = form.getRemainMoney();
+            payNum[Integer.valueOf(form.getXtimes())-1] = form.getPayNum();
         });
         QmDataConvertUtils.initEmptyArray(payMoney,"0");
         QmDataConvertUtils.initEmptyArray(reduceMoney,"0");
