@@ -149,7 +149,7 @@
                 and a.end_time <![CDATA[ <= #{contractQueryParam.endEndTime}]]>
             </if>
             <if test='contractQueryParam.operatorName != "" and contractQueryParam.operatorName != null '>
-                and a.operator_name like concat("%",#{contractQueryParam.operatorName},"%");
+                and a.operator_name like concat("%",#{contractQueryParam.operatorName},"%")
             </if>
             <if test='contractQueryParam.isOverTime != "" and contractQueryParam.isOverTime != null '>
                 <choose>
@@ -205,11 +205,11 @@
     <select id="queryHasOverContract" resultMap="BaseResultMap">
         select a.*,b.cust_name,b.cust_type,b.id_type,b.id_num,b.phone
         from contractdetails a
-                     left join customer b on a.cust_code = b.code
+             left join customer b on a.cust_code = b.code
         where
           <![CDATA[
                 a.end_time >= date_add(#{curTime,jdbcType=TIMESTAMP}, interval -${hasOvercontractTimeLimit} DAY)
-          and a.end_time <= #{curTime,jdbcType=TIMESTAMP}
+                and a.end_time <= #{curTime,jdbcType=TIMESTAMP}
           ]]>
           and a.status = '01'
         order by a.end_time DESC

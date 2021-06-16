@@ -199,6 +199,9 @@
           <include>**/mapper/*.xml</include>
         </includes>
         <filtering>true</filtering>
+        <excludes>
+          <exclude>static/**</exclude>
+        </excludes>
       </resource>
       <resource>
         <directory>src/main/resources</directory>
@@ -206,7 +209,19 @@
           <include>**/*.*</include>
         </includes>
         <filtering>true</filtering>
+        <excludes>
+          <exclude>static/**</exclude>
+        </excludes>
       </resource>
+
+      <resource>
+        <directory>src/main/resources</directory>
+        <filtering>false</filtering>
+        <includes>
+          <include>static/**</include>
+        </includes>
+      </resource>
+
     </resources>
     <plugins>
         <plugin>
