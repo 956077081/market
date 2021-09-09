@@ -7,5 +7,5 @@ import org.apache.ibatis.annotations.Param;
 import java.util.List;
 
 public interface SysRoleLnkMenuDao {
-    List<SysMenu> queryRoleMenus(@Param("roles") List<String> roleList);
+    List<SysMenu> queryRoleMenus(@Param("roles") List<String> roleList );
 }
