@@ -211,6 +211,7 @@
         <filtering>true</filtering>
         <excludes>
           <exclude>static/**</exclude>
+          <exclude>doc/**</exclude>
         </excludes>
       </resource>
 
